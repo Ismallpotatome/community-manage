@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.ParkingDetailMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.ParkingDetail">
+
+    <id column="detail_id" jdbcType="INTEGER" property="detailId" />
+    <result column="detail_car_num" jdbcType="VARCHAR" property="detailCarNum" />
+    <result column="detail_img" jdbcType="VARCHAR" property="detailImg" />
+    <result column="detail_user" jdbcType="VARCHAR" property="detailUser" />
+    <result column="detail_phone" jdbcType="VARCHAR" property="detailPhone" />
+    <result column="detail_nature" jdbcType="INTEGER" property="detailNature" />
+    <result column="detail_price" jdbcType="DECIMAL" property="detailPrice" />
+    <result column="detail_begin" jdbcType="DATE" property="detailBegin" />
+    <result column="detail_create_time" jdbcType="TIMESTAMP" property="detailCreateTime" />
+    <result column="detail_is_del" jdbcType="INTEGER" property="detailIsDel" />
+    <result column="local_id" jdbcType="INTEGER" property="localId" />
+    <result column="detail_out" jdbcType="DATE" property="detailOut" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    detail_id, detail_car_num, detail_img, detail_user, detail_phone, detail_nature, 
+    detail_price, detail_begin, detail_create_time, detail_is_del, local_id, detail_out
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from tb_parking_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from tb_parking_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="detail_id" keyProperty="detailId" parameterType="com.community.manage.domain.entity.ParkingDetail" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into tb_parking_detail (detail_car_num, detail_img, detail_user, 
+      detail_phone, detail_nature, detail_price, 
+      detail_begin, detail_create_time, detail_is_del, 
+      local_id, detail_out)
+    values (#{detailCarNum,jdbcType=VARCHAR}, #{detailImg,jdbcType=VARCHAR}, #{detailUser,jdbcType=VARCHAR}, 
+      #{detailPhone,jdbcType=VARCHAR}, #{detailNature,jdbcType=INTEGER}, #{detailPrice,jdbcType=DECIMAL}, 
+      #{detailBegin,jdbcType=DATE}, #{detailCreateTime,jdbcType=TIMESTAMP}, #{detailIsDel,jdbcType=INTEGER}, 
+      #{localId,jdbcType=INTEGER}, #{detailOut,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" keyColumn="detail_id" keyProperty="detailId" parameterType="com.community.manage.domain.entity.ParkingDetail" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into tb_parking_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailCarNum != null">
+        detail_car_num,
+      </if>
+      <if test="detailImg != null">
+        detail_img,
+      </if>
+      <if test="detailUser != null">
+        detail_user,
+      </if>
+      <if test="detailPhone != null">
+        detail_phone,
+      </if>
+      <if test="detailNature != null">
+        detail_nature,
+      </if>
+      <if test="detailPrice != null">
+        detail_price,
+      </if>
+      <if test="detailBegin != null">
+        detail_begin,
+      </if>
+      <if test="detailCreateTime != null">
+        detail_create_time,
+      </if>
+      <if test="detailIsDel != null">
+        detail_is_del,
+      </if>
+      <if test="localId != null">
+        local_id,
+      </if>
+      <if test="detailOut != null">
+        detail_out,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="detailCarNum != null">
+        #{detailCarNum,jdbcType=VARCHAR},
+      </if>
+      <if test="detailImg != null">
+        #{detailImg,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUser != null">
+        #{detailUser,jdbcType=VARCHAR},
+      </if>
+      <if test="detailPhone != null">
+        #{detailPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="detailNature != null">
+        #{detailNature,jdbcType=INTEGER},
+      </if>
+      <if test="detailPrice != null">
+        #{detailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="detailBegin != null">
+        #{detailBegin,jdbcType=DATE},
+      </if>
+      <if test="detailCreateTime != null">
+        #{detailCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailIsDel != null">
+        #{detailIsDel,jdbcType=INTEGER},
+      </if>
+      <if test="localId != null">
+        #{localId,jdbcType=INTEGER},
+      </if>
+      <if test="detailOut != null">
+        #{detailOut,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.ParkingDetail">
+    <!--@mbg.generated-->
+    update tb_parking_detail
+    <set>
+      <if test="detailCarNum != null">
+        detail_car_num = #{detailCarNum,jdbcType=VARCHAR},
+      </if>
+      <if test="detailImg != null">
+        detail_img = #{detailImg,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUser != null">
+        detail_user = #{detailUser,jdbcType=VARCHAR},
+      </if>
+      <if test="detailPhone != null">
+        detail_phone = #{detailPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="detailNature != null">
+        detail_nature = #{detailNature,jdbcType=INTEGER},
+      </if>
+      <if test="detailPrice != null">
+        detail_price = #{detailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="detailBegin != null">
+        detail_begin = #{detailBegin,jdbcType=DATE},
+      </if>
+      <if test="detailCreateTime != null">
+        detail_create_time = #{detailCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailIsDel != null">
+        detail_is_del = #{detailIsDel,jdbcType=INTEGER},
+      </if>
+      <if test="localId != null">
+        local_id = #{localId,jdbcType=INTEGER},
+      </if>
+      <if test="detailOut != null">
+        detail_out = #{detailOut,jdbcType=DATE},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.ParkingDetail">
+    <!--@mbg.generated-->
+    update tb_parking_detail
+    set detail_car_num = #{detailCarNum,jdbcType=VARCHAR},
+      detail_img = #{detailImg,jdbcType=VARCHAR},
+      detail_user = #{detailUser,jdbcType=VARCHAR},
+      detail_phone = #{detailPhone,jdbcType=VARCHAR},
+      detail_nature = #{detailNature,jdbcType=INTEGER},
+      detail_price = #{detailPrice,jdbcType=DECIMAL},
+      detail_begin = #{detailBegin,jdbcType=DATE},
+      detail_create_time = #{detailCreateTime,jdbcType=TIMESTAMP},
+      detail_is_del = #{detailIsDel,jdbcType=INTEGER},
+      local_id = #{localId,jdbcType=INTEGER},
+      detail_out = #{detailOut,jdbcType=DATE}
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+</mapper>
