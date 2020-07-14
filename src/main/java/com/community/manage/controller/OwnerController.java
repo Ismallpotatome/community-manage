@@ -32,8 +32,21 @@ public class OwnerController {
      * @return List<VehicleDto>:"车辆封装信息"集合
      */
     @PostMapping("vehicle/search")
-    // 业主的车辆信息关键字分页查询
     public List<VehicleDto> vehicleSearch(@RequestBody SearchDto searchDto) {
         return ownerService.vehicleSearchByPage(searchDto);
+    }
+
+    /**
+     *
+     * @param vehicleDto:车辆信息封装类
+     */
+    @PostMapping("vehicle/add")
+    public void vehicleAdd(@RequestBody VehicleDto vehicleDto){
+        ownerService.addVehicle(vehicleDto);
+    }
+
+    @PostMapping("vehicle/delete_batch")
+    public void vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
+
     }
 }
