@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.VehicleMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Vehicle">
+    <!--@mbg.generated-->
+    <!--@Table vehicle-->
+    <id column="vehicle_id" jdbcType="INTEGER" property="vehicleId" />
+    <result column="vehicle_owner_id" jdbcType="INTEGER" property="vehicleOwnerId" />
+    <result column="vehicle_number" jdbcType="VARCHAR" property="vehicleNumber" />
+    <result column="vehicle_color" jdbcType="VARCHAR" property="vehicleColor" />
+    <result column="vehicle_photo" jdbcType="VARCHAR" property="vehiclePhoto" />
+    <result column="vehicle_describe" jdbcType="VARCHAR" property="vehicleDescribe" />
+    <result column="vehicle_createtime" jdbcType="DATE" property="vehicleCreatetime" />
+    <result column="vehicle_updatetime" jdbcType="DATE" property="vehicleUpdatetime" />
+    <result column="vehicle_status" jdbcType="INTEGER" property="vehicleStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    vehicle_id, vehicle_owner_id, vehicle_number, vehicle_color, vehicle_photo, vehicle_describe, 
+    vehicle_createtime, vehicle_updatetime, vehicle_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from vehicle
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="vehicle_id" keyProperty="vehicleId" parameterType="com.community.manage.domain.entity.Vehicle" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into vehicle (vehicle_owner_id, vehicle_number, vehicle_color, 
+      vehicle_photo, vehicle_describe, vehicle_createtime, 
+      vehicle_updatetime, vehicle_status)
+    values (#{vehicleOwnerId,jdbcType=INTEGER}, #{vehicleNumber,jdbcType=VARCHAR}, #{vehicleColor,jdbcType=VARCHAR}, 
+      #{vehiclePhoto,jdbcType=VARCHAR}, #{vehicleDescribe,jdbcType=VARCHAR}, #{vehicleCreatetime,jdbcType=DATE}, 
+      #{vehicleUpdatetime,jdbcType=DATE}, #{vehicleStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="vehicle_id" keyProperty="vehicleId" parameterType="com.community.manage.domain.entity.Vehicle" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into vehicle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vehicleOwnerId != null">
+        vehicle_owner_id,
+      </if>
+      <if test="vehicleNumber != null">
+        vehicle_number,
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color,
+      </if>
+      <if test="vehiclePhoto != null">
+        vehicle_photo,
+      </if>
+      <if test="vehicleDescribe != null">
+        vehicle_describe,
+      </if>
+      <if test="vehicleCreatetime != null">
+        vehicle_createtime,
+      </if>
+      <if test="vehicleUpdatetime != null">
+        vehicle_updatetime,
+      </if>
+      <if test="vehicleStatus != null">
+        vehicle_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vehicleOwnerId != null">
+        #{vehicleOwnerId,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleNumber != null">
+        #{vehicleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleColor != null">
+        #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehiclePhoto != null">
+        #{vehiclePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleDescribe != null">
+        #{vehicleDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleCreatetime != null">
+        #{vehicleCreatetime,jdbcType=DATE},
+      </if>
+      <if test="vehicleUpdatetime != null">
+        #{vehicleUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="vehicleStatus != null">
+        #{vehicleStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Vehicle">
+    <!--@mbg.generated-->
+    update vehicle
+    <set>
+      <if test="vehicleOwnerId != null">
+        vehicle_owner_id = #{vehicleOwnerId,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleNumber != null">
+        vehicle_number = #{vehicleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vehiclePhoto != null">
+        vehicle_photo = #{vehiclePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleDescribe != null">
+        vehicle_describe = #{vehicleDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleCreatetime != null">
+        vehicle_createtime = #{vehicleCreatetime,jdbcType=DATE},
+      </if>
+      <if test="vehicleUpdatetime != null">
+        vehicle_updatetime = #{vehicleUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="vehicleStatus != null">
+        vehicle_status = #{vehicleStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Vehicle">
+    <!--@mbg.generated-->
+    update vehicle
+    set vehicle_owner_id = #{vehicleOwnerId,jdbcType=INTEGER},
+      vehicle_number = #{vehicleNumber,jdbcType=VARCHAR},
+      vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      vehicle_photo = #{vehiclePhoto,jdbcType=VARCHAR},
+      vehicle_describe = #{vehicleDescribe,jdbcType=VARCHAR},
+      vehicle_createtime = #{vehicleCreatetime,jdbcType=DATE},
+      vehicle_updatetime = #{vehicleUpdatetime,jdbcType=DATE},
+      vehicle_status = #{vehicleStatus,jdbcType=INTEGER}
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </update>
+</mapper>

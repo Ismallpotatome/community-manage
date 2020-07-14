@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.CommunityMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Community">
+    <!--@mbg.generated-->
+    <!--@Table community-->
+    <id column="community_id" jdbcType="INTEGER" property="communityId" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
+    <result column="community_address" jdbcType="VARCHAR" property="communityAddress" />
+    <result column="community_area" jdbcType="INTEGER" property="communityArea" />
+    <result column="community_build" jdbcType="INTEGER" property="communityBuild" />
+    <result column="community_home" jdbcType="INTEGER" property="communityHome" />
+    <result column="Community_greening" jdbcType="INTEGER" property="communityGreening" />
+    <result column="community_icon" jdbcType="VARCHAR" property="communityIcon" />
+    <result column="community_developers" jdbcType="VARCHAR" property="communityDevelopers" />
+    <result column="community_company" jdbcType="VARCHAR" property="communityCompany" />
+    <result column="community_creat_etime" jdbcType="TIMESTAMP" property="communityCreatEtime" />
+    <result column="community_status" jdbcType="INTEGER" property="communityStatus" />
+    <result column="community_is_delete" jdbcType="INTEGER" property="communityIsDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    community_id, community_name, community_address, community_area, community_build, 
+    community_home, Community_greening, community_icon, community_developers, community_company, 
+    community_creat_etime, community_status, community_is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from community
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from community
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="community_id" keyProperty="communityId" parameterType="com.community.manage.domain.entity.Community" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into community (community_name, community_address, 
+      community_area, community_build, community_home, 
+      Community_greening, community_icon, community_developers, 
+      community_company, community_creat_etime, 
+      community_status, community_is_delete)
+    values (#{communityName,jdbcType=VARCHAR}, #{communityAddress,jdbcType=VARCHAR}, 
+      #{communityArea,jdbcType=INTEGER}, #{communityBuild,jdbcType=INTEGER}, #{communityHome,jdbcType=INTEGER}, 
+      #{communityGreening,jdbcType=INTEGER}, #{communityIcon,jdbcType=VARCHAR}, #{communityDevelopers,jdbcType=VARCHAR}, 
+      #{communityCompany,jdbcType=VARCHAR}, #{communityCreatEtime,jdbcType=TIMESTAMP}, 
+      #{communityStatus,jdbcType=INTEGER}, #{communityIsDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="community_id" keyProperty="communityId" parameterType="com.community.manage.domain.entity.Community" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into community
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="communityName != null">
+        community_name,
+      </if>
+      <if test="communityAddress != null">
+        community_address,
+      </if>
+      <if test="communityArea != null">
+        community_area,
+      </if>
+      <if test="communityBuild != null">
+        community_build,
+      </if>
+      <if test="communityHome != null">
+        community_home,
+      </if>
+      <if test="communityGreening != null">
+        Community_greening,
+      </if>
+      <if test="communityIcon != null">
+        community_icon,
+      </if>
+      <if test="communityDevelopers != null">
+        community_developers,
+      </if>
+      <if test="communityCompany != null">
+        community_company,
+      </if>
+      <if test="communityCreatEtime != null">
+        community_creat_etime,
+      </if>
+      <if test="communityStatus != null">
+        community_status,
+      </if>
+      <if test="communityIsDelete != null">
+        community_is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="communityName != null">
+        #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddress != null">
+        #{communityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communityArea != null">
+        #{communityArea,jdbcType=INTEGER},
+      </if>
+      <if test="communityBuild != null">
+        #{communityBuild,jdbcType=INTEGER},
+      </if>
+      <if test="communityHome != null">
+        #{communityHome,jdbcType=INTEGER},
+      </if>
+      <if test="communityGreening != null">
+        #{communityGreening,jdbcType=INTEGER},
+      </if>
+      <if test="communityIcon != null">
+        #{communityIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="communityDevelopers != null">
+        #{communityDevelopers,jdbcType=VARCHAR},
+      </if>
+      <if test="communityCompany != null">
+        #{communityCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="communityCreatEtime != null">
+        #{communityCreatEtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="communityStatus != null">
+        #{communityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="communityIsDelete != null">
+        #{communityIsDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Community">
+    <!--@mbg.generated-->
+    update community
+    <set>
+      <if test="communityName != null">
+        community_name = #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddress != null">
+        community_address = #{communityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communityArea != null">
+        community_area = #{communityArea,jdbcType=INTEGER},
+      </if>
+      <if test="communityBuild != null">
+        community_build = #{communityBuild,jdbcType=INTEGER},
+      </if>
+      <if test="communityHome != null">
+        community_home = #{communityHome,jdbcType=INTEGER},
+      </if>
+      <if test="communityGreening != null">
+        Community_greening = #{communityGreening,jdbcType=INTEGER},
+      </if>
+      <if test="communityIcon != null">
+        community_icon = #{communityIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="communityDevelopers != null">
+        community_developers = #{communityDevelopers,jdbcType=VARCHAR},
+      </if>
+      <if test="communityCompany != null">
+        community_company = #{communityCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="communityCreatEtime != null">
+        community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="communityStatus != null">
+        community_status = #{communityStatus,jdbcType=INTEGER},
+      </if>
+      <if test="communityIsDelete != null">
+        community_is_delete = #{communityIsDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Community">
+    <!--@mbg.generated-->
+    update community
+    set community_name = #{communityName,jdbcType=VARCHAR},
+      community_address = #{communityAddress,jdbcType=VARCHAR},
+      community_area = #{communityArea,jdbcType=INTEGER},
+      community_build = #{communityBuild,jdbcType=INTEGER},
+      community_home = #{communityHome,jdbcType=INTEGER},
+      Community_greening = #{communityGreening,jdbcType=INTEGER},
+      community_icon = #{communityIcon,jdbcType=VARCHAR},
+      community_developers = #{communityDevelopers,jdbcType=VARCHAR},
+      community_company = #{communityCompany,jdbcType=VARCHAR},
+      community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
+      community_status = #{communityStatus,jdbcType=INTEGER},
+      community_is_delete = #{communityIsDelete,jdbcType=INTEGER}
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </update>
+</mapper>

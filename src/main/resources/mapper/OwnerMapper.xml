@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.OwnerMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Owner">
+    <!--@mbg.generated-->
+    <!--@Table `owner`-->
+    <id column="owner_id" jdbcType="INTEGER" property="ownerId" />
+    <result column="community_id" jdbcType="INTEGER" property="communityId" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="owner_idcard" jdbcType="VARCHAR" property="ownerIdcard" />
+    <result column="owner_birth" jdbcType="DATE" property="ownerBirth" />
+    <result column="owner_phone" jdbcType="VARCHAR" property="ownerPhone" />
+    <result column="owner_profession" jdbcType="VARCHAR" property="ownerProfession" />
+    <result column="owner_sex" jdbcType="INTEGER" property="ownerSex" />
+    <result column="owner_type" jdbcType="INTEGER" property="ownerType" />
+    <result column="owner_photo" jdbcType="VARCHAR" property="ownerPhoto" />
+    <result column="owner_describe" jdbcType="VARCHAR" property="ownerDescribe" />
+    <result column="owner_createtime" jdbcType="DATE" property="ownerCreatetime" />
+    <result column="owner_updatetime" jdbcType="DATE" property="ownerUpdatetime" />
+    <result column="owner_status" jdbcType="INTEGER" property="ownerStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    owner_id, community_id, owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, 
+    owner_sex, owner_type, owner_photo, owner_describe, owner_createtime, owner_updatetime, 
+    owner_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from `owner`
+    where owner_id = #{ownerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from `owner`
+    where owner_id = #{ownerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="owner_id" keyProperty="ownerId" parameterType="com.community.manage.domain.entity.Owner" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `owner` (community_id, owner_name, owner_idcard, 
+      owner_birth, owner_phone, owner_profession, 
+      owner_sex, owner_type, owner_photo, 
+      owner_describe, owner_createtime, owner_updatetime, 
+      owner_status)
+    values (#{communityId,jdbcType=INTEGER}, #{ownerName,jdbcType=VARCHAR}, #{ownerIdcard,jdbcType=VARCHAR}, 
+      #{ownerBirth,jdbcType=DATE}, #{ownerPhone,jdbcType=VARCHAR}, #{ownerProfession,jdbcType=VARCHAR}, 
+      #{ownerSex,jdbcType=INTEGER}, #{ownerType,jdbcType=INTEGER}, #{ownerPhoto,jdbcType=VARCHAR}, 
+      #{ownerDescribe,jdbcType=VARCHAR}, #{ownerCreatetime,jdbcType=DATE}, #{ownerUpdatetime,jdbcType=DATE}, 
+      #{ownerStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="owner_id" keyProperty="ownerId" parameterType="com.community.manage.domain.entity.Owner" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `owner`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="ownerName != null">
+        owner_name,
+      </if>
+      <if test="ownerIdcard != null">
+        owner_idcard,
+      </if>
+      <if test="ownerBirth != null">
+        owner_birth,
+      </if>
+      <if test="ownerPhone != null">
+        owner_phone,
+      </if>
+      <if test="ownerProfession != null">
+        owner_profession,
+      </if>
+      <if test="ownerSex != null">
+        owner_sex,
+      </if>
+      <if test="ownerType != null">
+        owner_type,
+      </if>
+      <if test="ownerPhoto != null">
+        owner_photo,
+      </if>
+      <if test="ownerDescribe != null">
+        owner_describe,
+      </if>
+      <if test="ownerCreatetime != null">
+        owner_createtime,
+      </if>
+      <if test="ownerUpdatetime != null">
+        owner_updatetime,
+      </if>
+      <if test="ownerStatus != null">
+        owner_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="communityId != null">
+        #{communityId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdcard != null">
+        #{ownerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerBirth != null">
+        #{ownerBirth,jdbcType=DATE},
+      </if>
+      <if test="ownerPhone != null">
+        #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerProfession != null">
+        #{ownerProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerSex != null">
+        #{ownerSex,jdbcType=INTEGER},
+      </if>
+      <if test="ownerType != null">
+        #{ownerType,jdbcType=INTEGER},
+      </if>
+      <if test="ownerPhoto != null">
+        #{ownerPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerDescribe != null">
+        #{ownerDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCreatetime != null">
+        #{ownerCreatetime,jdbcType=DATE},
+      </if>
+      <if test="ownerUpdatetime != null">
+        #{ownerUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="ownerStatus != null">
+        #{ownerStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Owner">
+    <!--@mbg.generated-->
+    update `owner`
+    <set>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdcard != null">
+        owner_idcard = #{ownerIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerBirth != null">
+        owner_birth = #{ownerBirth,jdbcType=DATE},
+      </if>
+      <if test="ownerPhone != null">
+        owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerProfession != null">
+        owner_profession = #{ownerProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerSex != null">
+        owner_sex = #{ownerSex,jdbcType=INTEGER},
+      </if>
+      <if test="ownerType != null">
+        owner_type = #{ownerType,jdbcType=INTEGER},
+      </if>
+      <if test="ownerPhoto != null">
+        owner_photo = #{ownerPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerDescribe != null">
+        owner_describe = #{ownerDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCreatetime != null">
+        owner_createtime = #{ownerCreatetime,jdbcType=DATE},
+      </if>
+      <if test="ownerUpdatetime != null">
+        owner_updatetime = #{ownerUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="ownerStatus != null">
+        owner_status = #{ownerStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where owner_id = #{ownerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Owner">
+    <!--@mbg.generated-->
+    update `owner`
+    set community_id = #{communityId,jdbcType=INTEGER},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_idcard = #{ownerIdcard,jdbcType=VARCHAR},
+      owner_birth = #{ownerBirth,jdbcType=DATE},
+      owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      owner_profession = #{ownerProfession,jdbcType=VARCHAR},
+      owner_sex = #{ownerSex,jdbcType=INTEGER},
+      owner_type = #{ownerType,jdbcType=INTEGER},
+      owner_photo = #{ownerPhoto,jdbcType=VARCHAR},
+      owner_describe = #{ownerDescribe,jdbcType=VARCHAR},
+      owner_createtime = #{ownerCreatetime,jdbcType=DATE},
+      owner_updatetime = #{ownerUpdatetime,jdbcType=DATE},
+      owner_status = #{ownerStatus,jdbcType=INTEGER}
+    where owner_id = #{ownerId,jdbcType=INTEGER}
+  </update>
+</mapper>

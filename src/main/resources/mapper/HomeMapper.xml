@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.HomeMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Home">
+    <!--@mbg.generated-->
+    <!--@Table home-->
+    <id column="home_id" jdbcType="INTEGER" property="homeId" />
+    <result column="owner_id" jdbcType="INTEGER" property="ownerId" />
+    <result column="build_id" jdbcType="INTEGER" property="buildId" />
+    <result column="home_numbe" jdbcType="VARCHAR" property="homeNumbe" />
+    <result column="home_name" jdbcType="VARCHAR" property="homeName" />
+    <result column="home_room" jdbcType="INTEGER" property="homeRoom" />
+    <result column="home_unit" jdbcType="INTEGER" property="homeUnit" />
+    <result column="home_layer" jdbcType="INTEGER" property="homeLayer" />
+    <result column="home_describe" jdbcType="VARCHAR" property="homeDescribe" />
+    <result column="home_create_time" jdbcType="TIMESTAMP" property="homeCreateTime" />
+    <result column="home_is_delete" jdbcType="INTEGER" property="homeIsDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    home_id, owner_id, build_id, home_numbe, home_name, home_room, home_unit, home_layer, 
+    home_describe, home_create_time, home_is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from home
+    where home_id = #{homeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from home
+    where home_id = #{homeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="home_id" keyProperty="homeId" parameterType="com.community.manage.domain.entity.Home" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into home (owner_id, build_id, home_numbe, 
+      home_name, home_room, home_unit, 
+      home_layer, home_describe, home_create_time, 
+      home_is_delete)
+    values (#{ownerId,jdbcType=INTEGER}, #{buildId,jdbcType=INTEGER}, #{homeNumbe,jdbcType=VARCHAR}, 
+      #{homeName,jdbcType=VARCHAR}, #{homeRoom,jdbcType=INTEGER}, #{homeUnit,jdbcType=INTEGER}, 
+      #{homeLayer,jdbcType=INTEGER}, #{homeDescribe,jdbcType=VARCHAR}, #{homeCreateTime,jdbcType=TIMESTAMP}, 
+      #{homeIsDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="home_id" keyProperty="homeId" parameterType="com.community.manage.domain.entity.Home" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into home
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="buildId != null">
+        build_id,
+      </if>
+      <if test="homeNumbe != null">
+        home_numbe,
+      </if>
+      <if test="homeName != null">
+        home_name,
+      </if>
+      <if test="homeRoom != null">
+        home_room,
+      </if>
+      <if test="homeUnit != null">
+        home_unit,
+      </if>
+      <if test="homeLayer != null">
+        home_layer,
+      </if>
+      <if test="homeDescribe != null">
+        home_describe,
+      </if>
+      <if test="homeCreateTime != null">
+        home_create_time,
+      </if>
+      <if test="homeIsDelete != null">
+        home_is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="buildId != null">
+        #{buildId,jdbcType=INTEGER},
+      </if>
+      <if test="homeNumbe != null">
+        #{homeNumbe,jdbcType=VARCHAR},
+      </if>
+      <if test="homeName != null">
+        #{homeName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeRoom != null">
+        #{homeRoom,jdbcType=INTEGER},
+      </if>
+      <if test="homeUnit != null">
+        #{homeUnit,jdbcType=INTEGER},
+      </if>
+      <if test="homeLayer != null">
+        #{homeLayer,jdbcType=INTEGER},
+      </if>
+      <if test="homeDescribe != null">
+        #{homeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="homeCreateTime != null">
+        #{homeCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeIsDelete != null">
+        #{homeIsDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Home">
+    <!--@mbg.generated-->
+    update home
+    <set>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="buildId != null">
+        build_id = #{buildId,jdbcType=INTEGER},
+      </if>
+      <if test="homeNumbe != null">
+        home_numbe = #{homeNumbe,jdbcType=VARCHAR},
+      </if>
+      <if test="homeName != null">
+        home_name = #{homeName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeRoom != null">
+        home_room = #{homeRoom,jdbcType=INTEGER},
+      </if>
+      <if test="homeUnit != null">
+        home_unit = #{homeUnit,jdbcType=INTEGER},
+      </if>
+      <if test="homeLayer != null">
+        home_layer = #{homeLayer,jdbcType=INTEGER},
+      </if>
+      <if test="homeDescribe != null">
+        home_describe = #{homeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="homeCreateTime != null">
+        home_create_time = #{homeCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeIsDelete != null">
+        home_is_delete = #{homeIsDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where home_id = #{homeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Home">
+    <!--@mbg.generated-->
+    update home
+    set owner_id = #{ownerId,jdbcType=INTEGER},
+      build_id = #{buildId,jdbcType=INTEGER},
+      home_numbe = #{homeNumbe,jdbcType=VARCHAR},
+      home_name = #{homeName,jdbcType=VARCHAR},
+      home_room = #{homeRoom,jdbcType=INTEGER},
+      home_unit = #{homeUnit,jdbcType=INTEGER},
+      home_layer = #{homeLayer,jdbcType=INTEGER},
+      home_describe = #{homeDescribe,jdbcType=VARCHAR},
+      home_create_time = #{homeCreateTime,jdbcType=TIMESTAMP},
+      home_is_delete = #{homeIsDelete,jdbcType=INTEGER}
+    where home_id = #{homeId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.PetMapper">
+  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Pet">
+    <!--@mbg.generated-->
+    <!--@Table pet-->
+    <id column="pet_id" jdbcType="INTEGER" property="petId" />
+    <result column="pet_owner_id" jdbcType="INTEGER" property="petOwnerId" />
+    <result column="pet_name" jdbcType="VARCHAR" property="petName" />
+    <result column="pet_color" jdbcType="VARCHAR" property="petColor" />
+    <result column="pet_adoptiontime" jdbcType="DATE" property="petAdoptiontime" />
+    <result column="pet_photo" jdbcType="VARCHAR" property="petPhoto" />
+    <result column="pet_describe" jdbcType="VARCHAR" property="petDescribe" />
+    <result column="pet_createtime" jdbcType="DATE" property="petCreatetime" />
+    <result column="pet_updatetime" jdbcType="DATE" property="petUpdatetime" />
+    <result column="pet_status" jdbcType="INTEGER" property="petStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    pet_id, pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_photo, pet_describe, 
+    pet_createtime, pet_updatetime, pet_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from pet
+    where pet_id = #{petId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from pet
+    where pet_id = #{petId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="pet_id" keyProperty="petId" parameterType="com.community.manage.domain.entity.Pet" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into pet (pet_owner_id, pet_name, pet_color, 
+      pet_adoptiontime, pet_photo, pet_describe, 
+      pet_createtime, pet_updatetime, pet_status
+      )
+    values (#{petOwnerId,jdbcType=INTEGER}, #{petName,jdbcType=VARCHAR}, #{petColor,jdbcType=VARCHAR}, 
+      #{petAdoptiontime,jdbcType=DATE}, #{petPhoto,jdbcType=VARCHAR}, #{petDescribe,jdbcType=VARCHAR}, 
+      #{petCreatetime,jdbcType=DATE}, #{petUpdatetime,jdbcType=DATE}, #{petStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="pet_id" keyProperty="petId" parameterType="com.community.manage.domain.entity.Pet" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into pet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="petOwnerId != null">
+        pet_owner_id,
+      </if>
+      <if test="petName != null">
+        pet_name,
+      </if>
+      <if test="petColor != null">
+        pet_color,
+      </if>
+      <if test="petAdoptiontime != null">
+        pet_adoptiontime,
+      </if>
+      <if test="petPhoto != null">
+        pet_photo,
+      </if>
+      <if test="petDescribe != null">
+        pet_describe,
+      </if>
+      <if test="petCreatetime != null">
+        pet_createtime,
+      </if>
+      <if test="petUpdatetime != null">
+        pet_updatetime,
+      </if>
+      <if test="petStatus != null">
+        pet_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="petOwnerId != null">
+        #{petOwnerId,jdbcType=INTEGER},
+      </if>
+      <if test="petName != null">
+        #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petColor != null">
+        #{petColor,jdbcType=VARCHAR},
+      </if>
+      <if test="petAdoptiontime != null">
+        #{petAdoptiontime,jdbcType=DATE},
+      </if>
+      <if test="petPhoto != null">
+        #{petPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="petDescribe != null">
+        #{petDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="petCreatetime != null">
+        #{petCreatetime,jdbcType=DATE},
+      </if>
+      <if test="petUpdatetime != null">
+        #{petUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="petStatus != null">
+        #{petStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Pet">
+    <!--@mbg.generated-->
+    update pet
+    <set>
+      <if test="petOwnerId != null">
+        pet_owner_id = #{petOwnerId,jdbcType=INTEGER},
+      </if>
+      <if test="petName != null">
+        pet_name = #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petColor != null">
+        pet_color = #{petColor,jdbcType=VARCHAR},
+      </if>
+      <if test="petAdoptiontime != null">
+        pet_adoptiontime = #{petAdoptiontime,jdbcType=DATE},
+      </if>
+      <if test="petPhoto != null">
+        pet_photo = #{petPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="petDescribe != null">
+        pet_describe = #{petDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="petCreatetime != null">
+        pet_createtime = #{petCreatetime,jdbcType=DATE},
+      </if>
+      <if test="petUpdatetime != null">
+        pet_updatetime = #{petUpdatetime,jdbcType=DATE},
+      </if>
+      <if test="petStatus != null">
+        pet_status = #{petStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pet_id = #{petId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Pet">
+    <!--@mbg.generated-->
+    update pet
+    set pet_owner_id = #{petOwnerId,jdbcType=INTEGER},
+      pet_name = #{petName,jdbcType=VARCHAR},
+      pet_color = #{petColor,jdbcType=VARCHAR},
+      pet_adoptiontime = #{petAdoptiontime,jdbcType=DATE},
+      pet_photo = #{petPhoto,jdbcType=VARCHAR},
+      pet_describe = #{petDescribe,jdbcType=VARCHAR},
+      pet_createtime = #{petCreatetime,jdbcType=DATE},
+      pet_updatetime = #{petUpdatetime,jdbcType=DATE},
+      pet_status = #{petStatus,jdbcType=INTEGER}
+    where pet_id = #{petId,jdbcType=INTEGER}
+  </update>
+</mapper>
