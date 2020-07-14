@@ -1,7 +1,6 @@
 package com.community.manage.mapper;
 
 import com.community.manage.domain.entity.Vehicle;
-
 public interface VehicleMapper {
     int deleteByPrimaryKey(Integer vehicleId);
 
