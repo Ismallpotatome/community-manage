@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.CommunityDtoMapper">
+    <select id="selectSum" resultType="com.community.manage.domain.dto.CommunityDto">
+        select sum(build_home) communityHomeNumber from community left join build on community.community_id = build.community_id
+        where community_create_time between #{startDate} and #{endDate}
+        group by build.community_id
+        limit #{limit}, #{offset}
+    </select>
+</mapper>
+
