@@ -21,4 +21,8 @@ public interface AssetsMapper {
     AssetsBean selectAll();
 
     AssetsBean selectByKey(@Param("assetsSearchDto") AssetsSearchDto assetsSearchDto);
+
+    int updateStatusById(int assetsId);
+
+    int updateStatusByIds(@Param("assetsIds") int[] assetsIds);
 }
