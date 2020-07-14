@@ -4,7 +4,7 @@ import com.community.manage.domain.entity.Assets;
 import com.community.manage.domain.vo.AssetsBean;
 import org.springframework.stereotype.Repository;
 
-@Repository("assetsMapper")
+@Repository
 public interface AssetsMapper {
     int deleteByPrimaryKey(Integer assetsId);
 

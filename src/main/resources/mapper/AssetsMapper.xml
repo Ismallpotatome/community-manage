@@ -162,7 +162,9 @@
     where assets_id = #{assetsId,jdbcType=INTEGER}
   </update>
     <select id="selectAll" resultMap="AssetsBeanResultMap">
-      SELECT <include refid="Base_Column_backup"/>,c.community_name
+      SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
+      a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
+      a.assets_establish_date, a.assets_status, c.community_name
       from assets a left join community c on a.community_id = c.community_id
     </select>
 </mapper>

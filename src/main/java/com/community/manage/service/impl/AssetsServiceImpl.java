@@ -1,5 +1,6 @@
 package com.community.manage.service.impl;
 
+import com.community.manage.domain.dto.AssetsSearchDto;
 import com.community.manage.domain.vo.AssetsBean;
 import com.community.manage.mapper.AssetsMapper;
 import com.community.manage.service.AssetsService;
@@ -9,11 +10,16 @@ import javax.annotation.Resource;
 
 @Service
 public class AssetsServiceImpl implements AssetsService {
-//    @Resource(name = "assetsMapper")
+    @Resource
     AssetsMapper assetsMapper;
     @Override
     public AssetsBean showAllInfo() {
         AssetsBean assetsBean = assetsMapper.selectAll();
         return assetsBean;
+    }
+
+    @Override
+    public String searchByKey(AssetsSearchDto assetsSearchDto) {
+        return null;
     }
 }
