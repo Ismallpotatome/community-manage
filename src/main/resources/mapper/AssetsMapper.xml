@@ -15,17 +15,14 @@
     <result column="assets_establish_date" jdbcType="TIMESTAMP" property="assetsEstablishDate" />
     <result column="assets_status" jdbcType="INTEGER" property="assetsStatus" />
   </resultMap>
-  <resultMap id="AssetsBeanResultMap" type="com.community.manage.domain.vo.AssetsBean" extends="BaseResultMap">
+
+  <resultMap extends="BaseResultMap" id="AssetsBeanResultMap" type="com.community.manage.domain.vo.AssetsBean">
     <association property="community" resultMap="com.community.manage.mapper.CommunityMapper.BaseResultMap" />
   </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     assets_id, community_id, assets_num, assets_name, assets_brand, assets_purchase_price, 
-    assets_purchase_quantity, assets_life, assets_establish_date, assets_status
-  </sql>
-  <sql id="Base_Column_backup">
-    <!--@mbg.generated-->
-    assets_id, assets_num, assets_name, assets_brand, assets_purchase_price,
     assets_purchase_quantity, assets_life, assets_establish_date, assets_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -161,10 +158,14 @@
       assets_status = #{assetsStatus,jdbcType=INTEGER}
     where assets_id = #{assetsId,jdbcType=INTEGER}
   </update>
+
     <select id="selectAll" resultMap="AssetsBeanResultMap">
-      SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
-      a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
-      a.assets_establish_date, a.assets_status, c.community_name
-      from assets a left join community c on a.community_id = c.community_id
+        SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
+        a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
+        a.assets_establish_date, a.assets_status, c.community_name
+        FROM assets a LEFT JOIN community c ON a.community_id = c.community_id
+    </select>
+    <select id="selectByKey" resultMap="AssetsBeanResultMap">
+
     </select>
 </mapper>

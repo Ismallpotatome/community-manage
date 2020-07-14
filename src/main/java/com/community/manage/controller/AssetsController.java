@@ -20,8 +20,8 @@ public class AssetsController {
         return assetsBean;
     }
     @RequestMapping("/search")
-    public String searchByKey(@RequestBody() AssetsSearchDto assetsSearchDto){
-
-        return null;
+    public AssetsBean searchByKey(@RequestBody() AssetsSearchDto assetsSearchDto){
+        AssetsBean assetsBean = assetsService.searchByKey(assetsSearchDto);
+        return assetsBean;
     }
 }

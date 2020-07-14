@@ -19,7 +19,8 @@ public class AssetsServiceImpl implements AssetsService {
     }
 
     @Override
-    public String searchByKey(AssetsSearchDto assetsSearchDto) {
-        return null;
+    public AssetsBean searchByKey(AssetsSearchDto assetsSearchDto) {
+        AssetsBean assetsBean = assetsMapper.selectByKey(assetsSearchDto);
+        return assetsBean;
     }
 }

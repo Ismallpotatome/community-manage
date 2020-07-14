@@ -5,5 +5,5 @@ import com.community.manage.domain.vo.AssetsBean;
 
 public interface AssetsService {
     AssetsBean showAllInfo();
-    String searchByKey(AssetsSearchDto assetsSearchDto);
+    AssetsBean searchByKey(AssetsSearchDto assetsSearchDto);
 }

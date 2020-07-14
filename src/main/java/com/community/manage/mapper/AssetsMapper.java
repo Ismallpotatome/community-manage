@@ -1,10 +1,10 @@
 package com.community.manage.mapper;
 
+import com.community.manage.domain.dto.AssetsSearchDto;
 import com.community.manage.domain.entity.Assets;
 import com.community.manage.domain.vo.AssetsBean;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
 
-@Repository
 public interface AssetsMapper {
     int deleteByPrimaryKey(Integer assetsId);
 
@@ -19,4 +19,6 @@ public interface AssetsMapper {
     int updateByPrimaryKey(Assets record);
 
     AssetsBean selectAll();
+
+    AssetsBean selectByKey(@Param("assetsSearchDto") AssetsSearchDto assetsSearchDto);
 }
