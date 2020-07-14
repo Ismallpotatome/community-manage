@@ -1,7 +1,10 @@
 package com.community.manage.mapper;
 
 import com.community.manage.domain.entity.Assets;
+import com.community.manage.domain.vo.AssetsBean;
+import org.springframework.stereotype.Repository;
 
+@Repository("assetsMapper")
 public interface AssetsMapper {
     int deleteByPrimaryKey(Integer assetsId);
 
@@ -14,4 +17,6 @@ public interface AssetsMapper {
     int updateByPrimaryKeySelective(Assets record);
 
     int updateByPrimaryKey(Assets record);
+
+    AssetsBean selectAll();
 }
