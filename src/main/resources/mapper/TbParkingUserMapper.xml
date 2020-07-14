@@ -2,119 +2,89 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.manage.mapper.TbParkingUserMapper">
   <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.TbParkingUser">
-    <!--@mbg.generated-->
-    <!--@Table tb_parking_user-->
-    <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_community" jdbcType="VARCHAR" property="userCommunity" />
-    <result column="user_number" jdbcType="VARCHAR" property="userNumber" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime" />
-    <result column="user_status" jdbcType="INTEGER" property="userStatus" />
-    <result column="user_is_del" jdbcType="INTEGER" property="userIsDel" />
+
+    <result column="user_id" property="userId"/>
+    <result column="community_id" property="userCommunity"/>
+    <result column="user_number" property="userNumber"/>
+    <result column="user_name" property="userName"/>
+    <result column="user_create_time" property="userCreateTime"/>
+    <result column="user_status" property="userStatus"/>
+    <result column="user_is_del" property="userIsDel"/>
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    user_id, user_community, user_number, user_name, user_create_time, user_status, user_is_del
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from tb_parking_user
-    where user_id = #{userId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from tb_parking_user
-    where user_id = #{userId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.community.manage.domain.entity.TbParkingUser" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_parking_user (user_community, user_number, user_name, 
-      user_create_time, user_status, user_is_del
-      )
-    values (#{userCommunity,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userCreateTime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, #{userIsDel,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.community.manage.domain.entity.TbParkingUser" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_parking_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userCommunity != null">
-        user_community,
+
+
+
+
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    SELECT u.user_id, community_id, user_number, user_name, user_create_time, user_status
+    FROM tb_parking_user u
+    <trim prefix="where" prefixOverrides="and">
+      <if test="keyword != null and keyword != ''">
+        and user_number like concat('%',#{keyword} ,'%') or user_name like concat('%',#{keyword} ,'%')
       </if>
-      <if test="userNumber != null">
+
+      <if test="begin != null and begin != '' and end != null and end != ''">
+        and user_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+      </if>
+    </trim>
+    limit #{limit},#{offset}
+  </select>
+
+  <insert id="insertParkingUser">
+    insert into  tb_parking_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="user.userCommunity != null">
+        community_id,
+      </if>
+      <if test="user.userNumber != null">
         user_number,
       </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="userCreateTime != null">
-        user_create_time,
-      </if>
-      <if test="userStatus != null">
-        user_status,
-      </if>
-      <if test="userIsDel != null">
-        user_is_del,
+      <if test="user.userName != null">
+        user_name ,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userCommunity != null">
-        #{userCommunity,jdbcType=VARCHAR},
+      <if test="user.userCommunity != null">
+        #{user.userCommunity},
       </if>
-      <if test="userNumber != null">
-        #{userNumber,jdbcType=VARCHAR},
+      <if test="user.userNumber != null">
+        #{user.userNumber},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userCreateTime != null">
-        #{userCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userStatus != null">
-        #{userStatus,jdbcType=INTEGER},
-      </if>
-      <if test="userIsDel != null">
-        #{userIsDel,jdbcType=INTEGER},
+      <if test="user.userName != null">
+        #{user.userName},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.TbParkingUser">
-    <!--@mbg.generated-->
-    update tb_parking_user
+
+  <update id="updateByStatus">
+    update tb_parking_user u
+    set u.user_status = #{status}
+    where u.user_id=#{id}
+  </update>
+
+  <update id="updateAll">
+    update tb_parking_user u
     <set>
-      <if test="userCommunity != null">
-        user_community = #{userCommunity,jdbcType=VARCHAR},
+      <if test="user.userCommunity != null">
+        community_id = #{user.userCommunity},
       </if>
-      <if test="userNumber != null">
-        user_number = #{userNumber,jdbcType=VARCHAR},
+
+      <if test="user.userName != null">
+        user_name = #{user.userName},
       </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userCreateTime != null">
-        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userStatus != null">
-        user_status = #{userStatus,jdbcType=INTEGER},
-      </if>
-      <if test="userIsDel != null">
-        user_is_del = #{userIsDel,jdbcType=INTEGER},
+      <if test="user.userStatus != null">
+        user_status = #{user.userStatus,jdbcType=INTEGER},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{user.userId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbParkingUser">
-    <!--@mbg.generated-->
-    update tb_parking_user
-    set user_community = #{userCommunity,jdbcType=VARCHAR},
-      user_number = #{userNumber,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
-      user_status = #{userStatus,jdbcType=INTEGER},
-      user_is_del = #{userIsDel,jdbcType=INTEGER}
-    where user_id = #{userId,jdbcType=INTEGER}
+
+  <update id="delById">
+    update tb_parking_user u
+    set user_is_del = 0
+    where u.user_id=#{userId}
   </update>
+
+
 </mapper>

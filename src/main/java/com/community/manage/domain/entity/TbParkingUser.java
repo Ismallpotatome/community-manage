@@ -13,7 +13,7 @@ public class TbParkingUser {
     /**
     * 小区名字
     */
-    private String userCommunity;
+    private Integer userCommunity;
 
     /**
     * 车位编号
