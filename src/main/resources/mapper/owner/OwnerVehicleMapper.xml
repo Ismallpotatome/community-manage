@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.community.manage.mapper.owner.OwnerVehicleMapper">
+    <resultMap id="BaseResultMap" type="Vehicle" extends="com.community.manage.mapper.VehicleMapper.BaseResultMap">
+    </resultMap>
+    <resultMap id="searchResult" type="com.community.manage.domain.dto.VehicleDto" extends="BaseResultMap">
+        <result property="ownerName" column="owner_name"/>
+    </resultMap>
+    <!--    -->
+    <select id="selectBySearchAndLimit" resultMap="searchResult">
+        select vehicle_id, vehicle_owner_id, vehicle_number, vehicle_color, vehicle_photo, vehicle_describe,
+        vehicle_createtime, vehicle_updatetime, vehicle_status,  owner_name
+        from vehicle v left join owner o on v.vehicle_owner_id = o.owner_id
+        <trim prefix="where">
+            vehicle_status = 0
+            <if test="searchDto.keyword != null and searchDto.keyword != ''">
+                and
+                (
+                owner_name like concat('%',#{searchDto.keyword},'%')
+                or vehicle_color like concat('%',#{searchDto.keyword},'%')
+                or vehicle_number like concat('%',#{searchDto.keyword},'%')
+                )
+            </if>
+            <if test="(searchDto.startDate != null and searchDto.startDate != '') and (searchDto.endData != null and searchDto.endData != '') ">
+                and v.vehicle_createtime between #{searchDto.startDate} and #{searchDto.endData}
+            </if>
+            limit #{searchDto.page},#{searchDto.size}
+        </trim>
+    </select>
+</mapper>
