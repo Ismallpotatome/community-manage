@@ -45,8 +45,12 @@ public class OwnerController {
         ownerService.addVehicle(vehicleDto);
     }
 
+    /**
+     *
+     * @param vehicleIdList:需要批量删除的车辆id集合
+     */
     @PostMapping("vehicle/delete_batch")
     public void vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
-
+        ownerService.deleteBatchVehicle(vehicleIdList);
     }
 }
