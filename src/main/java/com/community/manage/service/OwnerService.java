@@ -12,4 +12,8 @@ public interface OwnerService {
     List<Owner> personnelSearchByPage(SearchDto searchDto);
     //业主车辆信息的关键字分页查询
     List<VehicleDto> vehicleSearchByPage(SearchDto searchDto);
+    //添加"车辆"
+    void addVehicle(VehicleDto vehicleDto);
+    //批量删除"车辆"
+    void deleteBatchVehicle(List<Integer> vehicleIdList);
 }
