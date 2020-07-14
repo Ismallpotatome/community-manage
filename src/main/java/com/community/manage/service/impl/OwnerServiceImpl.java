@@ -3,8 +3,10 @@ package com.community.manage.service.impl;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Owner;
+import com.community.manage.domain.entity.Vehicle;
 import com.community.manage.mapper.owner.OwnerVehicleMapper;
 import com.community.manage.service.OwnerService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,5 +34,37 @@ public class OwnerServiceImpl implements OwnerService {
         int limit = (searchDto.getPage() - 1) * searchDto.getSize();
         searchDto.setPage(limit);
         return ownerVehicleMapper.selectBySearchAndLimit(searchDto);
+    }
+
+    /**
+     *
+     * @param vehicleDto:添加的车辆信息封装类
+     */
+    @Override
+    public void addVehicle(VehicleDto vehicleDto) {
+        Vehicle vehicle = new Vehicle();
+        //将封装类对象的数据赋值给对应的实体类对象
+        BeanUtils.copyProperties(vehicleDto,vehicle);
+        int i = ownerVehicleMapper.insertVehicleDto(vehicle);
+        //返回的结果处理
+        if(i > 0){
+
+        }else{
+
+        }
+    }
+
+    /**
+     *
+     * @param vehicleIdList:批量删除的车辆id集合
+     */
+    @Override
+    public void deleteBatchVehicle(List<Integer> vehicleIdList) {
+        int i = ownerVehicleMapper.updateBatchVehicle(vehicleIdList);
+        if(i > 0){
+
+        }else {
+
+        }
     }
 }
