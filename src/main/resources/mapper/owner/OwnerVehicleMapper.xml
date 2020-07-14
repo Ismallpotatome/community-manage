@@ -9,7 +9,7 @@
     <!--    -->
     <select id="selectBySearchAndLimit" resultMap="searchResult">
         select vehicle_id, vehicle_owner_id, vehicle_number, vehicle_color, vehicle_photo, vehicle_describe,
-        vehicle_createtime, vehicle_updatetime, vehicle_status,  owner_name
+        vehicle_createtime, vehicle_updatetime, vehicle_status, owner_name
         from vehicle v left join owner o on v.vehicle_owner_id = o.owner_id
         <trim prefix="where">
             vehicle_status = 0
@@ -27,4 +27,17 @@
             limit #{searchDto.page},#{searchDto.size}
         </trim>
     </select>
+    <insert id="insertVehicleDto">
+        insert into vehicle(vehicle_owner_id, vehicle_number, vehicle_color,
+                            vehicle_describe)
+        values (#{vehicle.vehicleOwnerId}, #{vehicle.vehicleNumber}, #{vehicle.vehicleColor},
+                #{vehicle.vehicleDescribe})
+    </insert>
+    <update id="updateBatchVehicle">
+        update vehicle set  vehicle_status = 1
+        where vehicle_status = 0 and vehicle_id in
+        <foreach collection="vehicleIdList" index="vehicleId" open="(" close=")" separator=",">
+            #{vehicleId}
+        </foreach>
+    </update>
 </mapper>
