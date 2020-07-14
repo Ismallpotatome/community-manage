@@ -57,4 +57,5 @@ public class VehicleDto implements Serializable {
      */
     private String ownerName;
 
+
 }
