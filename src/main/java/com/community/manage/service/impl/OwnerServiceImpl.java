@@ -67,4 +67,19 @@ public class OwnerServiceImpl implements OwnerService {
 
         }
     }
+
+    /**
+     *
+     * @param vehicleId:需要删除的车辆id
+     */
+    @Override
+    public void deleteSingleVehicle(Integer vehicleId) {
+        int i = ownerVehicleMapper.updateSingleVehicle(vehicleId);
+        //数据操作结果处理
+        if(i > 0){
+
+        }else {
+
+        }
+    }
 }
