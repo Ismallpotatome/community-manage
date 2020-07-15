@@ -1,23 +1,25 @@
-package com.community.manage.domain.vo;
+package com.community.manage.domain.dto;
 
-import com.community.manage.domain.entity.Community;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+/**
+ * 接收前端传输的参数
+ */
 @Data
-public class AssetsBean implements Serializable {
+public class AssetsInfoDto implements Serializable {
     /**
      * 资产表主键
      */
     private Integer assetsId;
 
     /**
-     * 外键字段，对应小区表的主键
+     * 小区名称
      */
-    private Integer communityId;
+    private String communityName;
 
     /**
      * 设备编号
@@ -53,13 +55,4 @@ public class AssetsBean implements Serializable {
      * 建立时间
      */
     private Timestamp assetsEstablishDate;
-
-    /**
-     * 1表示可用，0表示删除
-     */
-    private Integer assetsStatus;
-    /**
-     * 关联的小区信息
-     */
-    private Community community;
 }

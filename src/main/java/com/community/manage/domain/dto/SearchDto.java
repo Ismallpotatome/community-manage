@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class AssetsSearchDto implements Serializable {
+public class SearchDto implements Serializable {
     /**
      * 搜索关键字
      */

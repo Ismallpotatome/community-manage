@@ -1,7 +1,9 @@
 package com.community.manage.mapper;
 
 import com.community.manage.domain.entity.Community;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CommunityMapper {
     int deleteByPrimaryKey(Integer communityId);
 

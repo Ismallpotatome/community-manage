@@ -165,6 +165,7 @@
         a.assets_establish_date, a.assets_status, c.community_name
         FROM assets a LEFT JOIN community c ON a.community_id = c.community_id
     </select>
+
     <select id="selectByKey" resultMap="AssetsBeanResultMap">
          SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
         a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
@@ -186,10 +187,12 @@
           </if>
         </trim>
     </select>
+
   <update id="updateStatusById">
     UPDATE assets SET assets_status=0
     WHERE assets_id=#{assetsId}
   </update>
+
   <update id="updateStatusByIds">
     UPDATE assets SET assets_status=0
     WHERE assets_id IN

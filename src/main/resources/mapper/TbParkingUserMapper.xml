@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table tb_parking_user-->
     <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_community" jdbcType="VARCHAR" property="userCommunity" />
+    <result column="community_id" jdbcType="INTEGER" property="communityId" />
     <result column="user_number" jdbcType="VARCHAR" property="userNumber" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime" />
@@ -14,7 +14,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    user_id, user_community, user_number, user_name, user_create_time, user_status, user_is_del
+    user_id, community_id, user_number, user_name, user_create_time, user_status, user_is_del
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -30,10 +30,10 @@
   </delete>
   <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.community.manage.domain.entity.TbParkingUser" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into tb_parking_user (user_community, user_number, user_name, 
+    insert into tb_parking_user (community_id, user_number, user_name, 
       user_create_time, user_status, user_is_del
       )
-    values (#{userCommunity,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+    values (#{communityId,jdbcType=INTEGER}, #{userNumber,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{userCreateTime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, #{userIsDel,jdbcType=INTEGER}
       )
   </insert>
@@ -41,8 +41,8 @@
     <!--@mbg.generated-->
     insert into tb_parking_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userCommunity != null">
-        user_community,
+      <if test="communityId != null">
+        community_id,
       </if>
       <if test="userNumber != null">
         user_number,
@@ -61,8 +61,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userCommunity != null">
-        #{userCommunity,jdbcType=VARCHAR},
+      <if test="communityId != null">
+        #{communityId,jdbcType=INTEGER},
       </if>
       <if test="userNumber != null">
         #{userNumber,jdbcType=VARCHAR},
@@ -85,8 +85,8 @@
     <!--@mbg.generated-->
     update tb_parking_user
     <set>
-      <if test="userCommunity != null">
-        user_community = #{userCommunity,jdbcType=VARCHAR},
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=INTEGER},
       </if>
       <if test="userNumber != null">
         user_number = #{userNumber,jdbcType=VARCHAR},
@@ -109,7 +109,7 @@
   <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbParkingUser">
     <!--@mbg.generated-->
     update tb_parking_user
-    set user_community = #{userCommunity,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=INTEGER},
       user_number = #{userNumber,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
