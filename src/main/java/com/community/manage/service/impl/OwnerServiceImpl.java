@@ -2,7 +2,7 @@ package com.community.manage.service.impl;
 
 import com.community.manage.domain.dto.OwnerDto;
 import com.community.manage.domain.dto.PetDto;
-import com.community.manage.domain.dto.SearchDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Pet;
 import com.community.manage.domain.entity.Vehicle;
@@ -30,7 +30,7 @@ public class OwnerServiceImpl implements OwnerService {
      * 分页处理
      * @return
      */
-    public void pageDispose(SearchDto searchDto){
+    public void pageDispose(SearchsDto searchDto){
         //检测page是否为空
         if(searchDto.getPage() == 0 ){
             searchDto.setPage(1);
@@ -44,7 +44,7 @@ public class OwnerServiceImpl implements OwnerService {
         searchDto.setPage(limit);
     }
     @Override
-    public ResponseEntity personnelSearchByPage(SearchDto searchDto) {
+    public ResponseEntity personnelSearchByPage(SearchsDto searchDto) {
 
         return null;
     }
@@ -68,7 +68,7 @@ public class OwnerServiceImpl implements OwnerService {
      * @return List<VehicleDto>:查询到的"车辆"信息集合
      */
     @Override
-    public ResponseEntity vehicleSearchByPage(SearchDto searchDto) {
+    public ResponseEntity vehicleSearchByPage(SearchsDto searchDto) {
         //分页处理
         pageDispose(searchDto);
         //数据访问
@@ -151,7 +151,7 @@ public class OwnerServiceImpl implements OwnerService {
      * @return
      */
     @Override
-    public ResponseEntity petSearchByPage(SearchDto searchDto) {
+    public ResponseEntity petSearchByPage(SearchsDto searchDto) {
         //分页处理
         pageDispose(searchDto);
         //数据访问
@@ -206,5 +206,15 @@ public class OwnerServiceImpl implements OwnerService {
         }else {
             return ResponseEntity.error();
         }
+    }
+
+    /**
+     * 删除
+     * @param petId
+     * @return
+     */
+    @Override
+    public ResponseEntity deleteSinglePet(Integer petId) {
+        return null;
     }
 }

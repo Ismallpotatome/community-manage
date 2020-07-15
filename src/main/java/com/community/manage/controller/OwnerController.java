@@ -1,9 +1,8 @@
 package com.community.manage.controller;
 
 import com.community.manage.domain.dto.PetDto;
-import com.community.manage.domain.dto.SearchDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
-import com.community.manage.domain.entity.Owner;
 import com.community.manage.service.OwnerService;
 import com.community.manage.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class OwnerController {
      * @return List<Owner>:"业主信息"集合
      */
     @PostMapping("personnel/search")
-    public ResponseEntity personnelSearch(@RequestBody SearchDto searchDto) {
+    public ResponseEntity personnelSearch(@RequestBody SearchsDto searchDto) {
 
         return null;
     }
@@ -47,7 +46,7 @@ public class OwnerController {
      * @return List<VehicleDto>:"车辆封装信息"集合
      */
     @PostMapping("vehicle/search")
-    public ResponseEntity vehicleSearch(@RequestBody SearchDto searchDto) {
+    public ResponseEntity vehicleSearch(@RequestBody SearchsDto searchDto) {
         return ownerService.vehicleSearchByPage(searchDto);
     }
 
@@ -98,7 +97,7 @@ public class OwnerController {
      * @return
      */
     @PostMapping("pet/search")
-    public ResponseEntity petSearch(@RequestBody SearchDto searchDto) {
+    public ResponseEntity petSearch(@RequestBody SearchsDto searchDto) {
         return ownerService.petSearchByPage(searchDto);
     }
 
@@ -132,4 +131,13 @@ public class OwnerController {
         return ownerService.petAlter(petDto);
     }
 
+    /**
+     * 删除单个宠物
+     * @param petId
+     * @return
+     */
+    @PostMapping("pet/delete_single")
+    public ResponseEntity petSingleDelete(@RequestBody Integer petId){
+        return null;
+    }
 }

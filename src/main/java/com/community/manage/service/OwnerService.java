@@ -1,22 +1,20 @@
 package com.community.manage.service;
 
 import com.community.manage.domain.dto.PetDto;
-import com.community.manage.domain.dto.SearchDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
-import com.community.manage.domain.entity.Owner;
-import com.community.manage.domain.entity.Vehicle;
 import com.community.manage.util.ResponseEntity;
 
 import java.util.List;
 
 public interface OwnerService {
     //业主人员信息的关键字分页查询
-    ResponseEntity personnelSearchByPage(SearchDto searchDto);
+    ResponseEntity personnelSearchByPage(SearchsDto searchDto);
     //通过小区id查询业主的名称和id
     ResponseEntity personnelByCommunityId(Integer communityId);
 
     //业主车辆信息的关键字分页查询
-    ResponseEntity vehicleSearchByPage(SearchDto searchDto);
+    ResponseEntity vehicleSearchByPage(SearchsDto searchDto);
     //添加"车辆"
     ResponseEntity addVehicle(VehicleDto vehicleDto);
     //批量删除"车辆"
@@ -27,11 +25,13 @@ public interface OwnerService {
     ResponseEntity vehicleAlter(VehicleDto vehicleDto);
 
     //业主宠物信息的关键字分页查询
-    ResponseEntity petSearchByPage(SearchDto searchDto);
+    ResponseEntity petSearchByPage(SearchsDto searchDto);
     //添加宠物
     ResponseEntity addPet(PetDto petDto);
     //批量删除"宠物"
     ResponseEntity deleteBatchPet(List<Integer> vehicleIdList);
     //修改"宠物"信息
     ResponseEntity petAlter(PetDto petDto);
+    //删除单个"宠物"
+    ResponseEntity deleteSinglePet(Integer petId);
 }
