@@ -1,10 +1,8 @@
-package com.community.manage.service.Impl;
+package com.community.manage.service.impl;
 
 
 
-import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.dto.ParkingUseDto;
-import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.mapper.TbParkingUserMapper;
 import com.community.manage.service.ParkingUserService;
