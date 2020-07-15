@@ -32,10 +32,6 @@ public class Community {
     * 小区栋数
     */
     private Integer communityBuild;
-
-    /**
-    * 小区总户数
-    */
     private Integer communityHome;
 
     /**
@@ -61,7 +57,7 @@ public class Community {
     /**
     * 小区创建时间
     */
-    private Date communityCreatEtime;
+    private String communityCreatEtime;
 
     /**
     * 小区状态0表示正常显示,1表示停用

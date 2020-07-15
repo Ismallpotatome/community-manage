@@ -14,4 +14,6 @@ public interface BuildMapper {
     int updateByPrimaryKeySelective(Build record);
 
     int updateByPrimaryKey(Build record);
+
+
 }
