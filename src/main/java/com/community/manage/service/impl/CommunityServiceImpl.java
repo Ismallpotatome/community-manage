@@ -19,51 +19,61 @@ public class CommunityServiceImpl implements CommunityService {
     CommunityDtoMapper communityDtoMapper;
     @Override
     public List<CommunityDto> selectByFilter(CommunityDto filter) {
+        if (filter.getStartDate() == null) {
+            return null;
+        }
         int limit = (filter.getPage() - 1) * filter.getSize();
-        List<Community> communitys = communityMapper.selectFilter(filter.getStartDate(), filter.getEndDate(), limit, filter.getSize());
-        List<CommunityDto> communityDtos = communityDtoMapper.selectSum(filter.getStartDate(), filter.getEndDate(), limit, filter.getSize());
-        for (int i = 0; i < communityDtos.size(); i++) {
-            BeanUtils.copyProperties(communitys.get(i), communityDtos.get(i));
+        filter.setPage(limit);
+        List<CommunityDto> communityDtos = communityDtoMapper.selectFilter(filter);
+        List<CommunityDto> list = new ArrayList<>();
+        CommunityDto temp = new CommunityDto();
+        for (Community community : communityDtos) {
+            temp.setCommunityId(community.getCommunityId());
+            CommunityDto dto = communityDtoMapper.selectSum(temp);
+            temp.setCommunityHomeNumber(dto.getCommunityHomeNumber());
+            BeanUtils.copyProperties(community, dto);
+            dto.setCommunityHomeNumber(temp.getCommunityHomeNumber());
+            list.add(dto);
+        }
+        return list;
+    }
+
+    @Override
+    public List<CommunityDto> deleteOne(CommunityDto communityDto) {
+        List<CommunityDto> communityDtos = null;
+        int i = communityMapper.deleteOne(communityDto.getCommunityId());
+        if (i > 0) {
+            communityDtos = selectByFilter(communityDto);
         }
         return communityDtos;
     }
 
     @Override
-    public String deleteOne(int communityId) {
-        String str = "删除失败";
-        int i = communityMapper.deleteOne(communityId);
-        if (i > 0) {
-            str = "删除成功";
-        }
-        return str;
-    }
-
-    @Override
-    public String deleteBatch(List<CommunityDto> communityDtos) {
-        String str = "排量删除失败";
+    public List<CommunityDto> deleteBatch(List<CommunityDto> communityDtos) {
         ArrayList<Community> communities = new ArrayList<>();
-        Community community = new Community();
+        Community community = null;
         for (CommunityDto communityDto : communityDtos) {
+            community = new Community();
             BeanUtils.copyProperties(communityDto, community);
             communities.add(community);
         }
+        List<CommunityDto> dtos = null;
         int batch = communityMapper.deleteBatch(communities);
+        System.out.println(batch);
         if (batch > 0) {
-            str = "批量删除成功";
+            dtos = selectByFilter(communityDtos.get(0));
         }
-        return str;
+        return dtos;
     }
 
     @Override
-    public String updateOne(CommunityDto communityDto) {
-        String str = "更新失败";
-        Community community = new Community();
-        BeanUtils.copyProperties(communityDto, community);
-        int i = communityMapper.updateOne(community);
+    public List<CommunityDto> updateOne(CommunityDto communityDto) {
+        List<CommunityDto> dtos = null;
+        int i = communityMapper.updateOne(communityDto);
         if (i > 0) {
-            str = "跟新成功";
+            dtos = selectByFilter(communityDto);
         }
-        return str;
+        return dtos;
     }
 
     @Override
@@ -76,5 +86,23 @@ public class CommunityServiceImpl implements CommunityService {
             str = "插入成功";
         }
         return str;
+    }
+    @Override
+    public String updateStatus(int communityId, String status) {
+        int tag = 0;
+        String msg = "修改失败";
+        if ("停用".equals(status)) {
+           tag = communityMapper.updateStatus(communityId, 0);
+           msg = "已停用";
+        }
+        if ("启用".equals(status)) {
+           tag = communityMapper.updateStatus(communityId, 1);
+           msg = "已启用";
+        }
+        if (tag > 0) {
+            return msg;
+        } else {
+            return "修改失败";
+        }
     }
 }

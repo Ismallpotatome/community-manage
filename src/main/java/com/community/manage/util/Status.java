@@ -1,9 +1,7 @@
 package com.community.manage.util;
 
-import lombok.Data;
 
-
-public enum ErrorStatus {
+public enum Status {
     SUCCESS("success", "连接成功", 200),
     ERROR("system error", "系统繁忙", 500),
     CONTROLLER_ERROR("controller error", "控制层异常", 400),
@@ -13,7 +11,7 @@ public enum ErrorStatus {
     private String tip;
     private int status;
 
-    private ErrorStatus(String msg, String tip, int status) {
+    private Status(String msg, String tip, int status) {
         this.msg = msg;
         this.tip = tip;
         this.status = status;

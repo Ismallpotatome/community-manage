@@ -1,6 +1,5 @@
 package com.community.manage.util;
-
-import com.community.manage.exception.ControllerException;
+import com.community.manage.exception.OtherException;
 import lombok.Data;
 
 @Data
@@ -13,23 +12,30 @@ public class Result<T> {
 
     //系统繁忙异常
     public static <T> Result<T> error() {
-        return status(null, ErrorStatus.ERROR);
+        return status(null, Status.ERROR);
     }
     //连接成功
     public static <T> Result<T> success(T data) {
-        return status(data, ErrorStatus.SUCCESS);
+        return status(data, Status.SUCCESS);
     }
     //其他异常
-    public static <T> Result<T> error(ErrorStatus errorStatus) {
-        return status(null, errorStatus);
+    public static <T> Result<T> error(Status status) {
+        return status(null, status);
     }
-
-    public static <T> Result<T> status(T data, ErrorStatus errorStatus) {
+    //其他自定义异常
+    public static <T> Result<T> error(OtherException e) {
+        Result<T> result = new Result<>();
+        result.setMsg(e.getMsg());
+        result.setTip(e.getTip());
+        result.setStatus(e.getStatus());
+        return result;
+    }
+    public static <T> Result<T> status(T data, Status status) {
         Result<T> result = new Result<>();
         result.setData(data);
-        result.setMsg(errorStatus.getMsg());
-        result.setTip(errorStatus.getTip());
-        result.setStatus(errorStatus.getStatus());
+        result.setMsg(status.getMsg());
+        result.setTip(status.getTip());
+        result.setStatus(status.getStatus());
         return result;
     }
 

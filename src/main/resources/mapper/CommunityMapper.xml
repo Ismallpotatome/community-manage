@@ -177,8 +177,8 @@
   </update>
 
     <select id="selectFilter" resultMap="BaseResultMap">
-    select * from community left join build on community.community_id = build.community_id
-    where community_create_time between #{startDate} and #{endDate}
+    select * from community
+    where (community_create_time between #{startDate} and #{endDate}) and community_is_delete = 0
       limit #{limit}, #{offset}
     </select>
   <delete id="deleteOne">
@@ -212,4 +212,7 @@
       values (#{community.communityName}, #{community.communityAddress},#{community.communityArea}, #{community.communityBuild},#{community.communityGreening},
     #{community.communityIcon},#{community.communityDevelopers}, #{community.communityCompany},#{community.communityCreateTime},#{community.communityStatus})
   </insert>
+  <update id="updateStatus">
+    update community set community_status = #{status} where community_id = #{communityId}
+  </update>
 </mapper>

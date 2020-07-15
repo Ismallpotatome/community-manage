@@ -18,7 +18,7 @@ public class CommunityControllerTest {
     CommunityController communityController;
     @Test
     public void selectByFilter() {
-        FilterDto filterDto = new FilterDto();
+        CommunityDto filterDto = new CommunityDto();
         filterDto.setSize(3);
         filterDto.setPage(1);
         filterDto.setEndDate("2020-07-13 10:44:16");

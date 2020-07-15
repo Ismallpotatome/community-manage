@@ -20,10 +20,10 @@ public interface CommunityMapper {
     int updateByPrimaryKey(Community record);
 
     //根据时间和名字选择过滤出想要的小区
-    List<Community> selectFilter(@Param("startDate") String  startDate,
-                                    @Param("endDate") String endDate,
-                                    @Param("limit") int limit ,
-                                    @Param("offset") int offset);
+//    List<Community> selectFilter(@Param("startDate") String  startDate,
+//                                    @Param("endDate") String endDate,
+//                                    @Param("limit") int limit ,
+//                                    @Param("offset") int offset);
 
     //删除一条数据
     int deleteOne(@Param("communityId") int communityId);
@@ -33,4 +33,6 @@ public interface CommunityMapper {
     int updateOne(@Param("community") Community community);
     //插入一条数据
     int insertOne(@Param("community") Community community);
+    //修改status状态
+    int updateStatus(@Param("communityId") int communityId, @Param("status") int status);
 }
