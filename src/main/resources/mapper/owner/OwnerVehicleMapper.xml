@@ -40,4 +40,9 @@
            #{vehicleId}
        </foreach>
     </update>
+    <update id="updateSingleVehicle">
+        update vehicle set vehicle_status = 1
+        where vehicle_status = 0 and vehicle_id = #{vehicleId}
+
+    </update>
 </mapper>
