@@ -1,6 +1,7 @@
 package com.community.manage.controller;
 
 
+import com.community.manage.domain.dto.ParkingUseDto;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.service.ParkingUserService;
 import org.springframework.web.bind.annotation.*;
@@ -25,31 +26,44 @@ public class ParkingUserController {
 
     //添加一条信息
     @PostMapping("insert")
-    public int insert(int comId,String usernumber,String username){
+    public int insert(@RequestBody ParkingUseDto parkingUseDto){
+        Integer comId = parkingUseDto.getCommunityId();
+        String userName = parkingUseDto.getUserName();
+        String userNumber = parkingUseDto.getUserNumber();
         TbParkingUser parkingUser = new TbParkingUser();
-        parkingUser.setUserCommunity(comId);
-        parkingUser.setUserNumber(usernumber);
-        parkingUser.setUserName(username);
+        parkingUser.setCommunityId(comId);
+        parkingUser.setUserNumber(userNumber);
+        parkingUser.setUserName(userName);
 
         return parkingUserService.insert(parkingUser);
     }
 
     //修改一条信息
     @PostMapping("updateBid")
-    public int updateById(int status,int id){
-        return  parkingUserService.updateById(status,id);
+    public int updateById(@RequestBody ParkingUseDto parkingUseDto){
+        Integer status = parkingUseDto.getUserStatus();
+        Integer userId = parkingUseDto.getUserId();
+        return  parkingUserService.updateById(status,userId);
     }
 
     //修改所有信息
     @PostMapping("updateAll")
-    public int updateAll(int comId,String username,int status,int userId){
-        return parkingUserService.updateAll(comId, username, status, userId);
+    public int updateAll(@RequestBody ParkingUseDto parkingUseDto){
+
+        Integer comId = parkingUseDto.getCommunityId();
+        String userName = parkingUseDto.getUserName();
+        Integer status = parkingUseDto.getUserStatus();
+        Integer userId = parkingUseDto.getUserId();
+
+        return parkingUserService.updateAll(comId, userName, status, userId);
     }
 
-    //删除一条信息
+    //批量删除信息
     @PostMapping("del")
-    public int delOne(List<Integer> list){
-        return parkingUserService.del(list);
+    public int delOne(@RequestBody List<ParkingUseDto> parkingUseDto){
+
+        return parkingUserService.del(parkingUseDto);
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.community.manage.service;
 
 
 
+import com.community.manage.domain.dto.ParkingUseDto;
 import com.community.manage.domain.entity.TbParkingUser;
 
 
@@ -17,7 +18,7 @@ public interface ParkingUserService {
 
     public int updateAll(int comId,String username,int status,int userId);
 
-    int del(List<Integer> list);
+    int del(List<ParkingUseDto> list);
 
 
 }

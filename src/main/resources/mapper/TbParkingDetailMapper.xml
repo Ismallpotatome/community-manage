@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table tb_parking_detail-->
     <id column="detail_id" jdbcType="INTEGER" property="detailId" />
-    <result column="detail_community" jdbcType="VARCHAR" property="detailCommunity" />
+    <result column="community_id" jdbcType="INTEGER" property="communityId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="detail_car_num" jdbcType="VARCHAR" property="detailCarNum" />
     <result column="detail_img" jdbcType="VARCHAR" property="detailImg" />
@@ -18,18 +18,8 @@
     <result column="detail_create_time" jdbcType="TIMESTAMP" property="detailCreateTime" />
     <result column="detail_is_del" jdbcType="INTEGER" property="detailIsDel" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    detail_id, detail_community, user_id, detail_car_num, detail_img, detail_user, detail_phone, 
-    detail_nature, detail_price, detail_begin, detail_out, detail_create_time, detail_is_del
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from tb_parking_detail
-    where detail_id = #{detailId,jdbcType=INTEGER}
-  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from tb_parking_detail
@@ -37,12 +27,12 @@
   </delete>
   <insert id="insert" keyColumn="detail_id" keyProperty="detailId" parameterType="com.community.manage.domain.entity.TbParkingDetail" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into tb_parking_detail (detail_community, user_id, detail_car_num, 
+    insert into tb_parking_detail (community_id, user_id, detail_car_num, 
       detail_img, detail_user, detail_phone, 
       detail_nature, detail_price, detail_begin, 
       detail_out, detail_create_time, detail_is_del
       )
-    values (#{detailCommunity,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{detailCarNum,jdbcType=VARCHAR}, 
+    values (#{communityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{detailCarNum,jdbcType=VARCHAR}, 
       #{detailImg,jdbcType=VARCHAR}, #{detailUser,jdbcType=VARCHAR}, #{detailPhone,jdbcType=VARCHAR}, 
       #{detailNature,jdbcType=INTEGER}, #{detailPrice,jdbcType=DECIMAL}, #{detailBegin,jdbcType=DATE}, 
       #{detailOut,jdbcType=DATE}, #{detailCreateTime,jdbcType=TIMESTAMP}, #{detailIsDel,jdbcType=INTEGER}
@@ -52,8 +42,8 @@
     <!--@mbg.generated-->
     insert into tb_parking_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="detailCommunity != null">
-        detail_community,
+      <if test="communityId != null">
+        community_id,
       </if>
       <if test="userId != null">
         user_id,
@@ -90,8 +80,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="detailCommunity != null">
-        #{detailCommunity,jdbcType=VARCHAR},
+      <if test="communityId != null">
+        #{communityId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -132,8 +122,8 @@
     <!--@mbg.generated-->
     update tb_parking_detail
     <set>
-      <if test="detailCommunity != null">
-        detail_community = #{detailCommunity,jdbcType=VARCHAR},
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
@@ -174,7 +164,7 @@
   <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbParkingDetail">
     <!--@mbg.generated-->
     update tb_parking_detail
-    set detail_community = #{detailCommunity,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       detail_car_num = #{detailCarNum,jdbcType=VARCHAR},
       detail_img = #{detailImg,jdbcType=VARCHAR},
