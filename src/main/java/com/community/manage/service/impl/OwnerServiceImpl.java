@@ -4,14 +4,13 @@ import com.community.manage.domain.dto.OwnerDto;
 import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
-import com.community.manage.domain.entity.Owner;
+import com.community.manage.domain.entity.Pet;
 import com.community.manage.domain.entity.Vehicle;
 import com.community.manage.mapper.owner.OwnerInfoMapper;
 import com.community.manage.mapper.owner.OwnerPetMapper;
 import com.community.manage.mapper.owner.OwnerVehicleMapper;
 import com.community.manage.service.OwnerService;
 import com.community.manage.util.ResponseEntity;
-import com.community.manage.util.ReturnState;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -148,7 +147,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     /**
      * 根据关键字和时间对宠物信息进行分页查询
-     * @param searchDto
+     * @param searchDto 封装的搜索信息
      * @return
      */
     @Override
@@ -158,5 +157,54 @@ public class OwnerServiceImpl implements OwnerService {
         //数据访问
         List<PetDto> petDtos = ownerPetMapper.selectBySearchAndLimit(searchDto);
         return ResponseEntity.success(petDtos);
+    }
+
+    /**
+     * 添加"宠物"
+     * @param petDto:封装的"宠物"信息
+     * @return
+     */
+    @Override
+    public ResponseEntity addPet(PetDto petDto) {
+        Pet pet = new Pet();
+        BeanUtils.copyProperties(petDto,pet);
+        int i = ownerPetMapper.insertPet(pet);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else {
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 批量删除宠物
+     * @param vehicleIdList:宠物id集合
+     * @return
+     */
+    @Override
+    public ResponseEntity deleteBatchPet(List<Integer> vehicleIdList) {
+        int i = ownerPetMapper.updateBatchPet(vehicleIdList);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else {
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 修改"宠物"信息
+     * @param petDto:封装的宠物信息类
+     * @return
+     */
+    @Override
+    public ResponseEntity petAlter(PetDto petDto) {
+        Pet pet = new Pet();
+        BeanUtils.copyProperties(petDto,pet);
+        int i = ownerPetMapper.updatePet(pet);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else {
+            return ResponseEntity.error();
+        }
     }
 }

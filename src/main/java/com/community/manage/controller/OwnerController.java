@@ -1,5 +1,6 @@
 package com.community.manage.controller;
 
+import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Owner;
@@ -90,8 +91,45 @@ public class OwnerController {
     }
 
     //业主宠物信息
+
+    /**
+     * 根据关键字和时间对宠物信息进行分页查询
+     * @param searchDto : 封装的搜索信息
+     * @return
+     */
     @PostMapping("pet/search")
     public ResponseEntity petSearch(@RequestBody SearchDto searchDto) {
         return ownerService.petSearchByPage(searchDto);
     }
+
+    /**
+     * 添加"宠物"
+     * @param petDto:封装的"宠物"信息类
+     * @return
+     */
+    @PostMapping("pet/add")
+    public ResponseEntity petAdd(@RequestBody PetDto petDto){
+        return ownerService.addPet(petDto);
+    }
+
+    /**
+     * 批量删除"宠物"
+     * @param petIdList:"宠物id"集合
+     * @return
+     */
+    @PostMapping("pet/delete_batch")
+    public ResponseEntity petBatchDelete(@RequestBody List<Integer> petIdList){
+        return   ownerService.deleteBatchPet(petIdList);
+    }
+
+    /**
+     * 修改"宠物"信息
+     * @param petDto:封装的"宠物"信息类
+     * @return
+     */
+    @PostMapping("pet/alter")
+    public ResponseEntity petAlter(@RequestBody PetDto petDto){
+        return ownerService.petAlter(petDto);
+    }
+
 }

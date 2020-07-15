@@ -1,5 +1,6 @@
 package com.community.manage.service;
 
+import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Owner;
@@ -25,6 +26,12 @@ public interface OwnerService {
     //修改"车辆"信息
     ResponseEntity vehicleAlter(VehicleDto vehicleDto);
 
-    //业主车辆信息的关键字分页查询
+    //业主宠物信息的关键字分页查询
     ResponseEntity petSearchByPage(SearchDto searchDto);
+    //添加宠物
+    ResponseEntity addPet(PetDto petDto);
+    //批量删除"宠物"
+    ResponseEntity deleteBatchPet(List<Integer> vehicleIdList);
+    //修改"宠物"信息
+    ResponseEntity petAlter(PetDto petDto);
 }

@@ -29,4 +29,39 @@
             limit #{searchDto.page},#{searchDto.size}
         </trim>
     </select>
+    <insert id="insertPet">
+        insert into pet(pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_describe, pet_createtime,
+                        pet_updatetime)
+        values (#{pet.petOwnerId}, #{pet.petName}, #{pet.petColor}, #{pet.petAdoptiontime}, #{pet.petDescribe}, now(),
+                now())
+    </insert>
+    <update id="updateBatchPet">
+        update pet set  pet_status = 1,pet_updatetime = now()
+        where pet_status = 0 and pet_id in
+        <foreach collection="petIdList" item="petId" open="(" close=")" separator=",">
+            #{petId}
+        </foreach>
+    </update>
+    <update id="updatePet">
+        update pet
+        <set>
+            <if test="pet.petOwnerId != null">
+                pet_owner_id = #{pet.petOwnerId},
+            </if>
+            <if test="pet.petName != null">
+               pet_name = #{pet.petName},
+            </if>
+            <if test="pet.petColor != null">
+                pet_color = #{pet.petColor},
+            </if>
+            <if test="pet.petAdoptiontime != null">
+                pet_adoptiontime = #{pet.petAdoptiontime},
+            </if>
+            <if test="pet.petDescribe">
+                pet_describe = #{pet.petDescribe},
+            </if>
+            pet_updatetime = now()
+        </set>
+        where pet_id = #{pet.petId}
+    </update>
 </mapper>
