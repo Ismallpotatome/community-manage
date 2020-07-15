@@ -16,4 +16,6 @@ public interface OwnerService {
     void addVehicle(VehicleDto vehicleDto);
     //批量删除"车辆"
     void deleteBatchVehicle(List<Integer> vehicleIdList);
+    //删除单个"车辆"
+    void deleteSingleVehicle(Integer vehicleId);
 }
