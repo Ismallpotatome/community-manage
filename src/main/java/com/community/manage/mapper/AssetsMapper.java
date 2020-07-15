@@ -1,6 +1,9 @@
 package com.community.manage.mapper;
 
+import com.community.manage.domain.dto.AssetsSearchDto;
 import com.community.manage.domain.entity.Assets;
+import com.community.manage.domain.vo.AssetsBean;
+import org.apache.ibatis.annotations.Param;
 
 public interface AssetsMapper {
     int deleteByPrimaryKey(Integer assetsId);
@@ -14,4 +17,12 @@ public interface AssetsMapper {
     int updateByPrimaryKeySelective(Assets record);
 
     int updateByPrimaryKey(Assets record);
+
+    AssetsBean selectAll();
+
+    AssetsBean selectByKey(@Param("assetsSearchDto") AssetsSearchDto assetsSearchDto);
+
+    int updateStatusById(int assetsId);
+
+    int updateStatusByIds(@Param("assetsIds") int[] assetsIds);
 }

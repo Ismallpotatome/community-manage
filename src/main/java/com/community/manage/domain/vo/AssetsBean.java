@@ -1,15 +1,14 @@
-package com.community.manage.domain.entity;
+package com.community.manage.domain.vo;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
+import com.community.manage.domain.entity.Community;
 import lombok.Data;
 
-/**
- * 小区的设备资产表
- */
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 @Data
-public class Assets {
+public class AssetsBean implements Serializable {
     /**
      * 资产表主键
      */
@@ -53,10 +52,14 @@ public class Assets {
     /**
      * 建立时间
      */
-    private Timestamp assetsEstablishDate;
+    private Date assetsEstablishDate;
 
     /**
      * 1表示可用，0表示删除
      */
     private Integer assetsStatus;
+    /**
+     * 关联的小区信息
+     */
+    private Community community;
 }
