@@ -36,8 +36,8 @@
     <update id="updateBatchVehicle">
         update vehicle set  vehicle_status = 1
         where vehicle_status = 0 and vehicle_id in
-        <foreach collection="vehicleIdList" index="vehicleId" open="(" close=")" separator=",">
-            #{vehicleId}
-        </foreach>
+       <foreach collection="vehicleIdList" item="vehicleId" open="(" close=")" separator=",">
+           #{vehicleId}
+       </foreach>
     </update>
 </mapper>
