@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.community.manage.mapper.owner.OwnerInfoMapper">
+    <resultMap id="BaseResultMap" type="Owner"
+               extends="com.community.manage.mapper.OwnerMapper.BaseResultMap">
+    </resultMap>
+    <resultMap id="communityIdSelectResult" type="com.community.manage.domain.dto.OwnerDto">
+        <id property="ownerId" column="owner_id"/>
+        <result property="ownerName" column="owner_name"/>
+    </resultMap>
+    <select id="selectByCommunityId" resultMap="communityIdSelectResult">
+        select owner_id,
+               owner_name
+        from owner
+        where owner_status = 0
+          and community_id = #{communityId}
+    </select>
+</mapper>

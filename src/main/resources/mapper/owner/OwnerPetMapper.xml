@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.community.manage.mapper.owner.OwnerPetMapper">
+
+    <resultMap id="BaseResultMap" type="Pet"
+               extends="com.community.manage.mapper.PetMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="searchResult" type="com.community.manage.domain.dto.PetDto" extends="BaseResultMap">
+        <result property="ownerName" column="owner_name"/>
+    </resultMap>
+
+    <select id="selectBySearchAndLimit" resultMap="searchResult">
+        select pet_id, pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_photo, pet_describe, owner_name
+        from pet p left join owner o on p.pet_owner_id = o.owner_id
+        <trim prefix="where">
+            pet_status = 0
+            <if test="searchDto.keyword != null and searchDto.keyword != ''">
+                and
+                (
+                owner_name like concat('%',#{searchDto.keyword},'%')
+                or pet_color like concat('%',#{searchDto.keyword},'%')
+                or pet_name like concat('%',#{searchDto.keyword},'%')
+                )
+            </if>
+            <if test="(searchDto.startDate != null and searchDto.startDate != '') and (searchDto.endData != null and searchDto.endData != '') ">
+                and pet_adoptiontime between #{searchDto.startDate} and #{searchDto.endData}
+            </if>
+            limit #{searchDto.page},#{searchDto.size}
+        </trim>
+    </select>
+    <insert id="insertPet">
+        insert into pet(pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_describe, pet_createtime,
+                        pet_updatetime)
+        values (#{pet.petOwnerId}, #{pet.petName}, #{pet.petColor}, #{pet.petAdoptiontime}, #{pet.petDescribe}, now(),
+                now())
+    </insert>
+    <update id="updateBatchPet">
+        update pet set  pet_status = 1,pet_updatetime = now()
+        where pet_status = 0 and pet_id in
+        <foreach collection="petIdList" item="petId" open="(" close=")" separator=",">
+            #{petId}
+        </foreach>
+    </update>
+    <update id="updatePet">
+        update pet
+        <set>
+            <if test="pet.petOwnerId != null">
+                pet_owner_id = #{pet.petOwnerId},
+            </if>
+            <if test="pet.petName != null">
+               pet_name = #{pet.petName},
+            </if>
+            <if test="pet.petColor != null">
+                pet_color = #{pet.petColor},
+            </if>
+            <if test="pet.petAdoptiontime != null">
+                pet_adoptiontime = #{pet.petAdoptiontime},
+            </if>
+            <if test="pet.petDescribe">
+                pet_describe = #{pet.petDescribe},
+            </if>
+            pet_updatetime = now()
+        </set>
+        where pet_id = #{pet.petId}
+    </update>
+</mapper>
