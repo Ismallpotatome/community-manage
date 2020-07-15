@@ -66,7 +66,6 @@ public class AssetsServiceImpl implements AssetsService {
     @Transactional
     public ResponseEntity deleteById(int[] assetsIds) throws Exception{
         int i = assetsMapper.updateStatusByIds(assetsIds);
-        System.out.println(i);
         if(i == assetsIds.length){
             return ResponseEntity.success();
         }
@@ -114,7 +113,6 @@ public class AssetsServiceImpl implements AssetsService {
         /**
          * 设置所有的需要插入数据
          */
-        assets.setAssetsNum(assetsNewInfo.getAssetsNum());
         assets.setAssetsId(assetsNewInfo.getAssetsId());
         assets.setAssetsName(assetsNewInfo.getAssetsName());
         assets.setAssetsBrand(assetsNewInfo.getAssetsBrand());

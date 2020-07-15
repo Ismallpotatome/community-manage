@@ -1,107 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.manage.mapper.ChargeMapper">
-  <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Charge">
-    <!--@mbg.generated-->
-    <!--@Table charge-->
-    <id column="charge_id" jdbcType="INTEGER" property="chargeId" />
-    <result column="community_id" jdbcType="INTEGER" property="communityId" />
-    <result column="charge_num" jdbcType="VARCHAR" property="chargeNum" />
-    <result column="charge_name" jdbcType="VARCHAR" property="chargeName" />
-    <result column="charge_establish_date" jdbcType="TIMESTAMP" property="chargeEstablishDate" />
-    <result column="charge_status" jdbcType="INTEGER" property="chargeStatus" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    charge_id, community_id, charge_num, charge_name, charge_establish_date, charge_status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from charge
-    where charge_id = #{chargeId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from charge
-    where charge_id = #{chargeId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="charge_id" keyProperty="chargeId" parameterType="com.community.manage.domain.entity.Charge" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into charge (community_id, charge_num, charge_name, 
-      charge_establish_date, charge_status)
-    values (#{communityId,jdbcType=INTEGER}, #{chargeNum,jdbcType=VARCHAR}, #{chargeName,jdbcType=VARCHAR}, 
-      #{chargeEstablishDate,jdbcType=TIMESTAMP}, #{chargeStatus,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="charge_id" keyProperty="chargeId" parameterType="com.community.manage.domain.entity.Charge" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into charge
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        community_id,
-      </if>
-      <if test="chargeNum != null">
-        charge_num,
-      </if>
-      <if test="chargeName != null">
-        charge_name,
-      </if>
-      <if test="chargeEstablishDate != null">
-        charge_establish_date,
-      </if>
-      <if test="chargeStatus != null">
-        charge_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        #{communityId,jdbcType=INTEGER},
-      </if>
-      <if test="chargeNum != null">
-        #{chargeNum,jdbcType=VARCHAR},
-      </if>
-      <if test="chargeName != null">
-        #{chargeName,jdbcType=VARCHAR},
-      </if>
-      <if test="chargeEstablishDate != null">
-        #{chargeEstablishDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="chargeStatus != null">
-        #{chargeStatus,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Charge">
-    <!--@mbg.generated-->
-    update charge
-    <set>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=INTEGER},
-      </if>
-      <if test="chargeNum != null">
+    <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.Charge">
+        <!--@mbg.generated-->
+        <!--@Table charge-->
+        <id column="charge_id" jdbcType="INTEGER" property="chargeId"/>
+        <result column="community_id" jdbcType="INTEGER" property="communityId"/>
+        <result column="charge_num" jdbcType="VARCHAR" property="chargeNum"/>
+        <result column="charge_name" jdbcType="VARCHAR" property="chargeName"/>
+        <result column="charge_establish_date" jdbcType="TIMESTAMP" property="chargeEstablishDate"/>
+        <result column="charge_status" jdbcType="INTEGER" property="chargeStatus"/>
+    </resultMap>
+    <resultMap id="ChargeBeanResultMap" type="com.community.manage.domain.vo.ChargeBean">
+        <association property="community" resultMap="com.community.manage.mapper.CommunityMapper.BaseResultMap"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        charge_id, community_id, charge_num, charge_name, charge_establish_date, charge_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from charge
+        where charge_id = #{chargeId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from charge
+        where charge_id = #{chargeId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="charge_id" keyProperty="chargeId"
+            parameterType="com.community.manage.domain.entity.Charge" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into charge (community_id, charge_num, charge_name,
+        charge_establish_date, charge_status)
+        values (#{communityId,jdbcType=INTEGER}, #{chargeNum,jdbcType=VARCHAR}, #{chargeName,jdbcType=VARCHAR},
+        #{chargeEstablishDate,jdbcType=TIMESTAMP}, #{chargeStatus,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="charge_id" keyProperty="chargeId"
+            parameterType="com.community.manage.domain.entity.Charge" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into charge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">
+                community_id,
+            </if>
+            <if test="chargeNum != null">
+                charge_num,
+            </if>
+            <if test="chargeName != null">
+                charge_name,
+            </if>
+            <if test="chargeEstablishDate != null">
+                charge_establish_date,
+            </if>
+            <if test="chargeStatus != null">
+                charge_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="communityId != null">
+                #{communityId,jdbcType=INTEGER},
+            </if>
+            <if test="chargeNum != null">
+                #{chargeNum,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeName != null">
+                #{chargeName,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeEstablishDate != null">
+                #{chargeEstablishDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="chargeStatus != null">
+                #{chargeStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.Charge">
+        <!--@mbg.generated-->
+        update charge
+        <set>
+            <if test="communityId != null">
+                community_id = #{communityId,jdbcType=INTEGER},
+            </if>
+            <if test="chargeNum != null">
+                charge_num = #{chargeNum,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeName != null">
+                charge_name = #{chargeName,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeEstablishDate != null">
+                charge_establish_date = #{chargeEstablishDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="chargeStatus != null">
+                charge_status = #{chargeStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where charge_id = #{chargeId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Charge">
+        <!--@mbg.generated-->
+        update charge
+        set community_id = #{communityId,jdbcType=INTEGER},
         charge_num = #{chargeNum,jdbcType=VARCHAR},
-      </if>
-      <if test="chargeName != null">
         charge_name = #{chargeName,jdbcType=VARCHAR},
-      </if>
-      <if test="chargeEstablishDate != null">
         charge_establish_date = #{chargeEstablishDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="chargeStatus != null">
-        charge_status = #{chargeStatus,jdbcType=INTEGER},
-      </if>
-    </set>
-    where charge_id = #{chargeId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.Charge">
-    <!--@mbg.generated-->
-    update charge
-    set community_id = #{communityId,jdbcType=INTEGER},
-      charge_num = #{chargeNum,jdbcType=VARCHAR},
-      charge_name = #{chargeName,jdbcType=VARCHAR},
-      charge_establish_date = #{chargeEstablishDate,jdbcType=TIMESTAMP},
-      charge_status = #{chargeStatus,jdbcType=INTEGER}
-    where charge_id = #{chargeId,jdbcType=INTEGER}
-  </update>
+        charge_status = #{chargeStatus,jdbcType=INTEGER}
+        where charge_id = #{chargeId,jdbcType=INTEGER}
+    </update>
+    <select id="selectAll" resultMap="ChargeBeanResultMap">
+        select ch.charge_id, ch.community_id, ch.charge_num,
+         ch.charge_name, ch.charge_establish_date, ch.charge_status,co.community_name
+        from charge ch left join community co on ch.community_id = co.community_id
+    </select>
+    <select id="selectByKey" resultMap="ChargeBeanResultMap">
+        SELECT ch.charge_id, ch.community_id, ch.charge_num,
+        ch.charge_name, ch.charge_establish_date, ch.charge_status,co.community_name
+        FROM charge ch LEFT JOIN community co ON ch.community_id = co.community_id
+        <trim prefix="WHERE" prefixOverrides="and">
+            <if test="chargeSearchDto.keywords != null">
+                (ch.charge_name LIKE concat('%',#{chargeSearchDto.keywords},'%')
+                OR co.community_name LIKE concat('%',#{chargeSearchDto.keywords},'%'))
+            </if>
+            <if test="chargeSearchDto.startTime != null or chargeSearchDto.endTime != null">
+                <if test="chargeSearchDto.startTime != null">
+                    AND  #{chargeSearchDto.startTime} >
+                </if>
+                a.assets_establish_date
+                <if test="chargeSearchDto.endTime != null">
+                    > #{chargeSearchDto.endTime}
+                </if>
+            </if>
+        </trim>
+    </select>
+    <update id="updateStatusById">
+        UPDATE charge SET charge_status=0
+        WHERE charge_status=#{chargeIds}
+    </update>
+    <update id="updateStatusByIds">
+        UPDATE charge SET charge_status=0
+        WHERE charge_status IN
+        <foreach collection="chargeIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
 </mapper>
