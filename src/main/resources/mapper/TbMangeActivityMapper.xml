@@ -19,17 +19,100 @@
     FROM tb_mange_activity
     <trim prefix="where" prefixOverrides="and">
       <if test="keyword != null and keyword != ''">
-        and detail_phone like concat('%',#{keyword} ,'%') or detail_car_num like concat('%',#{keyword} ,'%')
-        or detail_user like concat('%',#{keyword} ,'%')
+        and activity_tittle like concat('%',#{keyword} ,'%') or activity_place like concat('%',#{keyword} ,'%')
+        or activity_unit like concat('%',#{keyword} ,'%')
       </if>
 
       <if test="begin != null and begin != '' and end != null and end != ''">
-        and detail_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+        and activity_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
       </if>
       and activity_is_del = 1
     </trim>
 
     limit #{limit},#{offset}
   </select>
+  <insert id="insertMangeActivity">
+    insert into  tb_mange_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mangeActivity.communityId ">
+        community_id,
+      </if>
+      <if test="mangeActivity.activityTittle!= null">
+        activity_tittle,
+      </if>
+      <if test="mangeActivity.activityPlace != null and mangeActivity.activityPlace != '' != null ">
+        activity_place,
+      </if>
+
+      <if test="mangeActivity.activityUnit != null and mangeActivity.activityUnit != ''">
+        activity_unit,
+      </if>
+
+      <if test="mangeActivity.activityBegin != null != null">
+        activity_begin,
+      </if>
+      <if test="mangeActivity.activityEnd != null != null">
+        activity_end,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mangeActivity.communityId != null">
+        #{mangeActivity.communityId},
+      </if>
+      <if test="mangeActivity.activityTittle != null">
+        #{mangeActivity.activityTittle},
+      </if>
+      <if test="mangeActivity.activityPlace != null">
+        #{mangeActivity.activityPlace},
+      </if>
+      <if test="mangeActivity.activityUnit != null">
+        #{mangeActivity.activityUnit },
+      </if>
+      <if test="mangeActivity.activityBegin != null">
+        #{mangeActivity.activityBegin},
+      </if>
+      <if test="mangeActivity.activityEnd != null">
+        #{mangeActivity.activityEnd},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateAll">
+    update tb_mange_activity a
+    <set>
+      <trim suffixOverrides=",">
+        <if test="mangeActivity.communityId != null ">
+          community_id=#{mangeActivity.communityId},
+        </if>
+        <if test="mangeActivity.activityTittle != null">
+          activity_tittle=#{mangeActivity.activityTittle},
+        </if>
+        <if test="mangeActivity.activityPlace != null ">
+          activity_place=#{mangeActivity.activityPlace},
+        </if>
+
+        <if test="mangeActivity.activityUnit != null and mangeActivity.activityUnit != ''">
+          activity_unit=#{mangeActivity.activityUnit},
+        </if>
+
+        <if test="mangeActivity.activityBegin != null">
+          activity_begin=#{mangeActivity.activityBegin},
+        </if>
+        <if test="mangeActivity.activityEnd != null">
+          activity_end=#{mangeActivity.activityEnd},
+        </if>
+        <if test="mangeActivity.activityStatus!= null">
+          activity_status=#{mangeActivity.activityStatus},
+        </if>
+
+      </trim>
+    </set>
+    where activity_id =#{mangeActivity.activityId}
+  </update>
+  <update id="delById">
+    update tb_mange_activity a
+    set activity_is_del = 0
+    where a.activity_id=#{activityId}
+  </update>
 
 </mapper>

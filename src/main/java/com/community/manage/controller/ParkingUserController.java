@@ -2,8 +2,10 @@ package com.community.manage.controller;
 
 
 import com.community.manage.domain.dto.ParkingUseDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.service.ParkingUserService;
+import com.community.manage.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,43 +19,43 @@ public class ParkingUserController {
 
 
     @PostMapping("select")
-    public List<TbParkingUser> selectAll(@RequestParam(value = "keyword") String keyword, String begin, String end, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<TbParkingUser>> selectAll(@RequestBody SearchsDto searchsDto,@RequestParam(defaultValue = "1") int limit,@RequestParam(defaultValue = "10") int offset){
 
-
-        List<TbParkingUser> tbParkingUsers = parkingUserService.selectAll(keyword, begin, end, limit, offset);
-        return tbParkingUsers;
+        List<TbParkingUser> tbParkingUsers = parkingUserService.selectAll(searchsDto,limit, offset);
+        return ResponseEntity.success(tbParkingUsers);
     }
 
     //添加一条信息
     @PostMapping("insert")
-    public int insert(@RequestBody ParkingUseDto parkingUseDto){
+    public ResponseEntity insert(@RequestBody ParkingUseDto parkingUseDto){
+        ResponseEntity responseEntity = parkingUserService.insert(parkingUseDto);
 
-
-        return parkingUserService.insert(parkingUseDto);
+        return responseEntity;
     }
 
     //修改一条信息
     @PostMapping("updateBid")
-    public int updateById(@RequestBody ParkingUseDto parkingUseDto){
+    public ResponseEntity updateById(@RequestBody ParkingUseDto parkingUseDto){
         Integer status = parkingUseDto.getUserStatus();
         Integer userId = parkingUseDto.getUserId();
-        return  parkingUserService.updateById(status,userId);
+        ResponseEntity responseEntity = parkingUserService.updateById(status, userId);
+        return  responseEntity;
     }
 
     //修改所有信息
     @PostMapping("updateAll")
-    public int updateAll(@RequestBody ParkingUseDto parkingUseDto){
+    public ResponseEntity updateAll(@RequestBody ParkingUseDto parkingUseDto){
 
+        ResponseEntity responseEntity = parkingUserService.updateAll(parkingUseDto);
 
-
-        return parkingUserService.updateAll(parkingUseDto);
+        return responseEntity ;
     }
 
     //批量删除信息
     @PostMapping("del")
-    public int delOne(@RequestBody List<ParkingUseDto> parkingUseDto){
-
-        return parkingUserService.del(parkingUseDto);
+    public ResponseEntity  delOne(@RequestBody List<ParkingUseDto> parkingUseDto){
+        ResponseEntity del = parkingUserService.del(parkingUseDto);
+        return del;
 
     }
 

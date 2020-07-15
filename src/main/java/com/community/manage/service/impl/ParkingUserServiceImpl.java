@@ -3,9 +3,11 @@ package com.community.manage.service.impl;
 
 
 import com.community.manage.domain.dto.ParkingUseDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.mapper.TbParkingUserMapper;
 import com.community.manage.service.ParkingUserService;
+import com.community.manage.util.ResponseEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,13 @@ public class ParkingUserServiceImpl implements ParkingUserService {
     TbParkingUserMapper parkingUserMapper;
 
     @Override
-    public List<TbParkingUser> selectAll(String keyword, String begin, String end, int limit, int offset) {
-            limit = (limit-1)*offset;
+    public List<TbParkingUser> selectAll(SearchsDto searchsDto,int limit,int offset) {
+        String keyword = searchsDto.getKeyword();
+        String begin = searchsDto.getStartDate();
+        String end = searchsDto.getEndData();
+
+
+        limit = (limit-1)*offset;
             List<TbParkingUser> tbParkingUsers = parkingUserMapper.selectByCondition(keyword, begin, end, limit, offset);
 
             return tbParkingUsers;
@@ -29,27 +36,38 @@ public class ParkingUserServiceImpl implements ParkingUserService {
 
 
     @Override
-    public int insert(ParkingUseDto parkingUserDto) {
+    public ResponseEntity insert(ParkingUseDto parkingUserDto) {
         TbParkingUser parkingUser = new TbParkingUser();
         BeanUtils.copyProperties(parkingUserDto,parkingUser);
         int i = parkingUserMapper.insertParkingUser(parkingUser);
-        return i;
+        if(i>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
     @Override
-    public int updateById(int status,int id) {
-        return parkingUserMapper.updateByStatus(status,id);
+    public ResponseEntity updateById(int status,int id) {
+        int i = parkingUserMapper.updateByStatus(status, id);
+        if(i>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
     @Override
-    public int updateAll(ParkingUseDto parkingUseDto) {
+    public ResponseEntity updateAll(ParkingUseDto parkingUseDto) {
         TbParkingUser parkingUser = new TbParkingUser();
         BeanUtils.copyProperties(parkingUseDto,parkingUser);
-        return parkingUserMapper.updateAll(parkingUser);
+        int i = parkingUserMapper.updateAll(parkingUser);
+        if(i>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
     @Override
-    public int del(List<ParkingUseDto> list) {
+    public ResponseEntity del(List<ParkingUseDto> list) {
         TbParkingUser parkingUse;
         int count = 0;
         for (ParkingUseDto parkingUseDto : list) {
@@ -58,6 +76,9 @@ public class ParkingUserServiceImpl implements ParkingUserService {
             int i = parkingUserMapper.delById(parkingUse.getUserId());
             count +=i;
         }
-        return count;
+        if(count>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 }
