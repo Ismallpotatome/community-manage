@@ -15,6 +15,11 @@
     <result column="assets_establish_date" jdbcType="TIMESTAMP" property="assetsEstablishDate" />
     <result column="assets_status" jdbcType="INTEGER" property="assetsStatus" />
   </resultMap>
+
+  <resultMap extends="BaseResultMap" id="AssetsBeanResultMap" type="com.community.manage.domain.vo.AssetsBean">
+    <association property="community" resultMap="com.community.manage.mapper.CommunityMapper.BaseResultMap" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     assets_id, community_id, assets_num, assets_name, assets_brand, assets_purchase_price, 
@@ -152,5 +157,47 @@
       assets_establish_date = #{assetsEstablishDate,jdbcType=TIMESTAMP},
       assets_status = #{assetsStatus,jdbcType=INTEGER}
     where assets_id = #{assetsId,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAll" resultMap="AssetsBeanResultMap">
+        SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
+        a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
+        a.assets_establish_date, a.assets_status, c.community_name
+        FROM assets a LEFT JOIN community c ON a.community_id = c.community_id
+    </select>
+
+    <select id="selectByKey" resultMap="AssetsBeanResultMap">
+         SELECT a.assets_id, a.community_id, a.assets_num, a.assets_name,
+        a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
+        a.assets_establish_date, a.assets_status, c.community_name
+        FROM assets a LEFT JOIN community c ON a.community_id = c.community_id
+        <trim prefix="WHERE" prefixOverrides="and">
+          <if test="assetsSearchDto.keywords != null and assetsSearchDto.keywords != ''">
+            (a.assets_name LIKE concat('%',#{assetsSearchDto.keywords},'%')
+            OR c.community_name LIKE concat('%',#{assetsSearchDto.keywords},'%'))
+          </if>
+          <if test="assetsSearchDto.startTime != null or assetsSearchDto.endTime != null">
+            <if test="assetsSearchDto.startTime != null">
+            AND  #{assetsSearchDto.startTime} >
+            </if>
+            a.assets_establish_date
+            <if test="assetsSearchDto.endTime != null">
+              > #{assetsSearchDto.endTime}
+            </if>
+          </if>
+        </trim>
+    </select>
+
+  <update id="updateStatusById">
+    UPDATE assets SET assets_status=0
+    WHERE assets_id=#{assetsId}
+  </update>
+
+  <update id="updateStatusByIds">
+    UPDATE assets SET assets_status=0
+    WHERE assets_id IN
+    <foreach collection="assetsIds" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
   </update>
 </mapper>
