@@ -64,4 +64,8 @@
         </set>
         where pet_id = #{pet.petId}
     </update>
+    <update id="updateSinglePet">
+        update pet set pet_status = 1,pet_updatetime = now()
+        where pet_status = 0 and pet_id = #{petId}
+    </update>
 </mapper>

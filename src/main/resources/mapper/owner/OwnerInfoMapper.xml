@@ -8,6 +8,10 @@
         <id property="ownerId" column="owner_id"/>
         <result property="ownerName" column="owner_name"/>
     </resultMap>
+    <resultMap id="searchResultMap" type="com.community.manage.domain.dto.OwnerDto" extends="BaseResultMap">
+        <result property="communityName" column="community_name"/>
+        <result property="homeName" column="home_name"/>
+    </resultMap>
     <select id="selectByCommunityId" resultMap="communityIdSelectResult">
         select owner_id,
                owner_name
@@ -15,4 +19,85 @@
         where owner_status = 0
           and community_id = #{communityId}
     </select>
+    <select id="selectBySearchAndLimit" resultMap="searchResultMap">
+        select owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, owner_sex,
+        owner_type, owner_describe, owner_createtime, home_name,community_name
+        from owner o left join community c on o.community_id = c.community_id
+        left join home h on o.owner_id = h.owner_id
+        <trim prefix="where">
+            owner_status = 0
+            <if test="searchDto.keyword != null and searchDto.keyword != ''">
+                and
+                (
+                owner_name like concat('%',#{searchDto.keyword},'%')
+                or owner_idcard like concat('%',#{searchDto.keyword},'%')
+                or owner_phone like concat('%',#{searchDto.keyword},'%')
+                or owner_profession like concat('%',#{searchDto.keyword},'%')
+                )
+            </if>
+            <if test="(searchDto.startDate != null and searchDto.startDate != '') and (searchDto.endData != null and searchDto.endData != '') ">
+                and
+                (
+                owner_birth between #{searchDto.startDate} and #{searchDto.endData}
+                or owner_createtime between #{searchDto.startDate} and #{searchDto.endData}
+                )
+            </if>
+            limit #{searchDto.page},#{searchDto.size}
+        </trim>
+    </select>
+    <insert id="insertPersonnel">
+        insert into owner(community_id, owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, owner_sex,
+                          owner_type, owner_describe, owner_createtime, owner_updatetime)
+        values (#{owner.communityId}, #{owner.ownerName}, #{owner.ownerIdcard}, #{owner.ownerBirth},
+                #{owner.ownerPhone}, #{owner.ownerProfession}, #{owner.ownerSex}, #{owner.ownerType},
+                #{owner.ownerDescribe},now(),now())
+    </insert>
+    <update id="updateBatchPersonnel">
+        update owner set  owner_status = 1,owner_updatetime = now()
+        where owner_status = 0 and owner_id in
+        <foreach collection="personnelIdList" item="personnelId" open="(" close=")" separator=",">
+            #{personnelId}
+        </foreach>
+    </update>
+    <update id="updatePersonnel">
+        update owner
+        <set>
+            <if test="owner.communityId != null">
+                 community_id = #{owner.communityId},
+            </if>
+            <if test="owner.ownerName != null">
+                owner_name = #{owner.ownerName},
+            </if>
+            <if test="owner.ownerIdcard != null">
+                owner_idcard = #{owner.ownerIdcard},
+            </if>
+            <if test="owner.ownerBirth != null">
+                owner_birth = #{owner.ownerBirth},
+            </if>
+            <if test="owner.ownerPhone">
+                owner_phone = #{owner.ownerPhone},
+            </if>
+            <if test="owner.ownerProfession">
+                owner_profession = #{owner.ownerProfession},
+            </if>
+            <if test="owner.ownerSex">
+                owner_sex = #{owner.ownerSex},
+            </if>
+            <if test="owner.ownerType">
+                owner_type = #{owner.ownerType},
+            </if>
+            <if test="owner.ownerPhoto">
+                owner_photo = #{owner.ownerPhoto},
+            </if>
+            <if test="owner.ownerDescribe">
+                owner_describe = #{owner.ownerDescribe},
+            </if>
+            owner_updatetime = now()
+        </set>
+        where owner_id = #{owner.ownerId}
+    </update>
+    <update id="updateSinglePersonnel">
+        update owner set owner_status = 1,owner_updatetime = now()
+        where owner_status = 0 and owner_id = #{personnelId}
+    </update>
 </mapper>

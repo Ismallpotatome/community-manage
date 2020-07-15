@@ -16,4 +16,6 @@ public interface OwnerPetMapper {
     int updateBatchPet(@Param("petIdList") List<Integer> petIdList);
     //修改信息
     int updatePet(@Param("pet") Pet pet);
+    //根据id单个修改数据状态
+    int updateSinglePet(@Param("petId") Integer petId);
 }

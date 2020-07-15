@@ -1,5 +1,6 @@
 package com.community.manage.service;
 
+import com.community.manage.domain.dto.OwnerDto;
 import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
@@ -10,6 +11,14 @@ import java.util.List;
 public interface OwnerService {
     //业主人员信息的关键字分页查询
     ResponseEntity personnelSearchByPage(SearchsDto searchDto);
+    //添加"业主"
+    ResponseEntity addPersonnel(OwnerDto ownerDto);
+    //批量删除"业主"
+    ResponseEntity deleteBatchPersonnel(List<Integer> personnelIdList);
+    //修改"业主"信息
+    ResponseEntity personnelAlter(OwnerDto ownerDto);
+    //删除单个"业主"
+    ResponseEntity deleteSinglePersonnel(Integer personneId);
     //通过小区id查询业主的名称和id
     ResponseEntity personnelByCommunityId(Integer communityId);
 

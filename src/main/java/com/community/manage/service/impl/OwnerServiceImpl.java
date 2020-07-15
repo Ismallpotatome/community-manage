@@ -4,6 +4,7 @@ import com.community.manage.domain.dto.OwnerDto;
 import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
+import com.community.manage.domain.entity.Owner;
 import com.community.manage.domain.entity.Pet;
 import com.community.manage.domain.entity.Vehicle;
 import com.community.manage.mapper.owner.OwnerInfoMapper;
@@ -43,10 +44,81 @@ public class OwnerServiceImpl implements OwnerService {
         int limit = (searchDto.getPage() - 1) * searchDto.getSize();
         searchDto.setPage(limit);
     }
+
+    /**
+     * 根据关键字和日期进行分页查询
+     * @param searchDto
+     * @return
+     */
     @Override
     public ResponseEntity personnelSearchByPage(SearchsDto searchDto) {
+        pageDispose(searchDto);
+        List<OwnerDto> ownerDtos = ownerInfoMapper.selectBySearchAndLimit(searchDto);
+        return  ResponseEntity.success(ownerDtos);
+    }
 
-        return null;
+    /**
+     * 添加业主
+     * @param ownerDto
+     * @return
+     */
+    @Override
+    public ResponseEntity addPersonnel(OwnerDto ownerDto) {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(ownerDto,owner);
+        int i = ownerInfoMapper.insertPersonnel(owner);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 批量删除"业主"
+     * @param personnelIdList
+     * @return
+     */
+    @Override
+    public ResponseEntity deleteBatchPersonnel(List<Integer> personnelIdList) {
+        int i = ownerInfoMapper.updateBatchPersonnel(personnelIdList);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 修改"业主"信息
+     * @param ownerDto
+     * @return
+     */
+    @Override
+    public ResponseEntity personnelAlter(OwnerDto ownerDto) {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(ownerDto,owner);
+        int i = ownerInfoMapper.updatePersonnel(owner);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 删除单个业主
+     * @param personneId
+     * @return
+     */
+    @Override
+    public ResponseEntity deleteSinglePersonnel(Integer personneId) {
+        int i = ownerInfoMapper.updateSinglePersonnel(personneId);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
+        }
     }
 
     /**
@@ -104,7 +176,6 @@ public class OwnerServiceImpl implements OwnerService {
         int i = ownerVehicleMapper.updateBatchVehicle(vehicleIdList);
         //返回的结果处理
         if(i > 0){
-            //添加成功
             return ResponseEntity.success();
         }else{
             return ResponseEntity.error();
@@ -121,7 +192,6 @@ public class OwnerServiceImpl implements OwnerService {
         //数据操作结果处理
         //返回的结果处理
         if(i > 0){
-            //添加成功
             return ResponseEntity.success();
         }else{
             return ResponseEntity.error();
@@ -209,12 +279,17 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     /**
-     * 删除
-     * @param petId
+     * 删除单个宠物
+     * @param petId:需要删除"宠物"id
      * @return
      */
     @Override
     public ResponseEntity deleteSinglePet(Integer petId) {
-        return null;
+        int i = ownerPetMapper.updateSinglePet(petId);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else {
+            return ResponseEntity.error();
+        }
     }
 }
