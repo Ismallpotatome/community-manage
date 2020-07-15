@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CommunityDto extends  Community {
-    private Integer communityHomeNumber;
     private String startDate;
     private String endDate = "2030-07-13 13:41:25";
     private int page = 1;

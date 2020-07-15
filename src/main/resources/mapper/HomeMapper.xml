@@ -164,4 +164,7 @@
       home_is_delete = #{homeIsDelete,jdbcType=INTEGER}
     where home_id = #{homeId,jdbcType=INTEGER}
   </update>
+    <select id="selectByBuildId" resultMap="BaseResultMap">
+      select * from home where
+    </select>
 </mapper>

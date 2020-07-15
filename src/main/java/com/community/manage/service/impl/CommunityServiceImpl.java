@@ -30,9 +30,9 @@ public class CommunityServiceImpl implements CommunityService {
         for (Community community : communityDtos) {
             temp.setCommunityId(community.getCommunityId());
             CommunityDto dto = communityDtoMapper.selectSum(temp);
-            temp.setCommunityHomeNumber(dto.getCommunityHomeNumber());
+            temp.setCommunityHome(dto.getCommunityHome());
             BeanUtils.copyProperties(community, dto);
-            dto.setCommunityHomeNumber(temp.getCommunityHomeNumber());
+            dto.setCommunityHome(temp.getCommunityHome());
             list.add(dto);
         }
         return list;

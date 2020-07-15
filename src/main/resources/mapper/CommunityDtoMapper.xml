@@ -3,7 +3,7 @@
 <mapper namespace="com.community.manage.mapper.CommunityDtoMapper">
     <resultMap id="BaseResultMap" type="com.community.manage.domain.dto.CommunityDto" extends="com.community.manage.mapper.CommunityMapper.BaseResultMap"/>
     <select id="selectSum" resultType="com.community.manage.domain.dto.CommunityDto">
-        select sum(build_home) communityHomeNumber from community left join build on community.community_id = build.community_id
+        select sum(build_home) communityHome from community left join build on community.community_id = build.community_id
         where build.community_id = #{communityDto.communityId}
     </select>
     <select id="selectFilter" resultMap="BaseResultMap">
@@ -11,7 +11,7 @@
         where
         <trim prefixOverrides="and|or">
             <if test="communityDto.startDate != null and communityDto.endDate != null">
-                and community_create_time between #{communityDto.startDate} and #{communityDto.endDate}
+                and community_creat_etime between #{communityDto.startDate} and #{communityDto.endDate}
             </if>
             <if test="communityDto.communityName != null">
                 and community_name = #{communityDto.communityName}

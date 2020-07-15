@@ -13,7 +13,7 @@
     <result column="community_icon" jdbcType="VARCHAR" property="communityIcon" />
     <result column="community_developers" jdbcType="VARCHAR" property="communityDevelopers" />
     <result column="community_company" jdbcType="VARCHAR" property="communityCompany" />
-    <result column="community_create_time" jdbcType="TIMESTAMP" property="communityCreateTime" />
+    <result column="community_create_time" jdbcType="TIMESTAMP" property="communityCreatEtime" />
     <result column="community_status" jdbcType="INTEGER" property="communityStatus" />
     <result column="community_is_delete" jdbcType="INTEGER" property="communityIsDelete" />
   </resultMap>
@@ -21,7 +21,7 @@
     <!--@mbg.generated-->
     community_id, community_name, community_address, community_area, community_build, 
   Community_greening, community_icon, community_developers, community_company,
-    community_create_time, community_status, community_is_delete
+    community_creat_etime, community_status, community_is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -40,12 +40,12 @@
     insert into community (community_name, community_address, 
       community_area, community_build,
       Community_greening, community_icon, community_developers, 
-      community_company, community_create_time,
+      community_company, community_creat_etime,
       community_status, community_is_delete)
     values (#{communityName,jdbcType=VARCHAR}, #{communityAddress,jdbcType=VARCHAR}, 
       #{communityArea,jdbcType=INTEGER}, #{communityBuild,jdbcType=INTEGER},
       #{communityGreening,jdbcType=INTEGER}, #{communityIcon,jdbcType=VARCHAR}, #{communityDevelopers,jdbcType=VARCHAR}, 
-      #{communityCompany,jdbcType=VARCHAR}, #{communityCreateTime,jdbcType=TIMESTAMP},
+      #{communityCompany,jdbcType=VARCHAR}, #{communityCreatEtime,jdbcType=TIMESTAMP},
       #{communityStatus,jdbcType=INTEGER}, #{communityIsDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="community_id" keyProperty="communityId" parameterType="com.community.manage.domain.entity.Community" useGeneratedKeys="true">
@@ -76,8 +76,8 @@
       <if test="communityCompany != null">
         community_company,
       </if>
-      <if test="communityCreateTime != null">
-        community_create_time,
+      <if test="communityCreatEtime != null">
+        community_creat_etime,
       </if>
       <if test="communityStatus != null">
         community_status,
@@ -147,8 +147,8 @@
       <if test="communityCompany != null">
         community_company = #{communityCompany,jdbcType=VARCHAR},
       </if>
-      <if test="communityCreateTime != null">
-        community_create_time = #{communityCreateTime,jdbcType=TIMESTAMP},
+      <if test="communityCreatEtime != null">
+        community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
       </if>
       <if test="communityStatus != null">
         community_status = #{communityStatus,jdbcType=INTEGER},
@@ -170,7 +170,7 @@
       community_icon = #{communityIcon,jdbcType=VARCHAR},
       community_developers = #{communityDevelopers,jdbcType=VARCHAR},
       community_company = #{communityCompany,jdbcType=VARCHAR},
-      community_create_time = #{communityCreateTime,jdbcType=TIMESTAMP},
+      community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
       community_status = #{communityStatus,jdbcType=INTEGER},
       community_is_delete = #{communityIsDelete,jdbcType=INTEGER}
     where community_id = #{communityId,jdbcType=INTEGER}
@@ -178,7 +178,7 @@
 
     <select id="selectFilter" resultMap="BaseResultMap">
     select * from community
-    where (community_create_time between #{startDate} and #{endDate}) and community_is_delete = 0
+    where (community_creat_etime between #{startDate} and #{endDate}) and community_is_delete = 0
       limit #{limit}, #{offset}
     </select>
   <delete id="deleteOne">
@@ -201,16 +201,16 @@
       <if test="community.communityIcon != null"> community_icon = #{community.communityIcon}, </if>
       <if test="community.communityDevelopers != null">community_developers = #{community.communityDevelopers}, </if>
       <if test="community.communityCompany != null"> community_company = #{community.communityCompany},</if>
-      <if test="community.communityCreateTime != null">community_create_time = #{community.communityCreateTime},</if>
+      <if test="community.communityCreatEtime != null">community_creat_etime = #{community.communityCreatEtime},</if>
       <if test="community.communityStatus != null">community_status = #{community.communityStatus},</if>
       <if test="community.communityIsDelete != null">community_is_delete = #{community.communityIsDelete},</if>
     </trim>
     where community_id = #{community.communityId}
   </update>
   <insert id="insertOne">
-    insert into community(community_name, community_address, community_area, community_build, Community_greening, community_icon, community_developers, community_company, community_create_time, community_status)
+    insert into community(community_name, community_address, community_area, community_build, Community_greening, community_icon, community_developers, community_company, community_creat_etime, community_status)
       values (#{community.communityName}, #{community.communityAddress},#{community.communityArea}, #{community.communityBuild},#{community.communityGreening},
-    #{community.communityIcon},#{community.communityDevelopers}, #{community.communityCompany},#{community.communityCreateTime},#{community.communityStatus})
+    #{community.communityIcon},#{community.communityDevelopers}, #{community.communityCompany},#{community.communityCreatEtime},#{community.communityStatus})
   </insert>
   <update id="updateStatus">
     update community set community_status = #{status} where community_id = #{communityId}
