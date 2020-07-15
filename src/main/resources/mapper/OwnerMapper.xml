@@ -200,4 +200,15 @@
       owner_status = #{ownerStatus,jdbcType=INTEGER}
     where owner_id = #{ownerId,jdbcType=INTEGER}
   </update>
+<!--  <select id="selectBySearchAndLimit" resultMap="BaseResultMap">-->
+<!--    select *-->
+<!--    from owner-->
+<!--    <trim prefix="where" >-->
+<!--      owner_status = 0-->
+<!--      <if test="keyword != null and keyword != ''">-->
+<!--        and-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </select>-->
+
 </mapper>

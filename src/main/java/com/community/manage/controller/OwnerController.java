@@ -4,6 +4,7 @@ import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Owner;
 import com.community.manage.service.OwnerService;
+import com.community.manage.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ public class OwnerController {
      * @return List<Owner>:"业主信息"集合
      */
     @PostMapping("personnel/search")
-    public List<Owner> personnelSearch(@RequestBody SearchDto searchDto) {
+    public ResponseEntity personnelSearch(@RequestBody SearchDto searchDto) {
 
         return null;
     }
@@ -32,7 +33,7 @@ public class OwnerController {
      * @return List<VehicleDto>:"车辆封装信息"集合
      */
     @PostMapping("vehicle/search")
-    public List<VehicleDto> vehicleSearch(@RequestBody SearchDto searchDto) {
+    public ResponseEntity vehicleSearch(@RequestBody SearchDto searchDto) {
         return ownerService.vehicleSearchByPage(searchDto);
     }
 
@@ -41,8 +42,9 @@ public class OwnerController {
      * @param vehicleDto:车辆信息封装类
      */
     @PostMapping("vehicle/add")
-    public void vehicleAdd(@RequestBody VehicleDto vehicleDto){
-        ownerService.addVehicle(vehicleDto);
+    public ResponseEntity vehicleAdd(@RequestBody VehicleDto vehicleDto){
+
+        return ownerService.addVehicle(vehicleDto);
     }
 
     /**
@@ -50,8 +52,8 @@ public class OwnerController {
      * @param vehicleIdList:需要批量删除的车辆id集合
      */
     @PostMapping("vehicle/delete_batch")
-    public void vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
-        ownerService.deleteBatchVehicle(vehicleIdList);
+    public ResponseEntity vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
+        return ownerService.deleteBatchVehicle(vehicleIdList);
     }
 
     /**
@@ -59,7 +61,7 @@ public class OwnerController {
      * @param vehicleId:需要删除的车辆id
      */
     @PostMapping("vehicle/delete_single")
-    public void vehicleSingleDelete(@RequestBody Integer vehicleId){
-        ownerService.deleteSingleVehicle(vehicleId);
+    public ResponseEntity vehicleSingleDelete(@RequestBody Integer vehicleId){
+        return ownerService.deleteSingleVehicle(vehicleId);
     }
 }

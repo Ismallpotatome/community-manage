@@ -6,6 +6,8 @@ import com.community.manage.domain.entity.Owner;
 import com.community.manage.domain.entity.Vehicle;
 import com.community.manage.mapper.owner.OwnerVehicleMapper;
 import com.community.manage.service.OwnerService;
+import com.community.manage.util.ResponseEntity;
+import com.community.manage.util.ReturnState;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class OwnerServiceImpl implements OwnerService {
     OwnerVehicleMapper ownerVehicleMapper;
 
     @Override
-    public List<Owner> personnelSearchByPage(SearchDto searchDto) {
+    public ResponseEntity personnelSearchByPage(SearchDto searchDto) {
 
         return null;
     }
@@ -29,11 +31,21 @@ public class OwnerServiceImpl implements OwnerService {
      * @return List<VehicleDto>:查询到的"车辆"信息集合
      */
     @Override
-    public List<VehicleDto> vehicleSearchByPage(SearchDto searchDto) {
+    public ResponseEntity vehicleSearchByPage(SearchDto searchDto) {
+       //检测page是否为空
+        if(searchDto.getPage() == 0 ){
+            searchDto.setPage(1);
+        }
+        //检测size是否为空
+        if(searchDto.getSize() == 0){
+            searchDto.setSize(5);
+        }
         //查询的起始
         int limit = (searchDto.getPage() - 1) * searchDto.getSize();
         searchDto.setPage(limit);
-        return ownerVehicleMapper.selectBySearchAndLimit(searchDto);
+        List<VehicleDto> vehicleDtos = ownerVehicleMapper.selectBySearchAndLimit(searchDto);
+        ResponseEntity<List<VehicleDto>> success = ResponseEntity.success(vehicleDtos);
+        return  success;
     }
 
     /**
@@ -41,16 +53,17 @@ public class OwnerServiceImpl implements OwnerService {
      * @param vehicleDto:添加的车辆信息封装类
      */
     @Override
-    public void addVehicle(VehicleDto vehicleDto) {
+    public ResponseEntity addVehicle(VehicleDto vehicleDto) {
         Vehicle vehicle = new Vehicle();
         //将封装类对象的数据赋值给对应的实体类对象
         BeanUtils.copyProperties(vehicleDto,vehicle);
         int i = ownerVehicleMapper.insertVehicleDto(vehicle);
         //返回的结果处理
         if(i > 0){
-
+            //添加成功
+            return ResponseEntity.success();
         }else{
-
+            return ResponseEntity.error();
         }
     }
 
@@ -59,12 +72,14 @@ public class OwnerServiceImpl implements OwnerService {
      * @param vehicleIdList:批量删除的车辆id集合
      */
     @Override
-    public void deleteBatchVehicle(List<Integer> vehicleIdList) {
+    public ResponseEntity deleteBatchVehicle(List<Integer> vehicleIdList) {
         int i = ownerVehicleMapper.updateBatchVehicle(vehicleIdList);
+        //返回的结果处理
         if(i > 0){
-
-        }else {
-
+            //添加成功
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
         }
     }
 
@@ -73,13 +88,15 @@ public class OwnerServiceImpl implements OwnerService {
      * @param vehicleId:需要删除的车辆id
      */
     @Override
-    public void deleteSingleVehicle(Integer vehicleId) {
+    public ResponseEntity deleteSingleVehicle(Integer vehicleId) {
         int i = ownerVehicleMapper.updateSingleVehicle(vehicleId);
         //数据操作结果处理
+        //返回的结果处理
         if(i > 0){
-
-        }else {
-
+            //添加成功
+            return ResponseEntity.success();
+        }else{
+            return ResponseEntity.error();
         }
     }
 }
