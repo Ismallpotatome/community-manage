@@ -53,4 +53,13 @@ public class OwnerController {
     public void vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
         ownerService.deleteBatchVehicle(vehicleIdList);
     }
+
+    /**
+     *
+     * @param vehicleId:需要删除的车辆id
+     */
+    @PostMapping("vehicle/delete_single")
+    public void vehicleSingleDelete(@RequestBody Integer vehicleId){
+        ownerService.deleteSingleVehicle(vehicleId);
+    }
 }
