@@ -173,6 +173,7 @@
   <update id="updateAll">
     update tb_parking_user u
     <set>
+      <trim suffixOverrides=",">
       <if test="user.communityId != null">
         community_id = #{user.communityId},
       </if>
@@ -183,6 +184,7 @@
       <if test="user.userStatus != null">
         user_status = #{user.userStatus,jdbcType=INTEGER},
       </if>
+      </trim>
     </set>
     where user_id = #{user.userId}
   </update>

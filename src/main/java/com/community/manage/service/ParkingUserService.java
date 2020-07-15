@@ -3,13 +3,14 @@ package com.community.manage.service;
 
 
 import com.community.manage.domain.dto.ParkingUseDto;
+import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 
 
 import java.util.List;
 
 public interface ParkingUserService {
-    List<TbParkingUser> selectAll( String keyword,  String begin,  String end, int limit, int offset);
+    List<TbParkingUser> selectAll(String keyword, String begin, String end, int limit, int offset);
 
 
     int insert(TbParkingUser parkingUser);

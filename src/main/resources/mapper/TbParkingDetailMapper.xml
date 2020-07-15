@@ -20,162 +20,136 @@
   </resultMap>
 
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from tb_parking_detail
-    where detail_id = #{detailId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="detail_id" keyProperty="detailId" parameterType="com.community.manage.domain.entity.TbParkingDetail" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_parking_detail (community_id, user_id, detail_car_num, 
-      detail_img, detail_user, detail_phone, 
-      detail_nature, detail_price, detail_begin, 
-      detail_out, detail_create_time, detail_is_del
-      )
-    values (#{communityId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{detailCarNum,jdbcType=VARCHAR}, 
-      #{detailImg,jdbcType=VARCHAR}, #{detailUser,jdbcType=VARCHAR}, #{detailPhone,jdbcType=VARCHAR}, 
-      #{detailNature,jdbcType=INTEGER}, #{detailPrice,jdbcType=DECIMAL}, #{detailBegin,jdbcType=DATE}, 
-      #{detailOut,jdbcType=DATE}, #{detailCreateTime,jdbcType=TIMESTAMP}, #{detailIsDel,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" keyColumn="detail_id" keyProperty="detailId" parameterType="com.community.manage.domain.entity.TbParkingDetail" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_parking_detail
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    SELECT detail_id, community_id, user_id, detail_car_num, detail_img, detail_user, detail_phone, detail_nature, detail_price, detail_begin, detail_out, detail_create_time, detail_is_del
+    FROM tb_parking_detail
+    <trim prefix="where" prefixOverrides="and">
+      <if test="keyword != null and keyword != ''">
+        and detail_phone like concat('%',#{keyword} ,'%') or detail_car_num like concat('%',#{keyword} ,'%')
+        or detail_user like concat('%',#{keyword} ,'%')
+      </if>
+
+      <if test="begin != null and begin != '' and end != null and end != ''">
+        and detail_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+      </if>
+    </trim>
+    limit #{limit},#{offset}
+  </select>
+  <insert id="insertParkingDetail">
+    insert into  tb_parking_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
+      <if test="detail.communityId != null ">
         community_id,
       </if>
-      <if test="userId != null">
+      <if test="detail.userId != null">
         user_id,
       </if>
-      <if test="detailCarNum != null">
+      <if test="detail.detailCarNum != null ">
         detail_car_num,
       </if>
-      <if test="detailImg != null">
+
+      <if test="detail.detailImg != null and detail.detailImg != ''">
         detail_img,
       </if>
-      <if test="detailUser != null">
+
+      <if test="detail.detailUser != null">
         detail_user,
       </if>
-      <if test="detailPhone != null">
-        detail_phone,
-      </if>
-      <if test="detailNature != null">
+      <if test="detail.detailNature != null">
         detail_nature,
       </if>
-      <if test="detailPrice != null">
+      <if test="detail.detailPhone != null">
+        detail_phone,
+      </if>
+      <if test="detail.detailPrice !=null ">
         detail_price,
       </if>
-      <if test="detailBegin != null">
+      <if test="detail.detailBegin !=null ">
         detail_begin,
       </if>
-      <if test="detailOut != null">
+      <if test="detail.detailOut !=null ">
         detail_out,
       </if>
-      <if test="detailCreateTime != null">
-        detail_create_time,
-      </if>
-      <if test="detailIsDel != null">
-        detail_is_del,
-      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        #{communityId,jdbcType=INTEGER},
+      <if test="detail.communityId != null">
+        #{detail.communityId},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="detail.userId != null">
+        #{detail.userId},
       </if>
-      <if test="detailCarNum != null">
-        #{detailCarNum,jdbcType=VARCHAR},
+      <if test="detail.detailCarNum != null">
+        #{detail.detailCarNum},
       </if>
-      <if test="detailImg != null">
-        #{detailImg,jdbcType=VARCHAR},
+      <if test="detail.detailImg != null">
+        #{detail.detailImg},
       </if>
-      <if test="detailUser != null">
-        #{detailUser,jdbcType=VARCHAR},
+      <if test="detail.detailUser != null">
+        #{detail.detailUser},
       </if>
-      <if test="detailPhone != null">
-        #{detailPhone,jdbcType=VARCHAR},
+      <if test="detail.detailNature != null">
+        #{detail.detailNature},
       </if>
-      <if test="detailNature != null">
-        #{detailNature,jdbcType=INTEGER},
+      <if test="detail.detailPhone != null">
+        #{detail.detailPhone},
       </if>
-      <if test="detailPrice != null">
-        #{detailPrice,jdbcType=DECIMAL},
+      <if test="detail.detailPrice != null">
+        #{detail.detailPrice},
       </if>
-      <if test="detailBegin != null">
-        #{detailBegin,jdbcType=DATE},
+      <if test="detail.detailBegin  != null">
+        #{detail.detailBegin },
       </if>
-      <if test="detailOut != null">
-        #{detailOut,jdbcType=DATE},
-      </if>
-      <if test="detailCreateTime != null">
-        #{detailCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="detailIsDel != null">
-        #{detailIsDel,jdbcType=INTEGER},
+      <if test="detail.detailOut  != null">
+        #{detail.detailOut },
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.TbParkingDetail">
-    <!--@mbg.generated-->
-    update tb_parking_detail
+  <update id="updateAll">
+    update tb_parking_detail d
     <set>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=INTEGER},
+      <trim suffixOverrides=",">
+      <if test="detail.communityId != null ">
+        community_id=#{detail.communityId},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="detail.userId != null">
+        user_id=#{detail.userId},
       </if>
-      <if test="detailCarNum != null">
-        detail_car_num = #{detailCarNum,jdbcType=VARCHAR},
+      <if test="detail.detailCarNum != null ">
+        detail_car_num=#{detail.detailCarNum},
       </if>
-      <if test="detailImg != null">
-        detail_img = #{detailImg,jdbcType=VARCHAR},
+
+      <if test="detail.detailImg != null and detail.detailImg != ''">
+        detail_img=#{detail.detailImg},
       </if>
-      <if test="detailUser != null">
-        detail_user = #{detailUser,jdbcType=VARCHAR},
+
+      <if test="detail.detailUser != null">
+        detail_user=#{detail.detailUser},
       </if>
-      <if test="detailPhone != null">
-        detail_phone = #{detailPhone,jdbcType=VARCHAR},
+      <if test="detail.detailNature != null">
+        detail_nature=#{detail.detailNature},
       </if>
-      <if test="detailNature != null">
-        detail_nature = #{detailNature,jdbcType=INTEGER},
+      <if test="detail.detailPhone != null">
+        detail_phone=#{detail.detailPhone},
       </if>
-      <if test="detailPrice != null">
-        detail_price = #{detailPrice,jdbcType=DECIMAL},
+      <if test="detail.detailPrice !=null ">
+        detail_price=#{detail.detailPrice},
       </if>
-      <if test="detailBegin != null">
-        detail_begin = #{detailBegin,jdbcType=DATE},
+      <if test="detail.detailBegin !=null ">
+        detail_begin=#{detail.detailBegin},
       </if>
-      <if test="detailOut != null">
-        detail_out = #{detailOut,jdbcType=DATE},
+      <if test="detail.detailOut !=null ">
+        detail_out =#{detail.detailOut},
       </if>
-      <if test="detailCreateTime != null">
-        detail_create_time = #{detailCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="detailIsDel != null">
-        detail_is_del = #{detailIsDel,jdbcType=INTEGER},
-      </if>
+    </trim>
     </set>
-    where detail_id = #{detailId,jdbcType=INTEGER}
+    where detail_id =#{detail.detailId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbParkingDetail">
-    <!--@mbg.generated-->
-    update tb_parking_detail
-    set community_id = #{communityId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      detail_car_num = #{detailCarNum,jdbcType=VARCHAR},
-      detail_img = #{detailImg,jdbcType=VARCHAR},
-      detail_user = #{detailUser,jdbcType=VARCHAR},
-      detail_phone = #{detailPhone,jdbcType=VARCHAR},
-      detail_nature = #{detailNature,jdbcType=INTEGER},
-      detail_price = #{detailPrice,jdbcType=DECIMAL},
-      detail_begin = #{detailBegin,jdbcType=DATE},
-      detail_out = #{detailOut,jdbcType=DATE},
-      detail_create_time = #{detailCreateTime,jdbcType=TIMESTAMP},
-      detail_is_del = #{detailIsDel,jdbcType=INTEGER}
-    where detail_id = #{detailId,jdbcType=INTEGER}
+
+  <update id="delById">
+    update tb_parking_detail d
+    set detail_is_del = 0
+    where d.detail_id=#{detailId}
   </update>
+
 </mapper>

@@ -3,6 +3,7 @@ package com.community.manage.service.Impl;
 
 
 import com.community.manage.domain.dto.ParkingUseDto;
+import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.mapper.TbParkingUserMapper;
 import com.community.manage.service.ParkingUserService;
