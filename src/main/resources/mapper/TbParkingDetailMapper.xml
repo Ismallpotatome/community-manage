@@ -21,7 +21,7 @@
 
 
   <select id="selectByCondition" resultMap="BaseResultMap">
-    SELECT detail_id, community_id, user_id, detail_car_num, detail_img, detail_user, detail_phone, detail_nature, detail_price, detail_begin, detail_out, detail_create_time, detail_is_del
+    SELECT detail_id, community_id, user_id, detail_car_num, detail_img, detail_user, detail_phone, detail_nature, detail_price, detail_begin, detail_out, detail_create_time
     FROM tb_parking_detail
     <trim prefix="where" prefixOverrides="and">
       <if test="keyword != null and keyword != ''">
@@ -32,6 +32,7 @@
       <if test="begin != null and begin != '' and end != null and end != ''">
         and detail_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
       </if>
+      and detail_is_del = 1
     </trim>
     limit #{limit},#{offset}
   </select>

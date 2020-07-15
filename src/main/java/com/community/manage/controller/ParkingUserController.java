@@ -27,15 +27,9 @@ public class ParkingUserController {
     //添加一条信息
     @PostMapping("insert")
     public int insert(@RequestBody ParkingUseDto parkingUseDto){
-        Integer comId = parkingUseDto.getCommunityId();
-        String userName = parkingUseDto.getUserName();
-        String userNumber = parkingUseDto.getUserNumber();
-        TbParkingUser parkingUser = new TbParkingUser();
-        parkingUser.setCommunityId(comId);
-        parkingUser.setUserNumber(userNumber);
-        parkingUser.setUserName(userName);
 
-        return parkingUserService.insert(parkingUser);
+
+        return parkingUserService.insert(parkingUseDto);
     }
 
     //修改一条信息
@@ -50,12 +44,9 @@ public class ParkingUserController {
     @PostMapping("updateAll")
     public int updateAll(@RequestBody ParkingUseDto parkingUseDto){
 
-        Integer comId = parkingUseDto.getCommunityId();
-        String userName = parkingUseDto.getUserName();
-        Integer status = parkingUseDto.getUserStatus();
-        Integer userId = parkingUseDto.getUserId();
 
-        return parkingUserService.updateAll(comId, userName, status, userId);
+
+        return parkingUserService.updateAll(parkingUseDto);
     }
 
     //批量删除信息

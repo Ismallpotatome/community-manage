@@ -2,11 +2,13 @@ package com.community.manage.service.Impl;
 
 
 
+import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.dto.ParkingUseDto;
 import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.mapper.TbParkingUserMapper;
 import com.community.manage.service.ParkingUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,10 +21,7 @@ public class ParkingUserServiceImpl implements ParkingUserService {
 
     @Override
     public List<TbParkingUser> selectAll(String keyword, String begin, String end, int limit, int offset) {
-        limit = (limit-1)*offset;
-
-
-
+            limit = (limit-1)*offset;
             List<TbParkingUser> tbParkingUsers = parkingUserMapper.selectByCondition(keyword, begin, end, limit, offset);
 
             return tbParkingUsers;
@@ -32,7 +31,9 @@ public class ParkingUserServiceImpl implements ParkingUserService {
 
 
     @Override
-    public int insert(TbParkingUser parkingUser) {
+    public int insert(ParkingUseDto parkingUserDto) {
+        TbParkingUser parkingUser = new TbParkingUser();
+        BeanUtils.copyProperties(parkingUserDto,parkingUser);
         int i = parkingUserMapper.insertParkingUser(parkingUser);
         return i;
     }
@@ -43,21 +44,21 @@ public class ParkingUserServiceImpl implements ParkingUserService {
     }
 
     @Override
-    public int updateAll(int comId, String username, int status, int userId) {
+    public int updateAll(ParkingUseDto parkingUseDto) {
         TbParkingUser parkingUser = new TbParkingUser();
-        parkingUser.setUserName(username);
-        parkingUser.setCommunityId(comId);
-        parkingUser.setUserStatus(status);
-        parkingUser.setUserId(userId);
+        BeanUtils.copyProperties(parkingUseDto,parkingUser);
         return parkingUserMapper.updateAll(parkingUser);
     }
 
     @Override
     public int del(List<ParkingUseDto> list) {
+        TbParkingUser parkingUse;
         int count = 0;
         for (ParkingUseDto parkingUseDto : list) {
-            int i = parkingUserMapper.delById(parkingUseDto.getUserId());
-            count +=1;
+            parkingUse = new TbParkingUser();
+            BeanUtils.copyProperties(parkingUseDto,parkingUse);
+            int i = parkingUserMapper.delById(parkingUse.getUserId());
+            count +=i;
         }
         return count;
     }
