@@ -9,23 +9,24 @@
     <result column="community_address" jdbcType="VARCHAR" property="communityAddress" />
     <result column="community_area" jdbcType="INTEGER" property="communityArea" />
     <result column="community_build" jdbcType="INTEGER" property="communityBuild" />
+    <result column="community_home" jdbcType="INTEGER" property="communityHome" />
     <result column="Community_greening" jdbcType="INTEGER" property="communityGreening" />
     <result column="community_icon" jdbcType="VARCHAR" property="communityIcon" />
     <result column="community_developers" jdbcType="VARCHAR" property="communityDevelopers" />
     <result column="community_company" jdbcType="VARCHAR" property="communityCompany" />
-    <result column="community_create_time" jdbcType="TIMESTAMP" property="communityCreatEtime" />
+    <result column="community_creat_etime" jdbcType="TIMESTAMP" property="communityCreatEtime" />
     <result column="community_status" jdbcType="INTEGER" property="communityStatus" />
     <result column="community_is_delete" jdbcType="INTEGER" property="communityIsDelete" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    community_id, community_name, community_address, community_area, community_build, 
-  Community_greening, community_icon, community_developers, community_company,
+    community_id, community_name, community_address, community_area, community_build,
+    community_home, Community_greening, community_icon, community_developers, community_company,
     community_creat_etime, community_status, community_is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from community
     where community_id = #{communityId,jdbcType=INTEGER}
@@ -37,16 +38,16 @@
   </delete>
   <insert id="insert" keyColumn="community_id" keyProperty="communityId" parameterType="com.community.manage.domain.entity.Community" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into community (community_name, community_address, 
-      community_area, community_build,
-      Community_greening, community_icon, community_developers, 
-      community_company, community_creat_etime,
-      community_status, community_is_delete)
-    values (#{communityName,jdbcType=VARCHAR}, #{communityAddress,jdbcType=VARCHAR}, 
-      #{communityArea,jdbcType=INTEGER}, #{communityBuild,jdbcType=INTEGER},
-      #{communityGreening,jdbcType=INTEGER}, #{communityIcon,jdbcType=VARCHAR}, #{communityDevelopers,jdbcType=VARCHAR}, 
-      #{communityCompany,jdbcType=VARCHAR}, #{communityCreatEtime,jdbcType=TIMESTAMP},
-      #{communityStatus,jdbcType=INTEGER}, #{communityIsDelete,jdbcType=INTEGER})
+    insert into community (community_name, community_address,
+    community_area, community_build, community_home,
+    Community_greening, community_icon, community_developers,
+    community_company, community_creat_etime,
+    community_status, community_is_delete)
+    values (#{communityName,jdbcType=VARCHAR}, #{communityAddress,jdbcType=VARCHAR},
+    #{communityArea,jdbcType=INTEGER}, #{communityBuild,jdbcType=INTEGER}, #{communityHome,jdbcType=INTEGER},
+    #{communityGreening,jdbcType=INTEGER}, #{communityIcon,jdbcType=VARCHAR}, #{communityDevelopers,jdbcType=VARCHAR},
+    #{communityCompany,jdbcType=VARCHAR}, #{communityCreatEtime,jdbcType=TIMESTAMP},
+    #{communityStatus,jdbcType=INTEGER}, #{communityIsDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="community_id" keyProperty="communityId" parameterType="com.community.manage.domain.entity.Community" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -63,6 +64,9 @@
       </if>
       <if test="communityBuild != null">
         community_build,
+      </if>
+      <if test="communityHome != null">
+        community_home,
       </if>
       <if test="communityGreening != null">
         Community_greening,
@@ -99,6 +103,9 @@
       <if test="communityBuild != null">
         #{communityBuild,jdbcType=INTEGER},
       </if>
+      <if test="communityHome != null">
+        #{communityHome,jdbcType=INTEGER},
+      </if>
       <if test="communityGreening != null">
         #{communityGreening,jdbcType=INTEGER},
       </if>
@@ -110,6 +117,9 @@
       </if>
       <if test="communityCompany != null">
         #{communityCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="communityCreatEtime != null">
+        #{communityCreatEtime,jdbcType=TIMESTAMP},
       </if>
       <if test="communityStatus != null">
         #{communityStatus,jdbcType=INTEGER},
@@ -134,6 +144,9 @@
       </if>
       <if test="communityBuild != null">
         community_build = #{communityBuild,jdbcType=INTEGER},
+      </if>
+      <if test="communityHome != null">
+        community_home = #{communityHome,jdbcType=INTEGER},
       </if>
       <if test="communityGreening != null">
         Community_greening = #{communityGreening,jdbcType=INTEGER},
@@ -163,16 +176,17 @@
     <!--@mbg.generated-->
     update community
     set community_name = #{communityName,jdbcType=VARCHAR},
-      community_address = #{communityAddress,jdbcType=VARCHAR},
-      community_area = #{communityArea,jdbcType=INTEGER},
-      community_build = #{communityBuild,jdbcType=INTEGER},
-      Community_greening = #{communityGreening,jdbcType=INTEGER},
-      community_icon = #{communityIcon,jdbcType=VARCHAR},
-      community_developers = #{communityDevelopers,jdbcType=VARCHAR},
-      community_company = #{communityCompany,jdbcType=VARCHAR},
-      community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
-      community_status = #{communityStatus,jdbcType=INTEGER},
-      community_is_delete = #{communityIsDelete,jdbcType=INTEGER}
+    community_address = #{communityAddress,jdbcType=VARCHAR},
+    community_area = #{communityArea,jdbcType=INTEGER},
+    community_build = #{communityBuild,jdbcType=INTEGER},
+    community_home = #{communityHome,jdbcType=INTEGER},
+    Community_greening = #{communityGreening,jdbcType=INTEGER},
+    community_icon = #{communityIcon,jdbcType=VARCHAR},
+    community_developers = #{communityDevelopers,jdbcType=VARCHAR},
+    community_company = #{communityCompany,jdbcType=VARCHAR},
+    community_creat_etime = #{communityCreatEtime,jdbcType=TIMESTAMP},
+    community_status = #{communityStatus,jdbcType=INTEGER},
+    community_is_delete = #{communityIsDelete,jdbcType=INTEGER}
     where community_id = #{communityId,jdbcType=INTEGER}
   </update>
 
