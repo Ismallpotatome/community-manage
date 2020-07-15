@@ -29,12 +29,12 @@
     </select>
     <insert id="insertVehicleDto">
         insert into vehicle(vehicle_owner_id, vehicle_number, vehicle_color,
-                            vehicle_describe)
+                            vehicle_describe,vehicle_createtime,vehicle_updatetime,vehicle_status)
         values (#{vehicle.vehicleOwnerId}, #{vehicle.vehicleNumber}, #{vehicle.vehicleColor},
-                #{vehicle.vehicleDescribe})
+                #{vehicle.vehicleDescribe},now(),now(),0)
     </insert>
     <update id="updateBatchVehicle">
-        update vehicle set  vehicle_status = 1
+        update vehicle set  vehicle_status = 1,vehicle_updatetime = now()
         where vehicle_status = 0 and vehicle_id in
        <foreach collection="vehicleIdList" item="vehicleId" open="(" close=")" separator=",">
            #{vehicleId}
@@ -44,5 +44,27 @@
         update vehicle set vehicle_status = 1
         where vehicle_status = 0 and vehicle_id = #{vehicleId}
 
+    </update>
+    <update id="updateVehicle">
+        update vehicle
+        <set>
+            <if test="vehicle.vehicleOwnerId != null">
+                 vehicle_owner_id = #{vehicle.vehicleOwnerId},
+            </if>
+            <if test="vehicle.vehicleNumber != null">
+                vehicle_number = #{vehicle.vehicleNumber},
+            </if>
+            <if test="vehicle.vehicleColor != null">
+                vehicle_color = #{vehicle.vehicleColor},
+            </if>
+            <if test="vehicle.vehiclePhoto != null">
+                vehicle_photo = #{vehicle.vehiclePhoto},
+            </if>
+            <if test="vehicle.vehicleDescribe">
+                vehicle_describe = #{vehicle.vehicleDescribe},
+            </if>
+            vehicle_updatetime = now()
+        </set>
+        where vehicle_id = #{vehicle.vehicleId}
     </update>
 </mapper>

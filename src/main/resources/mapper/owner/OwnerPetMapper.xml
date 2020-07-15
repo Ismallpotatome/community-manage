@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.community.manage.mapper.owner.OwnerPetMapper">
+
+    <resultMap id="BaseResultMap" type="Pet"
+               extends="com.community.manage.mapper.PetMapper.BaseResultMap">
+    </resultMap>
+
+    <resultMap id="searchResult" type="com.community.manage.domain.dto.PetDto" extends="BaseResultMap">
+        <result property="ownerName" column="owner_name"/>
+    </resultMap>
+
+    <select id="selectBySearchAndLimit" resultMap="searchResult">
+        select pet_id, pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_photo, pet_describe, owner_name
+        from pet p left join owner o on p.pet_owner_id = o.owner_id
+        <trim prefix="where">
+            pet_status = 0
+            <if test="searchDto.keyword != null and searchDto.keyword != ''">
+                and
+                (
+                owner_name like concat('%',#{searchDto.keyword},'%')
+                or pet_color like concat('%',#{searchDto.keyword},'%')
+                or pet_name like concat('%',#{searchDto.keyword},'%')
+                )
+            </if>
+            <if test="(searchDto.startDate != null and searchDto.startDate != '') and (searchDto.endData != null and searchDto.endData != '') ">
+                and pet_adoptiontime between #{searchDto.startDate} and #{searchDto.endData}
+            </if>
+            limit #{searchDto.page},#{searchDto.size}
+        </trim>
+    </select>
+</mapper>

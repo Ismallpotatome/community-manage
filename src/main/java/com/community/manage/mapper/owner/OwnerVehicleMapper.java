@@ -17,5 +17,6 @@ public interface OwnerVehicleMapper {
     int updateBatchVehicle(@Param("vehicleIdList") List<Integer> vehicleIdList);
     //根据id单个修改数据状态
     int updateSingleVehicle(@Param("vehicleId") Integer vehicleId);
-
+    //修改信息
+    int updateVehicle(@Param("vehicle") Vehicle vehicle);
 }

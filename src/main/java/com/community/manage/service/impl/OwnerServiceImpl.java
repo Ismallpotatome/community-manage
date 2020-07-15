@@ -1,9 +1,13 @@
 package com.community.manage.service.impl;
 
+import com.community.manage.domain.dto.OwnerDto;
+import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.dto.VehicleDto;
 import com.community.manage.domain.entity.Owner;
 import com.community.manage.domain.entity.Vehicle;
+import com.community.manage.mapper.owner.OwnerInfoMapper;
+import com.community.manage.mapper.owner.OwnerPetMapper;
 import com.community.manage.mapper.owner.OwnerVehicleMapper;
 import com.community.manage.service.OwnerService;
 import com.community.manage.util.ResponseEntity;
@@ -18,21 +22,17 @@ import java.util.List;
 public class OwnerServiceImpl implements OwnerService {
     @Resource
     OwnerVehicleMapper ownerVehicleMapper;
-
-    @Override
-    public ResponseEntity personnelSearchByPage(SearchDto searchDto) {
-
-        return null;
-    }
+    @Resource
+    OwnerInfoMapper ownerInfoMapper;
+    @Resource
+    OwnerPetMapper ownerPetMapper;
 
     /**
-     * 根据关键字和时间对车辆信息进行分页查询
-     * @param searchDto:搜索的信息
-     * @return List<VehicleDto>:查询到的"车辆"信息集合
+     * 分页处理
+     * @return
      */
-    @Override
-    public ResponseEntity vehicleSearchByPage(SearchDto searchDto) {
-       //检测page是否为空
+    public void pageDispose(SearchDto searchDto){
+        //检测page是否为空
         if(searchDto.getPage() == 0 ){
             searchDto.setPage(1);
         }
@@ -43,13 +43,42 @@ public class OwnerServiceImpl implements OwnerService {
         //查询的起始
         int limit = (searchDto.getPage() - 1) * searchDto.getSize();
         searchDto.setPage(limit);
-        List<VehicleDto> vehicleDtos = ownerVehicleMapper.selectBySearchAndLimit(searchDto);
-        ResponseEntity<List<VehicleDto>> success = ResponseEntity.success(vehicleDtos);
-        return  success;
+    }
+    @Override
+    public ResponseEntity personnelSearchByPage(SearchDto searchDto) {
+
+        return null;
     }
 
     /**
-     *
+     * 根据小区id查询业主的名称和id
+     * @param communityId:需要查询的小区id
+     * @return
+     */
+    @Override
+    public ResponseEntity personnelByCommunityId(Integer communityId) {
+        //数据访问
+        List<OwnerDto> ownerDtos = ownerInfoMapper.selectByCommunityId(communityId);
+        //对访问到的数据结果进行处理并返回
+        return ResponseEntity.success(ownerDtos);
+    }
+
+    /**
+     * 根据关键字和时间对车辆信息进行分页查询
+     * @param searchDto:搜索的信息
+     * @return List<VehicleDto>:查询到的"车辆"信息集合
+     */
+    @Override
+    public ResponseEntity vehicleSearchByPage(SearchDto searchDto) {
+        //分页处理
+        pageDispose(searchDto);
+        //数据访问
+        List<VehicleDto> vehicleDtos = ownerVehicleMapper.selectBySearchAndLimit(searchDto);
+        return  ResponseEntity.success(vehicleDtos);
+    }
+
+    /**
+     *添加车辆
      * @param vehicleDto:添加的车辆信息封装类
      */
     @Override
@@ -68,7 +97,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     /**
-     *
+     *批量删除车辆
      * @param vehicleIdList:批量删除的车辆id集合
      */
     @Override
@@ -84,7 +113,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     /**
-     *
+     *删除单个车辆
      * @param vehicleId:需要删除的车辆id
      */
     @Override
@@ -98,5 +127,36 @@ public class OwnerServiceImpl implements OwnerService {
         }else{
             return ResponseEntity.error();
         }
+    }
+
+    /**
+     * 修改车辆信息
+     * @param vehicleDto:封装的"车辆"信息
+     * @return
+     */
+    @Override
+    public ResponseEntity vehicleAlter(VehicleDto vehicleDto) {
+        Vehicle vehicle = new Vehicle();
+        BeanUtils.copyProperties(vehicleDto,vehicle);
+        int i = ownerVehicleMapper.updateVehicle(vehicle);
+        if(i > 0){
+            return ResponseEntity.success();
+        }else {
+            return ResponseEntity.error();
+        }
+    }
+
+    /**
+     * 根据关键字和时间对宠物信息进行分页查询
+     * @param searchDto
+     * @return
+     */
+    @Override
+    public ResponseEntity petSearchByPage(SearchDto searchDto) {
+        //分页处理
+        pageDispose(searchDto);
+        //数据访问
+        List<PetDto> petDtos = ownerPetMapper.selectBySearchAndLimit(searchDto);
+        return ResponseEntity.success(petDtos);
     }
 }
