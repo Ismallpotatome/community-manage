@@ -2,6 +2,7 @@ package com.community.manage.service;
 
 import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.entity.TbParkingDetail;
+import com.community.manage.util.ResponseEntity;
 
 
 import java.util.List;
@@ -11,12 +12,12 @@ public interface ParkingDetailService {
     List<TbParkingDetail> selectAll(String keyword, String begin, String end, int limit, int offset);
 
 
-    int insert(ParkingDetailDto parkingDetailDto);
+    ResponseEntity insert(ParkingDetailDto parkingDetailDto);
 
 
 
-    public int updateAll(ParkingDetailDto parkingDetail);
+    ResponseEntity updateAll(ParkingDetailDto parkingDetail);
 
-    int del(List<ParkingDetailDto> list);
+    ResponseEntity del(List<ParkingDetailDto> list);
 
 }

@@ -4,6 +4,7 @@ import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.mapper.TbParkingDetailMapper;
 import com.community.manage.service.ParkingDetailService;
+import com.community.manage.util.ResponseEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,22 +32,30 @@ public class ParkingDetailServiceImpl implements ParkingDetailService {
     }
 
     @Override
-    public int insert(ParkingDetailDto parkingDetailDto) {
+    public ResponseEntity insert(ParkingDetailDto parkingDetailDto) {
         TbParkingDetail parkingDetail = new TbParkingDetail();
         BeanUtils.copyProperties(parkingDetailDto,parkingDetail);
-        return parkingDetailMapper.insertParkingDetail(parkingDetail);
+        int i = parkingDetailMapper.insertParkingDetail(parkingDetail);
+        if(i>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
     @Override
-    public int updateAll(ParkingDetailDto parkingDetailDto) {
+    public ResponseEntity updateAll(ParkingDetailDto parkingDetailDto) {
         TbParkingDetail parkingDetails = new TbParkingDetail();
         BeanUtils.copyProperties(parkingDetailDto,parkingDetails);
-        return parkingDetailMapper.updateAll(parkingDetails);
+        int i = parkingDetailMapper.updateAll(parkingDetails);
+        if(i>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
 
     @Override
-    public int del(List<ParkingDetailDto> list) {
+    public ResponseEntity del(List<ParkingDetailDto> list) {
         TbParkingDetail parkingDetails;
 
         int count = 0;
@@ -56,7 +65,10 @@ public class ParkingDetailServiceImpl implements ParkingDetailService {
             int i = parkingDetailMapper.delById(parkingDetails.getDetailId());
             count +=i;
         }
-        return count;
+        if(count>0) {
+            return ResponseEntity.success();
+        }
+        return ResponseEntity.error();
     }
 
 }

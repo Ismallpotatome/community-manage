@@ -5,6 +5,7 @@ import com.community.manage.domain.dto.ParkingUseDto;
 import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.service.ParkingDetailService;
+import com.community.manage.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,36 +20,38 @@ public class ParkingDetailController {
 
 
     @PostMapping("select")
-    public List<TbParkingDetail> selectAll(@RequestParam(value = "keyword") String keyword, String begin, String end, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<TbParkingDetail>> selectAll(@RequestParam(value = "keyword") String keyword, String begin, String end, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
         List<TbParkingDetail> tbParkingDetails = parkingDetailService.selectAll(keyword, begin, end, limit, offset);
-        return tbParkingDetails;
+        return ResponseEntity.success(tbParkingDetails);
     }
 
 
     //添加一条信息
     @PostMapping("insert")
-    public int insert(@RequestBody ParkingDetailDto parkingDetailDto){
+    public ResponseEntity insert(@RequestBody ParkingDetailDto parkingDetailDto){
+        ResponseEntity responseEntity = parkingDetailService.insert(parkingDetailDto);
 
-
-        return parkingDetailService.insert(parkingDetailDto);
+        return responseEntity;
     }
 
     //修改所有信息
     @PostMapping("updateAll")
-    public int updateAll(@RequestBody ParkingDetailDto parkingDetailDto){
+    public ResponseEntity updateAll(@RequestBody ParkingDetailDto parkingDetailDto){
 
+        ResponseEntity responseEntity = parkingDetailService.updateAll(parkingDetailDto);
 
-
-        return parkingDetailService.updateAll(parkingDetailDto);
+        return responseEntity;
     }
 
     //批量删除信息
     @PostMapping("del")
-    public int delOne(@RequestBody List<ParkingDetailDto> parkingDetailDto){
+    public ResponseEntity delOne(@RequestBody List<ParkingDetailDto> parkingDetailDto){
 
-        return parkingDetailService.del(parkingDetailDto);
+        ResponseEntity del = parkingDetailService.del(parkingDetailDto);
+
+        return del;
 
     }
 
