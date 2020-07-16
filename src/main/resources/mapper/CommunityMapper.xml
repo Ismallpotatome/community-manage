@@ -229,4 +229,13 @@
   <update id="updateStatus">
     update community set community_status = #{status} where community_id = #{communityId}
   </update>
+  <select id="selectOneCommunity" resultMap="BaseResultMap">
+    select * from community where community_id = #{communityId}
+  </select>
+  <select id="selectAllCommunity" resultMap="BaseResultMap">
+    select * from community
+  </select>
+  <select id="selectCommunityByName" resultMap="BaseResultMap">
+    select * from community where community_name = #{communityName}
+  </select>
 </mapper>

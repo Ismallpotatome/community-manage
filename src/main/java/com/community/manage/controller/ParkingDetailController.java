@@ -2,6 +2,7 @@ package com.community.manage.controller;
 
 import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.dto.ParkingUseDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.domain.entity.TbParkingUser;
 import com.community.manage.service.ParkingDetailService;
@@ -20,11 +21,11 @@ public class ParkingDetailController {
 
 
     @PostMapping("select")
-    public ResponseEntity<List<TbParkingDetail>> selectAll(@RequestParam(value = "keyword") String keyword, String begin, String end, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<ParkingDetailDto>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
-        List<TbParkingDetail> tbParkingDetails = parkingDetailService.selectAll(keyword, begin, end, limit, offset);
-        return ResponseEntity.success(tbParkingDetails);
+        List<ParkingDetailDto> parkingDetailDtoList = parkingDetailService.selectAll(searchsDto, limit, offset);
+        return ResponseEntity.success(parkingDetailDtoList);
     }
 
 

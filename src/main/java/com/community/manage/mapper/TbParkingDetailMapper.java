@@ -21,7 +21,7 @@ public interface TbParkingDetailMapper {
     List<TbParkingDetail> selectByCondition(@Param("keyword") String keyword, @Param("begin") String begin, @Param("end") String end, @Param("limit") int limit, @Param("offset") int offset);
 
     /**
-     * 这里是添加 需要输入外键id,车位名称,车位编号
+     * 这里是添加
      *
      * @param detail 需要插入的对象
      * @return

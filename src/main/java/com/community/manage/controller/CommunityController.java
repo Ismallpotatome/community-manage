@@ -48,7 +48,7 @@ public class CommunityController {
      * @return
      */
     @PostMapping("/deleteBatch")
-    public Result<List<CommunityDto>> deleteOne(@RequestBody List<CommunityDto> communityDtos) {
+    public Result<List<CommunityDto>> deleteBatch(@RequestBody List<CommunityDto> communityDtos) {
         List<CommunityDto> dtos = communityService.deleteBatch(communityDtos);
         if (communityDtos == null) {
             return Result.success(null);
@@ -61,7 +61,7 @@ public class CommunityController {
      * @param communityDto 封装了一条小区的信息,还有startDate,endDate,page,size
      * @return 返回修改后当前页面数据条数
      */
-    @GetMapping("/updateOne")
+    @PostMapping("/updateOne")
     public Result<List<CommunityDto>> updateOne(@RequestBody CommunityDto communityDto) {
         List<CommunityDto> communityDtos = communityService.updateOne(communityDto);
         if (communityDtos == null) {

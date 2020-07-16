@@ -1,8 +1,12 @@
 package com.community.manage.service.impl;
 import com.community.manage.domain.dto.CommunityDto;
+import com.community.manage.domain.entity.Build;
 import com.community.manage.domain.entity.Community;
+import com.community.manage.domain.entity.Home;
+import com.community.manage.mapper.BuildMapper;
 import com.community.manage.mapper.CommunityMapper;
 import com.community.manage.mapper.CommunityDtoMapper;
+import com.community.manage.mapper.HomeMapper;
 import com.community.manage.service.CommunityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,10 @@ import java.util.List;
 public class CommunityServiceImpl implements CommunityService {
     @Resource
     CommunityMapper communityMapper;
+    @Resource
+    BuildMapper buildMapper;
+    @Resource
+    HomeMapper homeMapper;
     @Resource
     CommunityDtoMapper communityDtoMapper;
     @Override
@@ -104,5 +112,20 @@ public class CommunityServiceImpl implements CommunityService {
         } else {
             return "修改失败";
         }
+    }
+    //根据小区Id查询出所有的房产
+    public List<Home> selectHomeByCommunityId(int communityId) {
+        List<Build> builds = buildMapper.selectAllBuildByCommunityId(communityId);
+        List<Home> homes = homeMapper.selectAllHome(builds);
+        return homes;
+    }
+    //根据小区Id查询出所有栋数
+    public List<Build> selectBuildByCommunityId(int communityId) {
+        List<Build> builds = buildMapper.selectAllBuildByCommunityId(communityId);
+        return builds;
+    }
+    //根据小区Id查询出一条小区
+    public Community selectOneCommunity(int communityId) {
+       return communityMapper.selectOneCommunity(communityId);
     }
 }

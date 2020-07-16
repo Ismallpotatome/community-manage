@@ -33,12 +33,12 @@ public class TbMangeActivity {
     /**
     * 开始时间
     */
-    private Date activityBegin;
+    private String activityBegin;
 
     /**
     * 截止时间
     */
-    private Date activityEnd;
+    private String activityEnd;
 
     /**
     * 创建时间
