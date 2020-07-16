@@ -12,109 +12,78 @@
     <result column="mail_status" jdbcType="INTEGER" property="mailStatus" />
     <result column="mail_is_del" jdbcType="INTEGER" property="mailIsDel" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    mail_id, community_id, mail_source, mail_title, mail_create_time, mail_status, mail_is_del
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from tb_mange_mail
-    where mail_id = #{mailId,jdbcType=INTEGER}
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    SELECT mail_id, community_id, mail_source, mail_title, mail_create_time, mail_status
+    FROM tb_mange_mail m
+    <trim prefix="where" prefixOverrides="and">
+      <if test="keyword != null and keyword != ''">
+        and mail_source like concat('%',#{keyword} ,'%') or mail_title like concat('%',#{keyword} ,'%')
+        or community_id like concat('%',#{keyword} ,'%')
+      </if>
+
+      <if test="begin != null and begin != '' and end != null and end != ''">
+        and mail_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+      </if>
+      and mail_is_del = 1
+    </trim>
+
+    limit #{limit},#{offset}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from tb_mange_mail
-    where mail_id = #{mailId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="mail_id" keyProperty="mailId" parameterType="com.community.manage.domain.entity.TbMangeMail" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_mail (community_id, mail_source, mail_title, 
-      mail_create_time, mail_status, mail_is_del
-      )
-    values (#{communityId,jdbcType=INTEGER}, #{mailSource,jdbcType=VARCHAR}, #{mailTitle,jdbcType=VARCHAR}, 
-      #{mailCreateTime,jdbcType=TIMESTAMP}, #{mailStatus,jdbcType=INTEGER}, #{mailIsDel,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" keyColumn="mail_id" keyProperty="mailId" parameterType="com.community.manage.domain.entity.TbMangeMail" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_mail
+  <insert id="insertMangeActivity">
+    insert into  tb_mange_mail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
+      <if test="tbMangeMail.communityId != null ">
         community_id,
       </if>
-      <if test="mailSource != null">
+      <if test="tbMangeMail.mailSource != null">
         mail_source,
       </if>
-      <if test="mailTitle != null">
+      <if test="tbMangeMail.mailTitle != null ">
         mail_title,
       </if>
-      <if test="mailCreateTime != null">
-        mail_create_time,
-      </if>
-      <if test="mailStatus != null">
-        mail_status,
-      </if>
-      <if test="mailIsDel != null">
-        mail_is_del,
-      </if>
+
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        #{communityId,jdbcType=INTEGER},
+      <if test="tbMangeMail.communityId != null">
+        #{tbMangeMail.communityId },
       </if>
-      <if test="mailSource != null">
-        #{mailSource,jdbcType=VARCHAR},
+      <if test="tbMangeMail.mailSource != null ">
+        #{tbMangeMail.mailSource},
       </if>
-      <if test="mailTitle != null">
-        #{mailTitle,jdbcType=VARCHAR},
+      <if test="tbMangeMail.mailTitle != null">
+        #{tbMangeMail.mailTitle},
       </if>
-      <if test="mailCreateTime != null">
-        #{mailCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="mailStatus != null">
-        #{mailStatus,jdbcType=INTEGER},
-      </if>
-      <if test="mailIsDel != null">
-        #{mailIsDel,jdbcType=INTEGER},
-      </if>
+
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.TbMangeMail">
-    <!--@mbg.generated-->
-    update tb_mange_mail
+  <update id="updateAll">
+    update tb_mange_mail m
     <set>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=INTEGER},
-      </if>
-      <if test="mailSource != null">
-        mail_source = #{mailSource,jdbcType=VARCHAR},
-      </if>
-      <if test="mailTitle != null">
-        mail_title = #{mailTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="mailCreateTime != null">
-        mail_create_time = #{mailCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="mailStatus != null">
-        mail_status = #{mailStatus,jdbcType=INTEGER},
-      </if>
-      <if test="mailIsDel != null">
-        mail_is_del = #{mailIsDel,jdbcType=INTEGER},
-      </if>
+      <trim suffixOverrides=",">
+        <if test="tbMangeMail.communityId != null ">
+          community_id=#{tbMangeMail.communityId},
+        </if>
+        <if test="tbMangeMail.mailSource != null">
+          mail_source=#{tbMangeMail.mailSource},
+        </if>
+        <if test="tbMangeMail.mailTitle != null ">
+          mail_title=#{tbMangeMail.mailTitle},
+        </if>
+
+        <if test="tbMangeMail.mailStatus != null ">
+          mail_status=#{tbMangeMail.mailStatus},
+        </if>
+
+
+      </trim>
     </set>
-    where mail_id = #{mailId,jdbcType=INTEGER}
+    where mail_id =#{tbMangeMail.mailId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbMangeMail">
-    <!--@mbg.generated-->
+  <update id="delById">
     update tb_mange_mail
-    set community_id = #{communityId,jdbcType=INTEGER},
-      mail_source = #{mailSource,jdbcType=VARCHAR},
-      mail_title = #{mailTitle,jdbcType=VARCHAR},
-      mail_create_time = #{mailCreateTime,jdbcType=TIMESTAMP},
-      mail_status = #{mailStatus,jdbcType=INTEGER},
-      mail_is_del = #{mailIsDel,jdbcType=INTEGER}
-    where mail_id = #{mailId,jdbcType=INTEGER}
+    set mail_is_del = 0
+    where mail_id=#{MailId}
   </update>
+
 </mapper>
