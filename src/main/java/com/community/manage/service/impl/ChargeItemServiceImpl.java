@@ -8,7 +8,6 @@ import com.community.manage.domain.vo.ChargeItemBean;
 import com.community.manage.mapper.ChargeItemMapper;
 import com.community.manage.mapper.ChargeMapper;
 import com.community.manage.service.ChargeItemService;
-import com.community.manage.util.GenerateCodeUtil;
 import com.community.manage.util.ResponseEntity;
 import com.community.manage.util.ServiceException;
 import org.springframework.stereotype.Service;
@@ -96,6 +95,9 @@ public class ChargeItemServiceImpl implements ChargeItemService {
         return ResponseEntity.error();
     }
 
+    /**
+     * 通过小区名字好缴费项目反向获取id
+     */
     private int selectChargeNameById(String chargeName,String communityName){
 
         Charge charge = chargeMapper.selectByName(chargeName, communityName);

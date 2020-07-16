@@ -3,8 +3,10 @@ package com.community.manage.service.impl;
 import com.community.manage.domain.dto.AssetsInfoDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.entity.Assets;
+import com.community.manage.domain.entity.Community;
 import com.community.manage.domain.vo.AssetsBean;
 import com.community.manage.mapper.AssetsMapper;
+import com.community.manage.mapper.DesktopMapper;
 import com.community.manage.service.AssetsService;
 import com.community.manage.util.GenerateCodeUtil;
 import com.community.manage.util.ResponseEntity;
@@ -19,6 +21,8 @@ import java.util.List;
 public class AssetsServiceImpl implements AssetsService {
     @Resource
     AssetsMapper assetsMapper;
+    @Resource
+    DesktopMapper desktopMapper;
 
     /**
      * 查询所有的信息，逻辑处理
@@ -136,6 +140,7 @@ public class AssetsServiceImpl implements AssetsService {
      * @return
      */
     private int selectIdByName(String commounityName){
-        return 1;
+        Community community = desktopMapper.selectIdByName(commounityName);
+        return community.getCommunityId();
     }
 }
