@@ -1,5 +1,6 @@
 package com.community.manage.service;
 
+import com.community.manage.domain.dto.ChargeInfoDto;
 import com.community.manage.domain.dto.SearchDto;
 import com.community.manage.domain.vo.ChargeBean;
 import com.community.manage.util.ResponseEntity;
@@ -15,7 +16,7 @@ public interface ChargeService {
 
     ResponseEntity deleteById(int[] chargeId) throws Exception;
 
-    ResponseEntity insertAssets();
+    ResponseEntity insertAssets(ChargeInfoDto chargeInfoDto);
 
-    ResponseEntity updateAssets();
+    ResponseEntity updateAssets(ChargeInfoDto chargeInfoDto);
 }

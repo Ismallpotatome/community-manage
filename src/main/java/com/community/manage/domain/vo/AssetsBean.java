@@ -1,7 +1,9 @@
 package com.community.manage.domain.vo;
 
 import com.community.manage.domain.entity.Community;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -52,6 +54,8 @@ public class AssetsBean implements Serializable {
     /**
      * 建立时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp assetsEstablishDate;
 
     /**
