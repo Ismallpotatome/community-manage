@@ -55,7 +55,8 @@ public class HomeServiceImpl implements HomeService {
         Community community = communityMapper.selectCommunityByName(homeDto.getCommunityName());
         Build build = buildMapper.selectByName(community.getCommunityId(), homeDto.getBuildName());
         Home home = new Home();
-
+        BeanUtils.copyProperties(homeDto, home);
+        home.setBuildId(build.getBuildId());
         return null;
     }
 

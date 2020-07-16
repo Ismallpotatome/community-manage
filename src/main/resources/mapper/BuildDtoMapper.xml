@@ -34,5 +34,5 @@
         select b.*, c.community_name from build b left join community c on b.community_id = c.community_id
         where b.community_id = #{communityId}
     </select>
-
+</mapper>
 
