@@ -185,4 +185,25 @@
       #{home.homeId}
     </foreach>
   </delete>
+    <delete id="insertOne">
+      insert into home (owner_id, build_id, home_numbe, home_name, home_room, home_unit, home_layer, home_describe, home_create_time)
+        values (#{home.ownerId}, #{home.buildId}, #{home.homeNumbe}, #{home.homeName}, #{home.homeRoom}, #{home.homeUnit},
+      #{home.homeLayer}, #{home.homeDescribe}, #{home.homeCreateTime})
+    </delete>
+  <update id="updateOne">
+    update home
+    <trim prefix="set" suffixOverrides=",">
+      <if test="home.ownerId != null">owner_id = #{home.ownerId},</if>
+      <if test="home.buildId != null">build_id = #{home.buildId},</if>
+      <if test="home.homeNumbe != null">home_numbe = #{home.homeNumbe},</if>
+      <if test="home.homeName != null"> home_name = #{home.homeName},</if>
+      <if test="home.homeRoom != null"> home_room = #{home.homeRoom},</if>
+      <if test="home.homeUnit != null">home_unit = #{home.homeUnit},</if>
+      <if test="home.homeLayer != null">home_layer = #{home.homeLayer}, </if>
+      <if test="home.homeDescribe != null"> home_describe = #{home.homeDescribe},</if>
+      <if test="home.homeCreateTime != null">home_create_time = #{home.homeCreateTime},</if>
+      <if test="home.homeIsDelete != null">home_is_delete = #{home.homeIsDelete},</if>
+    </trim>
+        where home_id = #{home.homeId}
+  </update>
 </mapper>

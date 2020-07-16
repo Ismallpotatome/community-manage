@@ -28,4 +28,8 @@ public interface HomeMapper {
     int deleteOne(@Param("homeId") int homeId);
     //根据房产集合批量删除房产
     int deleteBatch(@Param("homes") List<Home> homes);
+    //插入一条home数据记录
+    int insertOne(@Param("home") Home home);
+    //修改一条记录
+    int updateOne(@Param("home") Home home);
 }

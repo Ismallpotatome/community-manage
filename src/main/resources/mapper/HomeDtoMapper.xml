@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.HomeDtoMapper">
+    <resultMap id="BaseResultMap" type="com.community.manage.domain.dto.HomeDto" extends="com.community.manage.mapper.HomeMapper.BaseResultMap">
+        <result property="communityName" column="community_name"/>
+        <result property="buildName" column="bulid_name"/>
+    </resultMap>
+    <select id="selectByKeyword" resultMap="BaseResultMap">
+       select h.*,b.bulid_name,c.community_name from home h left join build b on h.build_id = b.build_id
+                            left join community c on b.community_id = c.community_id
+         <trim prefixOverrides="and|or" prefix="where">
+             <if test="homeDto.startDate != null">
+               and  home_create_time between #{homeDto.startDate} and #{homeDto.endDate}
+             </if>
+             <if test="homeDto.homeName != null" >
+                 and home_name like concat('%',#{homeDto.homeName},'%')
+             </if>
+         </trim>
+        and home_is_delete = 0 limit #{homeDto.startDate}, #{homeDto.endDate}
+    </select>
+    <select id="selectHomeNumber" resultType="com.community.manage.domain.dto.HomeDto">
+        select count(1) msgNumber from home h left join build b on h.build_id = b.build_id
+        left join community c on b.community_id = c.community_id
+        <trim prefixOverrides="and|or" prefix="where">
+            <if test="homeDto.startDate != null">
+                and  home_create_time between #{homeDto.startDate} and #{homeDto.endDate}
+            </if>
+            <if test="homeDto.homeName != null" >
+                and home_name like concat('%',#{homeDto.homeName},'%')
+            </if>
+        </trim>
+        and home_is_delete = 0 limit #{homeDto.startDate}, #{homeDto.endDate}
+    </select>
+    <select id="selectOne" resultMap="BaseResultMap">
+        select h.*,b.bulid_name,c.community_name from home h left join build b on h.build_id = b.build_id
+                                                             left join community c on b.community_id = c.community_id
+        where home_id = #{homeId} and home_is_delete = 0
+    </select>
+</mapper>
+

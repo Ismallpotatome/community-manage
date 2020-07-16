@@ -5,7 +5,15 @@
         <result property="communityName" column="community_name"/>
     </resultMap>
     <select id="selectMsgNumber" resultType="com.community.manage.domain.dto.BuildDto">
-        select count(1) msgNumber from build
+        select count(1) msgNumber from build b left join community c on b.community_id = c.community_id
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="buildDto.startDate != null">
+                and build_create_time between #{buildDto.startDate} and #{buildDto.endDate}
+            </if>
+            <if test="buildDto.bulidName != null">
+                and bulid_name like concat('%',#{buildDto.bulidName},'%')
+            </if>
+        </trim> and build_is_delete = 0 limit #{buildDto.page}, #{buildDto.size}
     </select>
     <select id="selectByKeyword" resultMap="BaseResultMap">
         select b.*,c.community_name from build b left join community c on b.community_id = c.community_id
@@ -17,6 +25,14 @@
                 and bulid_name like concat('%',#{buildDto.bulidName},'%')
             </if>
         </trim> and build_is_delete = 0 limit #{buildDto.page}, #{buildDto.size}
+    </select>
+    <select id="selectOne" resultMap="BaseResultMap">
+        select b.*, c.community_name from build b left join community c on b.community_id = c.community_id
+        where build_id = #{buildId}
+    </select>
+    <select id="selectAllBuildDto" resultMap="BaseResultMap">
+        select b.*, c.community_name from build b left join community c on b.community_id = c.community_id
+        where b.community_id = #{communityId}
     </select>
 </mapper>
 

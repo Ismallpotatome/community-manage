@@ -11,4 +11,5 @@ public class HomeDto extends Home {
     private int size = 3;
     private String communityName;
     private String buildName;
+    private int msgNumber;
 }
