@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface MangeWarrantyService {
 
-    List<TbMangeWarranty> selectAll(SearchsDto searchsDto, int limit, int offset);
+    List<MangeWarrantyDto> selectAll(SearchsDto searchsDto, int limit, int offset);
 
 
     ResponseEntity insert(MangeWarrantyDto mangeWarrantyDto);

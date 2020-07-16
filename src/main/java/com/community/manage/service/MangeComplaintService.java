@@ -8,7 +8,7 @@ import com.community.manage.util.ResponseEntity;
 import java.util.List;
 
 public interface MangeComplaintService {
-    List<TbMangeComplaint> selectAll(SearchsDto searchsDto, int limit, int offset);
+    List<MangeComplaintDto> selectAll(SearchsDto searchsDto, int limit, int offset);
 
 
     ResponseEntity insert(MangeComplaintDto mangeComplaintDto);

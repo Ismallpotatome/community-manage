@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ParkingDetailService {
 
-    List<TbParkingDetail> selectAll(SearchsDto searchsDto, int limit, int offset);
+    List<ParkingDetailDto> selectAll(SearchsDto searchsDto, int limit, int offset);
 
 
     ResponseEntity insert(ParkingDetailDto parkingDetailDto);

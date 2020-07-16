@@ -12,7 +12,7 @@ import java.util.List;
 public interface MangeActivityService {
 
 
-    List<TbMangeActivity> selectAll(SearchsDto searchsDto, int limit, int offset);
+    List<MangeActivityDto> selectAll(SearchsDto searchsDto, int limit, int offset);
 
 
     ResponseEntity insert(MangeActivityDto mangeActivityDto);

@@ -17,11 +17,11 @@ public class MangeActivityController {
     MangeActivityService mangeActivityService;
 
     @PostMapping("select")
-    public ResponseEntity<List<TbMangeActivity>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<MangeActivityDto>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
-        List<TbMangeActivity> tbMangeActivities = mangeActivityService.selectAll(searchsDto, limit, offset);
-        return ResponseEntity.success(tbMangeActivities);
+        List<MangeActivityDto> mangeActivityDtoList = mangeActivityService.selectAll(searchsDto, limit, offset);
+        return ResponseEntity.success(mangeActivityDtoList);
     }
 
     //添加一条信息

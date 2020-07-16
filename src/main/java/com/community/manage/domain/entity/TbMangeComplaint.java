@@ -15,6 +15,8 @@ public class TbMangeComplaint {
     */
     private Integer communityId;
 
+
+
     /**
     * 投诉人员
     */

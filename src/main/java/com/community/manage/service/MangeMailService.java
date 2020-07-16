@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MangeMailService {
 
-    List<TbMangeMail> selectAll(SearchsDto searchsDto, int limit, int offset);
+    List<MangeMailDto> selectAll(SearchsDto searchsDto, int limit, int offset);
 
 
     ResponseEntity insert(MangeMailDto mangeMainDto);

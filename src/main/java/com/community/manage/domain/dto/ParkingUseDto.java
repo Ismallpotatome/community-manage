@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 public class ParkingUseDto extends TbParkingUser  implements Serializable {
-    List<ParkingUseDto> list;
+
 
     private Integer userId;
 

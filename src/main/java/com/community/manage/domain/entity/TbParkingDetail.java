@@ -54,12 +54,12 @@ public class TbParkingDetail {
     /**
      * 开始时间
      */
-    private Date detailBegin;
+    private String detailBegin;
 
     /**
      * 截止时间
      */
-    private Date detailOut;
+    private String detailOut;
 
     /**
      * 创建时间

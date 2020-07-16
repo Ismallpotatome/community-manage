@@ -18,11 +18,11 @@ public class MangeWarrantyController {
     MangeWarrantyService mangeWarrantyService;
 
     @PostMapping("select")
-    public ResponseEntity<List<TbMangeWarranty>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<MangeWarrantyDto>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
-        List<TbMangeWarranty> tbMangeWarranties = mangeWarrantyService.selectAll(searchsDto, limit, offset);
-        return ResponseEntity.success(tbMangeWarranties);
+        List<MangeWarrantyDto> mangeWarrantyDtoList = mangeWarrantyService.selectAll(searchsDto, limit, offset);
+        return ResponseEntity.success(mangeWarrantyDtoList);
     }
 
     //添加一条信息

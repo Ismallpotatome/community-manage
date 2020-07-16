@@ -1,10 +1,13 @@
 package com.community.manage.mapper;
 
+
 import com.community.manage.domain.entity.TbParkingUser;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TbParkingUserMapper {
+
+    TbParkingUser selectByNum(@Param("userNum") String userNum);
 
     /**
      * 这是对应网页的条件查询搜索框

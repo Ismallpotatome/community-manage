@@ -70,7 +70,8 @@ public class ParkingUserServiceImpl implements ParkingUserService {
         TbParkingUser parkingUser = new TbParkingUser();
 
         String communityName = parkingUserDto.getCommunityName();
-
+        Community community = communityMapper.selectCommunityByName(communityName);
+        parkingUserDto.setCommunityId(community.getCommunityId());
 
 
         BeanUtils.copyProperties(parkingUserDto,parkingUser);
@@ -93,6 +94,11 @@ public class ParkingUserServiceImpl implements ParkingUserService {
     @Override
     public ResponseEntity updateAll(ParkingUseDto parkingUseDto) {
         TbParkingUser parkingUser = new TbParkingUser();
+
+        String communityName = parkingUseDto.getCommunityName();
+        Community community = communityMapper.selectCommunityByName(communityName);
+        parkingUseDto.setCommunityId(community.getCommunityId());
+
         BeanUtils.copyProperties(parkingUseDto,parkingUser);
         int i = parkingUserMapper.updateAll(parkingUser);
         if(i>0) {

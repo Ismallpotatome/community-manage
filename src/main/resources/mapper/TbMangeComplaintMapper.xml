@@ -66,8 +66,8 @@
     update tb_mange_complaint c
     <set>
       <trim suffixOverrides=",">
-        <if test="tbMangeComplaint.complaintId != null ">
-          community_id=#{tbMangeComplaint.complaintId},
+        <if test="tbMangeComplaint.communityId != null ">
+          community_id=#{tbMangeComplaint.communityId},
         </if>
         <if test="tbMangeComplaint.complaintUse != null">
           complaint_use=#{tbMangeComplaint.complaintUse},

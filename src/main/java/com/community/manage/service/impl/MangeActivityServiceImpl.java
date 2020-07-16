@@ -3,8 +3,10 @@ package com.community.manage.service.impl;
 import com.community.manage.domain.dto.MangeActivityDto;
 import com.community.manage.domain.dto.ParkingDetailDto;
 import com.community.manage.domain.dto.SearchsDto;
+import com.community.manage.domain.entity.Community;
 import com.community.manage.domain.entity.TbMangeActivity;
 import com.community.manage.domain.entity.TbParkingDetail;
+import com.community.manage.mapper.CommunityMapper;
 import com.community.manage.mapper.TbMangeActivityMapper;
 import com.community.manage.service.MangeActivityService;
 import com.community.manage.util.ResponseEntity;
@@ -19,9 +21,11 @@ import java.util.List;
 public class MangeActivityServiceImpl implements MangeActivityService {
     @Resource
     TbMangeActivityMapper mangeActivityMapper;
+    @Resource
+    CommunityMapper communityMapper;
 
     @Override
-    public List<TbMangeActivity> selectAll(SearchsDto searchsDto, int limit, int offset) {
+    public List<MangeActivityDto> selectAll(SearchsDto searchsDto, int limit, int offset) {
         MangeActivityDto mangeActivityDto;
 
         String keyword = searchsDto.getKeyword();
@@ -31,15 +35,37 @@ public class MangeActivityServiceImpl implements MangeActivityService {
 
         List<TbMangeActivity> tbMangeActivities = mangeActivityMapper.selectByCondition(keyword, begin, end, limit, offset);
 
+//      这里开始进行转化,把TbParkingUser对象转化为ParkingUserDto对象
+        MangeActivityDto mangeActivityDto1;
+        List<MangeActivityDto> mangeActivityDtoList = new ArrayList<>();
 
-        return tbMangeActivities;
+        for (TbMangeActivity tbMangeActivity: tbMangeActivities) {
+            //获取外键id
+            Integer communityId = tbMangeActivity.getCommunityId();
+            //用id从community中找到对象
+            Community community = communityMapper.selectOneCommunity(communityId);
+
+            mangeActivityDto1 =new MangeActivityDto();
+            BeanUtils.copyProperties(tbMangeActivity,mangeActivityDto1 );
+            mangeActivityDto1.setCommunityName(community.getCommunityName());
+            mangeActivityDtoList.add(mangeActivityDto1);
+
+        }
+
+        return mangeActivityDtoList;
 
     }
 
     @Override
     public ResponseEntity insert(MangeActivityDto mangeActivityDto) {
         TbMangeActivity mangeActivity = new TbMangeActivity();
+
+        String communityName = mangeActivityDto.getCommunityName();
+        Community community = communityMapper.selectCommunityByName(communityName);
+        mangeActivityDto.setCommunityId(community.getCommunityId());
+
         BeanUtils.copyProperties(mangeActivityDto,mangeActivity);
+
         int i =mangeActivityMapper.insertMangeActivity(mangeActivity);
         if(i>0) {
             return ResponseEntity.success();
@@ -50,6 +76,11 @@ public class MangeActivityServiceImpl implements MangeActivityService {
     @Override
     public ResponseEntity updateAll(MangeActivityDto mangeActivityDto) {
         TbMangeActivity mangeActivity = new TbMangeActivity();
+
+        String communityName = mangeActivityDto.getCommunityName();
+        Community community = communityMapper.selectCommunityByName(communityName);
+        mangeActivityDto.setCommunityId(community.getCommunityId());
+
         BeanUtils.copyProperties(mangeActivityDto,mangeActivity);
         int i =mangeActivityMapper.updateAll(mangeActivity);
         if(i>0) {

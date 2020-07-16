@@ -16,6 +16,7 @@ public interface ParkingUserService {
     List<ParkingUseDto> selectAll(SearchsDto searchsDto,int limit,int offset);
 
 
+
     ResponseEntity insert(ParkingUseDto parkingUserDto);
 
     ResponseEntity  updateById(int status,int id);

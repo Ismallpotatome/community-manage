@@ -20,11 +20,11 @@ public class MangeComplaintController {
     MangeComplaintService mangeComplaintService;
 
     @PostMapping("select")
-    public ResponseEntity<List<TbMangeComplaint>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<MangeComplaintDto>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
-        List<TbMangeComplaint> tbMangeComplaints = mangeComplaintService.selectAll(searchsDto, limit, offset);
-        return ResponseEntity.success(tbMangeComplaints);
+        List<MangeComplaintDto> mangeComplaintDtos = mangeComplaintService.selectAll(searchsDto, limit, offset);
+        return ResponseEntity.success(mangeComplaintDtos);
     }
 
     //添加一条信息

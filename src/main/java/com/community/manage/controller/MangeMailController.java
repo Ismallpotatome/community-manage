@@ -19,11 +19,11 @@ public class MangeMailController {
     MangeMailService mangeMailService;
 
     @PostMapping("select")
-    public ResponseEntity<List<TbMangeMail>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<MangeMailDto>> selectAll(@RequestBody SearchsDto searchsDto, @RequestParam(defaultValue = "1") int limit, @RequestParam(defaultValue = "10") int offset){
 
 
-        List<TbMangeMail> tbMangeMails = mangeMailService.selectAll(searchsDto, limit, offset);
-        return ResponseEntity.success(tbMangeMails);
+        List<MangeMailDto> mangeMailDtos = mangeMailService.selectAll(searchsDto, limit, offset);
+        return ResponseEntity.success(mangeMailDtos);
     }
 
     //添加一条信息
