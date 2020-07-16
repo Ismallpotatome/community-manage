@@ -165,6 +165,24 @@
     where home_id = #{homeId,jdbcType=INTEGER}
   </update>
     <select id="selectByBuildId" resultMap="BaseResultMap">
-      select * from home where
+      select * from home where build_id = #{buildId}
     </select>
+  <select id="selectAllHome" resultMap="BaseResultMap">
+    select * from home where build_id in
+    <foreach collection="builds" item="build" open="(" close=")" separator=",">
+      #{build.buildId}
+    </foreach>
+  </select>
+  <select id="selectOne" resultMap="BaseResultMap">
+    select * from home where home_id = #{homeId}
+  </select>
+  <delete id="deleteOne">
+    update home set home_is_delete = 1 where home_id = #{homeId}
+  </delete>
+  <delete id="deleteBatch">
+    select * from home where home_id in
+    <foreach collection="homes" item="home" open="(" close=")" separator=",">
+      #{home.homeId}
+    </foreach>
+  </delete>
 </mapper>

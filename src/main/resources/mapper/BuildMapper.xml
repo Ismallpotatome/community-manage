@@ -129,4 +129,48 @@
       build_is_delete = #{buildIsDelete,jdbcType=INTEGER}
     where build_id = #{buildId,jdbcType=INTEGER}
   </update>
+    <select id="selectAllBuildByCommunityId" resultMap="BaseResultMap">
+      select * from build where build_id = #{communityId}
+    </select>
+  <delete id="deleteAllBuild">
+    update build set build_is_delete = 1 where build_id in
+    <foreach collection="builds" item="build" separator="," open="(" close=")">
+      #{build.buildId}
+    </foreach>
+  </delete>
+  <delete id="deleteOne">
+    update build set build_is_delete = 1 where build_id = #{buildId}
+  </delete>
+  <update id="updateOne">
+    update build
+    <trim prefix="set" suffixOverrides=",">
+      <if test="build.communityId != null">
+        community_id = #{build.communityId},
+      </if>
+      <if test="build.bulidName != null">
+        bulid_name = #{build.bulidName},
+      </if>
+      <if test="build.buildNumber != null">
+        build_number = #{build.buildNumber},
+      </if>
+      <if test="build.buildHome != null">
+        build_home = #{build.buildHome},
+      </if>
+      <if test="build.buildDescribe != null">
+        build_describe = #{build.buildDescribe},
+      </if>
+      <if test="build.buildCreateTime != null">
+        build_create_time = #{build.buildCreateTime},
+      </if>
+      <if test="build.buildIsDelete != null">
+        build_is_delete = #{build.buildIsDelete},
+      </if>
+    </trim>
+    where build_id = #{build.buildId}
+  </update>
+
+  <insert id="insertOne">
+    insert into build(bulid_name, build_number, build_home, build_describe, build_create_time) values ( #{build.bulidName}, #{build.buildNumber},
+    #{build.buildHome}, #{build.buildDescribe}, #{build.buildCreateTime})
+  </insert>
 </mapper>
