@@ -164,6 +164,7 @@
         a.assets_brand, a.assets_purchase_price, a.assets_purchase_quantity, a.assets_life,
         a.assets_establish_date, a.assets_status, c.community_name
         FROM assets a LEFT JOIN community c ON a.community_id = c.community_id
+        where assets_status=1;
     </select>
 
     <select id="selectByKey" resultMap="AssetsBeanResultMap">
@@ -185,6 +186,7 @@
               > #{assetsSearchDto.endTime}
             </if>
           </if>
+          and assets_status=1
         </trim>
     </select>
 

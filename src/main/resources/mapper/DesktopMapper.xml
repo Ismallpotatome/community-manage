@@ -1,0 +1,101 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.community.manage.mapper.DesktopMapper">
+
+    <resultMap id="BuildCountResultMap" type="com.community.manage.domain.dto.DesktopDto.BuildCount">
+        <result property="buildCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="HomeCountResultMap" type="com.community.manage.domain.dto.DesktopDto.HomeCount">
+        <result property="homeCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="OwnerCountResultMap" type="com.community.manage.domain.dto.DesktopDto.OwnerCount">
+        <result property="ownerCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="PerCommunityOwnerResultMap" type="com.community.manage.domain.dto.DesktopDto.PerCommunityOwner">
+        <result property="communityName" column="community_name"/>
+        <result property="ownerCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="PerMonthComplaintResultMap" type="com.community.manage.domain.dto.DesktopDto.PerMonthComplaint">
+        <result property="month" column="months"/>
+        <result property="complaintCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="PerCommunityParkingResultMap" type="com.community.manage.domain.dto.DesktopDto.PerCommunityParking">
+        <result property="communityName" column="community_name"/>
+        <result property="parkingCount" column="count"/>
+    </resultMap>
+
+    <resultMap id="ActivityStatisticsResultMap" type="com.community.manage.domain.dto.DesktopDto.ActivityStatistics">
+        <result property="activityTittle" column="activity_tittle"/>
+        <result property="activityCreateTime" column="activity_create_time"/>
+    </resultMap>
+
+    <resultMap id="WarrantyStatisticsResultMap" type="com.community.manage.domain.dto.DesktopDto.WarrantyStatistics">
+        <result property="warrantyEquipment" column="warranty_equipment"/>
+        <result property="warrantyCreateTime" column="warranty_create_time"/>
+        <result property="warrantyStatus" column="warranty_status"/>
+    </resultMap>
+
+
+    <select id="selectBuildCount" resultMap="BuildCountResultMap">
+        SELECT COUNT(build_id) `count`
+        FROM build
+        WHERE build_is_delete=0
+    </select>
+
+    <select id="selectHomeCount" resultMap="HomeCountResultMap">
+        SELECT COUNT(home_id) `count`
+        FROM home
+        WHERE home_is_delete=0
+    </select>
+    <select id="selectOwnerCount" resultMap="OwnerCountResultMap">
+        SELECT COUNT(owner_id) `count`
+        FROM owner
+        WHERE owner_status=0
+    </select>
+    <select id="selectPerCommunityOwner" resultMap="PerCommunityOwnerResultMap">
+        SELECT c.community_name,COUNT(o.`owner_name`) `count`
+        FROM community c LEFT JOIN  `owner` o ON c.community_id = o.community_id
+        WHERE c.community_status=1
+        GROUP BY c.community_name
+    </select>
+    <select id="selectPerMonthComplaint" resultMap="PerMonthComplaintResultMap">
+
+        SELECT months, COUNT(*) `count`
+        FROM(
+        SELECT DATE_FORMAT(complaint_create_time, '%m') months
+        FROM tb_mange_complaint
+        WHERE complaint_status=1
+        ) a
+        GROUP BY months
+    </select>
+    <select id="selectPerCommunityParking" resultMap="PerCommunityParkingResultMap">
+        SELECT c.community_name,COUNT(tb.user_id) `count`
+        FROM community c LEFT JOIN  tb_parking_user tb ON c.community_id = tb.community_id
+        WHERE c.community_status=1
+        GROUP BY c.community_name
+    </select>
+    <select id="selectActivityStatistics" resultMap="ActivityStatisticsResultMap">
+        SELECT activity_tittle,activity_create_time
+        FROM tb_mange_activity
+        WHERE activity_status=1
+        ORDER BY activity_create_time DESC
+        LIMIT 0,10
+    </select>
+    <select id="selectWarrantyStatistics" resultMap="WarrantyStatisticsResultMap">
+        SELECT warranty_equipment, warranty_create_time, warranty_status
+        FROM tb_mange_warranty
+        WHERE warranty_is_del=1
+        ORDER BY warranty_create_time DESC
+        LIMIT 0,10
+    </select>
+    <select id="selectIdByName" resultMap="com.community.manage.mapper.CommunityMapper.BaseResultMap">
+        SELECT community_id
+        FROM community
+        WHERE community_status=1 AND community_name=#{communityName}
+    </select>
+</mapper>

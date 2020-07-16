@@ -1,6 +1,8 @@
 package com.community.manage.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,11 +22,6 @@ public class AssetsInfoDto implements Serializable {
      * 小区名称
      */
     private String communityName;
-
-    /**
-     * 设备编号
-     */
-    private String assetsNum;
 
     /**
      * 设备名称
@@ -54,5 +51,7 @@ public class AssetsInfoDto implements Serializable {
     /**
      * 建立时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp assetsEstablishDate;
 }
