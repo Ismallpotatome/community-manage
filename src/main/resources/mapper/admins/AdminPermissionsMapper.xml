@@ -18,11 +18,11 @@
     <insert id="insertPermissions">
         insert into permissions(permissions_name, permissions_describe, permissions_createtime,
                                 permissions_updatetime)
-        values (#{permissions.permissionsName}, #{permissions.permissionsDescribe}, now(), now())
+        values (#{permissions.permissionsName}, #{permissions.permissionsDescribe}, date(now()), date(now()))
     </insert>
     <!--  批量修改"权限"的"状态"  -->
     <update id="updateBatchPermissions">
-        update permissions set permissions_status = 1,permissions_updatetime = now()
+        update permissions set permissions_status = 1,permissions_updatetime = date(now())
         where permissions_status = 0 and permissions_id in
         <foreach collection="permissionsIdList" item="permissionsId" open="(" close=")" separator=",">
             #{permissionsId}
@@ -41,7 +41,7 @@
             <if test="permissions.permissionsStatus != null">
                 permissions_status = #{permissions.permissionsStatus},
             </if>
-            permissions_updatetime = now()
+            permissions_updatetime = date(now())
         </set>
         where permissions_id= #{permissions.permissionsId}
     </update>
@@ -55,7 +55,7 @@
     <update id="updateSinglePermissions">
         update permissions
         set permissions_status     = 1,
-            permissions_updatetime = now()
+            permissions_updatetime = date(now())
         where permissions_status = 0
           and permissions_id = #{permissionsId}
     </update>
@@ -63,7 +63,7 @@
     <update id="updateStatusStart">
         update permissions
         set permissions_status     = 0,
-            permissions_updatetime = now()
+            permissions_updatetime = date(now())
         where (permissions_status = 1 or permissions_status = 2)
           and permissions_id = #{permissionsId}
     </update>
@@ -71,7 +71,7 @@
     <update id="updateStatusDisable">
         update permissions
         set permissions_status     = 2,
-        permissions_updatetime = now()
+        permissions_updatetime = date(now())
         where permissions_status = 0
         and permissions_id = #{permissionsId}
     </update>

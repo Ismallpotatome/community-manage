@@ -1,9 +1,11 @@
 package com.community.manage.domain.dto;
 
+import com.community.manage.domain.entity.Permissions;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * "管理员角色"的封装信息
@@ -34,5 +36,10 @@ public class AdminRoleDto implements Serializable {
      * 状态,1:已删除,0:未删除
      */
     private Integer adminRoleStatus;
+
+    /**
+     * 管理员角色所拥有的权限的id集合
+     */
+    private List<Integer> permissionsIdList;
 
 }

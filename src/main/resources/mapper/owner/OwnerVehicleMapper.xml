@@ -31,17 +31,17 @@
         insert into vehicle(vehicle_owner_id, vehicle_number, vehicle_color,
                             vehicle_describe,vehicle_createtime,vehicle_updatetime,vehicle_status)
         values (#{vehicle.vehicleOwnerId}, #{vehicle.vehicleNumber}, #{vehicle.vehicleColor},
-                #{vehicle.vehicleDescribe},now(),now(),0)
+                #{vehicle.vehicleDescribe},date(now()),date(now()),0)
     </insert>
     <update id="updateBatchVehicle">
-        update vehicle set  vehicle_status = 1,vehicle_updatetime = now()
+        update vehicle set  vehicle_status = 1,vehicle_updatetime = date(now())
         where vehicle_status = 0 and vehicle_id in
        <foreach collection="vehicleIdList" item="vehicleId" open="(" close=")" separator=",">
            #{vehicleId}
        </foreach>
     </update>
     <update id="updateSingleVehicle">
-        update vehicle set vehicle_status = 1,vehicle_updatetime= now()
+        update vehicle set vehicle_status = 1,vehicle_updatetime= date(now())
         where vehicle_status = 0 and vehicle_id = #{vehicleId}
 
     </update>
@@ -63,7 +63,7 @@
             <if test="vehicle.vehicleDescribe">
                 vehicle_describe = #{vehicle.vehicleDescribe},
             </if>
-            vehicle_updatetime = now()
+            vehicle_updatetime = date(now())
         </set>
         where vehicle_id = #{vehicle.vehicleId}
     </update>

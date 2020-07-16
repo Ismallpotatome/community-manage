@@ -32,11 +32,11 @@
     <insert id="insertPet">
         insert into pet(pet_owner_id, pet_name, pet_color, pet_adoptiontime, pet_describe, pet_createtime,
                         pet_updatetime)
-        values (#{pet.petOwnerId}, #{pet.petName}, #{pet.petColor}, #{pet.petAdoptiontime}, #{pet.petDescribe}, now(),
-                now())
+        values (#{pet.petOwnerId}, #{pet.petName}, #{pet.petColor}, #{pet.petAdoptiontime}, #{pet.petDescribe}, date(now()),
+        date(now()))
     </insert>
     <update id="updateBatchPet">
-        update pet set  pet_status = 1,pet_updatetime = now()
+        update pet set  pet_status = 1,pet_updatetime = date(now())
         where pet_status = 0 and pet_id in
         <foreach collection="petIdList" item="petId" open="(" close=")" separator=",">
             #{petId}
@@ -60,12 +60,12 @@
             <if test="pet.petDescribe">
                 pet_describe = #{pet.petDescribe},
             </if>
-            pet_updatetime = now()
+            pet_updatetime = date(now())
         </set>
         where pet_id = #{pet.petId}
     </update>
     <update id="updateSinglePet">
-        update pet set pet_status = 1,pet_updatetime = now()
+        update pet set pet_status = 1,pet_updatetime = date(now())
         where pet_status = 0 and pet_id = #{petId}
     </update>
 </mapper>

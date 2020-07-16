@@ -9,6 +9,7 @@ import com.community.manage.domain.entity.AdminRole;
 import com.community.manage.domain.entity.Permissions;
 import com.community.manage.mapper.admins.AdminInfoMapper;
 import com.community.manage.mapper.admins.AdminPermissionsMapper;
+import com.community.manage.mapper.admins.AdminPermissionsRoleMapper;
 import com.community.manage.mapper.admins.AdminsRoleMapper;
 import com.community.manage.service.AdminsService;
 import com.community.manage.util.ResponseEntity;
@@ -27,6 +28,8 @@ public class AdminsServiceImpl implements AdminsService {
     AdminsRoleMapper adminsRoleMapper;
     @Resource
     AdminPermissionsMapper adminPermissionsMapper;
+    @Resource
+    AdminPermissionsRoleMapper adminPermissionsRoleMapper;
 
     /**
      * 分页处理
@@ -178,11 +181,29 @@ public class AdminsServiceImpl implements AdminsService {
     public ResponseEntity addRole(AdminRoleDto adminRoleDto) {
         AdminRole adminRole = new AdminRole();
         BeanUtils.copyProperties(adminRoleDto, adminRole);
-        int i = adminsRoleMapper.insertRole(adminRole);
-        if (i > 0) {
-            return ResponseEntity.success();
+        //添加管理员角色的基本信息
+        int insertRoleResult = adminsRoleMapper.insertRole(adminRole);
+        if (insertRoleResult > 0) {
+            //管理员角色的信息添加成功
+            //添加管理员角色的权限问题
+            List<Integer> permissionsIdList = adminRoleDto.getPermissionsIdList();
+            //获取添加管理员角色后返回的角色id
+            Integer adminRoleId = adminRole.getAdminRoleId();
+            //记录添加角色_权限的执行成功次数
+            int insertPermissionsRoleResult = 0;
+            //遍历权限id集合添加角色_权限
+            for (Integer permissionsId : permissionsIdList) {
+               insertPermissionsRoleResult += adminPermissionsRoleMapper.insertPermissionsRole(permissionsId, adminRoleId);
+            }
+            //判断是否全部插入成功
+            if(insertPermissionsRoleResult == permissionsIdList.size()){
+                //当权限id集合的长度和执行成功的次数相同则全部插入成功
+                return ResponseEntity.success();
+            }else {
+                return ResponseEntity.error();
+            }
         } else {
-            return ResponseEntity.error();
+           return ResponseEntity.error();
         }
     }
 

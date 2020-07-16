@@ -15,14 +15,14 @@
         from admin_role
     </select>
     <!-- 添加信息   -->
-    <insert id="insertRole">
+    <insert id="insertRole" keyProperty="adminRole.adminRoleId" useGeneratedKeys="true">
         insert into admin_role(admin_role_name, admin_role_describe, admin_role_createtime,
                                admin_role_updatetime)
-        values (#{adminRole.adminRoleName}, #{adminRole.adminRoleDescribe}, now(), now())
+        values (#{adminRole.adminRoleName}, #{adminRole.adminRoleDescribe}, date(now()), date(now()))
     </insert>
     <!--  批量修改状态  -->
     <update id="updateBatchRole">
-        update admin_role set admin_role_status = 1,admin_role_updatetime = now()
+        update admin_role set admin_role_status = 1,admin_role_updatetime = date(now())
         where admin_role_status = 0 and admin_role_id in
         <foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">
             #{roleId}
@@ -41,7 +41,7 @@
             <if test="adminRole.adminRoleStatus != null">
                 admin_role_status = #{adminRole.adminRoleStatus},
             </if>
-            admin_role_updatetime = now()
+            admin_role_updatetime = date(now())
         </set>
         where admin_role_id= #{adminRole.adminRoleId}
     </update>
@@ -55,7 +55,7 @@
     <update id="updateSingleRole">
         update admin_role
         set admin_role_status     = 1,
-            admin_role_updatetime = now()
+            admin_role_updatetime = date(now())
         where admin_role_status = 0
           and admin_role_id = #{roleId}
     </update>
@@ -63,7 +63,7 @@
     <update id="updateStatusStart">
         update admin_role
         set admin_role_status     = 0,
-            admin_role_updatetime = now()
+            admin_role_updatetime = date(now())
         where (admin_role_status = 1 or admin_role_status = 2)
           and admin_role_id = #{roleId}
     </update>
@@ -71,7 +71,7 @@
     <update id="updateStatusDisable">
         update admin_role
         set admin_role_status     = 2,
-        admin_role_updatetime = now()
+        admin_role_updatetime = date(now())
         where admin_role_status = 0
         and admin_role_id = #{roleId}
     </update>

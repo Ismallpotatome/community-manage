@@ -24,4 +24,5 @@ public interface AdminsRoleMapper {
     int updateStatusStart(@Param("roleId") Integer roleId);
     //根据id修改状态为2,即禁用
     int updateStatusDisable(@Param("roleId") Integer roleId);
+
 }
