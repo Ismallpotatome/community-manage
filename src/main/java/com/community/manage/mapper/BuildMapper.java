@@ -29,7 +29,13 @@ public interface BuildMapper {
     int updateOne(@Param("build") Build build);
     //添加一条信息
     int insertOne(@Param("build") Build build);
-
-
+    //获取所有的栋数,里面封装了栋数id,名字,还有小区id
+    List<Build> selectAllBuild();
+    //根据栋数Id获取一条栋数
+    Build selectOne(@Param("buildId") int buildId);
+    //根据栋数名称获取栋数条数
+    List<Build> selectBuildByName(String buildName);
+    //通过小区Id和栋数名称查询出一条栋数记录
+    Build selectByName(@Param("communityId") int communityId, @Param("buildName") String buildName);
 
 }

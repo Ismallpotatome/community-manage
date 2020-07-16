@@ -1,21 +1,21 @@
 package com.community.manage.service;
 
 import com.community.manage.domain.dto.BuildDto;
+import com.community.manage.domain.dto.HomeDto;
 import com.community.manage.domain.entity.Build;
+import com.community.manage.util.TwoResult;
 
 import java.util.List;
 
 public interface HomeService {
     //查询
-    BuildDto selectByKeyword(BuildDto buildDto);
+    TwoResult<List<HomeDto>> selectByKeyword(HomeDto homeDto);
     //批量删除
-    BuildDto deleteBatch(List<Build> builds);
+    List<HomeDto> deleteBatch(List<HomeDto> homeDtos);
     //添加一条记录
-    String addOne(BuildDto buildDto);
+    String addOne(HomeDto homeDto);
     //修改一条记录
-    BuildDto updateOne(BuildDto buildDto);
+    String updateOne(HomeDto homeDto);
     //删除一条记录
-    BuildDto deleteOne(BuildDto buildDto);
-    //查询总条数
-    int selectMsgNumber(BuildDto buildDto);
+    List<HomeDto> deleteOne(HomeDto homeDto);
 }

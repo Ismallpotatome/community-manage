@@ -173,4 +173,16 @@
     insert into build(bulid_name, build_number, build_home, build_describe, build_create_time) values ( #{build.bulidName}, #{build.buildNumber},
     #{build.buildHome}, #{build.buildDescribe}, #{build.buildCreateTime})
   </insert>
+  <select id="selectAllBuild" resultMap="BaseResultMap">
+    select * from build;
+  </select>
+  <select id="selectOne" resultMap="BaseResultMap">
+    select * from build where build_id = #{buildId}
+  </select>
+  <select id="selectBuildByName" resultMap="BaseResultMap">
+    select * from build where bulid_name = #{buildName}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select * from build where bulid_name = #{buildName} and community_id = #{communityId}
+  </select>
 </mapper>

@@ -39,4 +39,6 @@ public interface CommunityMapper {
     Community selectOneCommunity(@Param("communityId") int communityId);
     //查询所以小区的信息包含名字和id
     List<Community> selectAllCommunity();
+    //根据小区名字获取一条小区信息
+    Community selectCommunityByName(@Param("communityName") String communityName);
 }
