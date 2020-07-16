@@ -20,7 +20,7 @@
           and community_id = #{communityId}
     </select>
     <select id="selectBySearchAndLimit" resultMap="searchResultMap">
-        select owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, owner_sex,
+        select o.owner_id ,owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, owner_sex,
         owner_type, owner_describe, owner_createtime, home_name,community_name
         from owner o left join community c on o.community_id = c.community_id
         left join home h on o.owner_id = h.owner_id
