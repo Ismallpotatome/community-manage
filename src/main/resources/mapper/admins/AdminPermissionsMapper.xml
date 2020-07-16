@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.community.manage.mapper.admins.AdminPermissionsMapper">
+    <resultMap id="BaseResult" type="com.community.manage.domain.dto.PermissionsDto"
+               extends="com.community.manage.mapper.PermissionsMapper.BaseResultMap">
+
+    </resultMap>
+    <!-- 查询全部信息   -->
+    <select id="selectAll" resultMap="BaseResult">
+        select permissions_id,
+               permissions_name,
+               permissions_describe,
+               permissions_createtime,
+               permissions_status
+        from permissions
+    </select>
+    <!-- 添加权限   -->
+    <insert id="insertPermissions">
+        insert into permissions(permissions_name, permissions_describe, permissions_createtime,
+                                permissions_updatetime)
+        values (#{permissions.permissionsName}, #{permissions.permissionsDescribe}, date(now()), date(now()))
+    </insert>
+    <!--  批量修改"权限"的"状态"  -->
+    <update id="updateBatchPermissions">
+        update permissions set permissions_status = 1,permissions_updatetime = date(now())
+        where permissions_status = 0 and permissions_id in
+        <foreach collection="permissionsIdList" item="permissionsId" open="(" close=")" separator=",">
+            #{permissionsId}
+        </foreach>
+    </update>
+    <!--  修改信息  -->
+    <update id="updatePermissions">
+        update permissions
+        <set>
+            <if test="permissions.permissionsName != null">
+                permissions_name = #{permissions.permissionsName},
+            </if>
+            <if test="permissions.permissionsDescribe != null">
+                permissions_describe = #{permissions.permissionsDescribe},
+            </if>
+            <if test="permissions.permissionsStatus != null">
+                permissions_status = #{permissions.permissionsStatus},
+            </if>
+            permissions_updatetime = date(now())
+        </set>
+        where permissions_id= #{permissions.permissionsId}
+    </update>
+    <!--  查询"状态"  -->
+    <select id="selectStatusByPermissionsId" resultType="int">
+        select permissions_status
+        from permissions
+        where permissions_id = #{permissionsId}
+    </select>
+    <!-- 修改状态为1   -->
+    <update id="updateSinglePermissions">
+        update permissions
+        set permissions_status     = 1,
+            permissions_updatetime = date(now())
+        where permissions_status = 0
+          and permissions_id = #{permissionsId}
+    </update>
+    <!--  修改状态为0  -->
+    <update id="updateStatusStart">
+        update permissions
+        set permissions_status     = 0,
+            permissions_updatetime = date(now())
+        where (permissions_status = 1 or permissions_status = 2)
+          and permissions_id = #{permissionsId}
+    </update>
+    <!-- 修改状态为2   -->
+    <update id="updateStatusDisable">
+        update permissions
+        set permissions_status     = 2,
+        permissions_updatetime = date(now())
+        where permissions_status = 0
+        and permissions_id = #{permissionsId}
+    </update>
+
+
+</mapper>

@@ -5,6 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * "宠物"封装类
+ */
 @Data
 public class PetDto implements Serializable {
     /**

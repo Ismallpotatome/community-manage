@@ -1,5 +1,6 @@
 package com.community.manage.controller;
 
+import com.community.manage.domain.dto.OwnerDto;
 import com.community.manage.domain.dto.PetDto;
 import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.dto.VehicleDto;
@@ -23,10 +24,48 @@ public class OwnerController {
      */
     @PostMapping("personnel/search")
     public ResponseEntity personnelSearch(@RequestBody SearchsDto searchDto) {
-
-        return null;
+        return ownerService.personnelSearchByPage(searchDto);
     }
 
+    /**
+     * 添加业主
+     * @param ownerDto
+     * @return
+     */
+    @PostMapping("personnel/add")
+    public ResponseEntity personnelAdd(@RequestBody OwnerDto ownerDto){
+        return  ownerService.addPersonnel(ownerDto);
+    }
+
+    /**
+     * 批量删除业主
+     * @param personnelIdList
+     * @return
+     */
+    @PostMapping("personnel/delete_batch")
+    public ResponseEntity personnelBatchDelete(@RequestBody List<Integer> personnelIdList){
+        return ownerService.deleteBatchPersonnel(personnelIdList);
+    }
+
+    /**
+     * 修改"业主"信息
+     * @param ownerDto
+     * @return
+     */
+    @PostMapping("personnel/alter")
+    public ResponseEntity personnelAlter(@RequestBody OwnerDto ownerDto){
+        return ownerService.personnelAlter(ownerDto);
+    }
+
+    /**
+     * 删除单个业主
+     * @param personnelId
+     * @return
+     */
+    @PostMapping("personnel/delete_single")
+    public ResponseEntity personnelSingleDelete(@RequestBody Integer personnelId){
+        return ownerService.deleteSinglePersonnel(personnelId);
+    }
     /**
      * 通过小区id查询业主的名称和id
      * @param communityId
@@ -138,6 +177,6 @@ public class OwnerController {
      */
     @PostMapping("pet/delete_single")
     public ResponseEntity petSingleDelete(@RequestBody Integer petId){
-        return null;
+        return ownerService.deleteSinglePet(petId);
     }
 }
