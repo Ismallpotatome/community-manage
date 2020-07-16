@@ -19,9 +19,9 @@ public class ParkingUserController {
 
 
     @PostMapping("select")
-    public ResponseEntity<List<TbParkingUser>> selectAll(@RequestBody SearchsDto searchsDto,@RequestParam(defaultValue = "1") int limit,@RequestParam(defaultValue = "10") int offset){
+    public ResponseEntity<List<ParkingUseDto>> selectAll(@RequestBody SearchsDto searchsDto,@RequestParam(defaultValue = "1") int limit,@RequestParam(defaultValue = "10") int offset){
 
-        List<TbParkingUser> tbParkingUsers = parkingUserService.selectAll(searchsDto,limit, offset);
+        List<ParkingUseDto> tbParkingUsers = parkingUserService.selectAll(searchsDto,limit, offset);
         return ResponseEntity.success(tbParkingUsers);
     }
 

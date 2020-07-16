@@ -13,7 +13,7 @@ import com.community.manage.util.ResponseEntity;
 import java.util.List;
 
 public interface ParkingUserService {
-    List<TbParkingUser> selectAll(SearchsDto searchsDto,int limit,int offset);
+    List<ParkingUseDto> selectAll(SearchsDto searchsDto,int limit,int offset);
 
 
     ResponseEntity insert(ParkingUseDto parkingUserDto);
