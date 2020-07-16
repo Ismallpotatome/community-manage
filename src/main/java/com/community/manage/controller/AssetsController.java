@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/assets")
 public class AssetsController {
+
     @Resource(name = "assetsServiceImpl")
     AssetsService assetsService;
 
@@ -47,7 +48,9 @@ public class AssetsController {
      */
     @RequestMapping("/delete")
     public ResponseEntity deletAssets(int assetsId){
+
         ResponseEntity responseEntity = assetsService.deleteById(assetsId);
+
         return responseEntity;
     }
 
@@ -59,7 +62,9 @@ public class AssetsController {
      */
     @PostMapping("/deletes")
     public ResponseEntity deleteAssets(@RequestBody int[] assetsIds) throws Exception {
+
         ResponseEntity responseEntity = assetsService.deleteById(assetsIds);
+
         return responseEntity;
     }
 
@@ -68,14 +73,18 @@ public class AssetsController {
      * @param assetsUpdateInfo 前端传输过来的数据
      * @return
      */
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public ResponseEntity insertNewAssets(@RequestBody AssetsInfoDto assetsUpdateInfo){
+
         ResponseEntity responseEntity = assetsService.insertAssets(assetsUpdateInfo);
+
         return responseEntity;
     }
-    @PostMapping("update")
+    @PostMapping("/update")
     public ResponseEntity updateAssetsInfo(@RequestBody AssetsInfoDto assetsUpdateInfo){
+
         ResponseEntity responseEntity = assetsService.updateAssets(assetsUpdateInfo);
+
         return responseEntity;
     }
 }
