@@ -14,5 +14,65 @@
                admin_role_status
         from admin_role
     </select>
-
+    <!-- 添加信息   -->
+    <insert id="insertRole">
+        insert into admin_role(admin_role_name, admin_role_describe, admin_role_createtime,
+                               admin_role_updatetime)
+        values (#{adminRole.adminRoleName}, #{adminRole.adminRoleDescribe}, now(), now())
+    </insert>
+    <!--  批量修改状态  -->
+    <update id="updateBatchRole">
+        update admin_role set admin_role_status = 1,admin_role_updatetime = now()
+        where admin_role_status = 0 and admin_role_id in
+        <foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </update>
+    <!--  修改信息  -->
+    <update id="updateRole">
+        update admin_role
+        <set>
+            <if test="adminRole.adminRoleName != null">
+                admin_role_name = #{adminRole.adminRoleName},
+            </if>
+            <if test="adminRole.adminRoleDescribe != null">
+                admin_role_describe = #{adminRole.adminRoleDescribe},
+            </if>
+            <if test="adminRole.adminRoleStatus != null">
+                admin_role_status = #{adminRole.adminRoleStatus},
+            </if>
+            admin_role_updatetime = now()
+        </set>
+        where admin_role_id= #{adminRole.adminRoleId}
+    </update>
+    <!--  查询状态  -->
+    <select id="selectStatusByRoleId" resultType="int">
+        select admin_role_status
+        from admin_role
+        where admin_role_id = #{roleId}
+    </select>
+    <!-- 修改状态为1   -->
+    <update id="updateSingleRole">
+        update admin_role
+        set admin_role_status     = 1,
+            admin_role_updatetime = now()
+        where admin_role_status = 0
+          and admin_role_id = #{roleId}
+    </update>
+    <!-- 修改状态为0   -->
+    <update id="updateStatusStart">
+        update admin_role
+        set admin_role_status     = 0,
+            admin_role_updatetime = now()
+        where (admin_role_status = 1 or admin_role_status = 2)
+          and admin_role_id = #{roleId}
+    </update>
+    <!--  修改状态为2  -->
+    <update id="updateStatusDisable">
+        update admin_role
+        set admin_role_status     = 2,
+        admin_role_updatetime = now()
+        where admin_role_status = 0
+        and admin_role_id = #{roleId}
+    </update>
 </mapper>

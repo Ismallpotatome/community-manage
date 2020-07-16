@@ -5,6 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * "管理员角色"的封装信息
+ */
 @Data
 public class AdminRoleDto implements Serializable {
     /**
