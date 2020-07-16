@@ -40,7 +40,12 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public List<HomeDto> deleteBatch(List<HomeDto> homeDtos) {
         List<Home> homes = new ArrayList<>();
-        BeanUtils.copyProperties(homeDtos, homes);
+        Home home = null;
+        for (int i = 0; i < homeDtos.size(); i++) {
+            home = new Home();
+            BeanUtils.copyProperties(homeDtos.get(i),home);
+            homes.add(home);
+        }
         int i = homeMapper.deleteBatch(homes);
         if (i > 0) {
             int page = (homeDtos.get(0).getPage() - 1) * homeDtos.get(0).getSize();
@@ -57,15 +62,26 @@ public class HomeServiceImpl implements HomeService {
         Home home = new Home();
         BeanUtils.copyProperties(homeDto, home);
         home.setBuildId(build.getBuildId());
-        return null;
+        int i = homeMapper.insertOne(home);
+        if (i > 0) {
+            return  "插入成功";
+        }
+        return "插入失败";
     }
 
     @Override
     public String updateOne(HomeDto homeDto) {
-        int buildId = -1;
+        if (homeDto.getBuildName() != null && homeDto.getCommunityName() != null) {
+            Community community = communityMapper.selectCommunityByName(homeDto.getCommunityName());
+            Build build = buildMapper.selectByName(community.getCommunityId(), homeDto.getBuildName());
+            Home home = new Home();
+            BeanUtils.copyProperties(homeDto, home);
+            home.setBuildId(build.getBuildId());
+            int i = homeMapper.updateOne(home);
+            return "修改成功影响行数" + i;
+        }
         Home home = new Home();
         BeanUtils.copyProperties(homeDto, home);
-        home.setBuildId(buildId);
         int i = homeMapper.updateOne(home);
         return "修改成功影响行数" + i;
     }

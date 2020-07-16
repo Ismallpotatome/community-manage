@@ -27,9 +27,6 @@ public class CommunityServiceImpl implements CommunityService {
     CommunityDtoMapper communityDtoMapper;
     @Override
     public List<CommunityDto> selectByFilter(CommunityDto filter) {
-        if (filter.getStartDate() == null) {
-            return null;
-        }
         int limit = (filter.getPage() - 1) * filter.getSize();
         filter.setPage(limit);
         List<CommunityDto> communityDtos = communityDtoMapper.selectFilter(filter);
@@ -47,17 +44,17 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<CommunityDto> deleteOne(CommunityDto communityDto) {
+    public String deleteOne(CommunityDto communityDto) {
         List<CommunityDto> communityDtos = null;
         int i = communityMapper.deleteOne(communityDto.getCommunityId());
         if (i > 0) {
-            communityDtos = selectByFilter(communityDto);
+            return  "删除成功";
         }
-        return communityDtos;
+        return "删除失败";
     }
 
     @Override
-    public List<CommunityDto> deleteBatch(List<CommunityDto> communityDtos) {
+    public String deleteBatch(List<CommunityDto> communityDtos) {
         ArrayList<Community> communities = new ArrayList<>();
         Community community = null;
         for (CommunityDto communityDto : communityDtos) {
@@ -65,13 +62,11 @@ public class CommunityServiceImpl implements CommunityService {
             BeanUtils.copyProperties(communityDto, community);
             communities.add(community);
         }
-        List<CommunityDto> dtos = null;
         int batch = communityMapper.deleteBatch(communities);
-        System.out.println(batch);
         if (batch > 0) {
-            dtos = selectByFilter(communityDtos.get(0));
+            return  "删除成功";
         }
-        return dtos;
+        return "删除失败";
     }
 
     @Override
