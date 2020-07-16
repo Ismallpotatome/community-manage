@@ -1,9 +1,9 @@
 package com.community.manage.controller;
 
-import com.community.manage.domain.dto.ChargeInfoDto;
+import com.community.manage.domain.dto.ChargeItemInfoDto;
 import com.community.manage.domain.dto.SearchDto;
-import com.community.manage.domain.vo.ChargeBean;
-import com.community.manage.service.ChargeService;
+import com.community.manage.domain.vo.ChargeItemBean;
+import com.community.manage.service.ChargeItemService;
 import com.community.manage.util.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +14,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/charge")
-public class ChargeController {
+@RequestMapping("charge/item")
+public class ChargeItemController {
+
     @Resource
-    ChargeService chargeService;
+    ChargeItemService chargeItemService;
 
     /**
      * 展示所有的信息
@@ -25,7 +26,7 @@ public class ChargeController {
      */
     @RequestMapping("shows")
     public ResponseEntity showAllCharge(){
-        List<ChargeBean> chargeBeans = chargeService.showAllInfo();
+        List<ChargeItemBean> chargeBeans = chargeItemService.showAllInfo();
         return ResponseEntity.success(chargeBeans);
     }
 
@@ -35,19 +36,19 @@ public class ChargeController {
      * @return
      */
     @PostMapping("/search")
-    public ResponseEntity<List<ChargeBean>> searchByKey(@RequestBody() SearchDto chargeSearchDto){
-        List<ChargeBean> chargeBeans = chargeService.searchByKey(chargeSearchDto);
-        return ResponseEntity.success(chargeBeans);
+    public ResponseEntity<List<ChargeItemBean>> searchByKey(@RequestBody() SearchDto chargeSearchDto){
+        List<ChargeItemBean> chargeItemBeans = chargeItemService.searchByKey(chargeSearchDto);
+        return ResponseEntity.success(chargeItemBeans);
     }
 
     /**
      * 通过ID删除信息
-     * @param chargeId
+     * @param chargeIds
      * @return
      */
     @RequestMapping("/delete")
-    public ResponseEntity deletAssets(int chargeId){
-        ResponseEntity responseEntity = chargeService.deleteById(chargeId);
+    public ResponseEntity deletAssets(int chargeIds){
+        ResponseEntity responseEntity = chargeItemService.deleteById(chargeIds);
         return responseEntity;
     }
 
@@ -59,29 +60,29 @@ public class ChargeController {
      */
     @PostMapping("/deletes")
     public ResponseEntity deleteAssets(@RequestBody int[] chargeIds) throws Exception {
-        ResponseEntity responseEntity = chargeService.deleteById(chargeIds);
+        ResponseEntity responseEntity = chargeItemService.deleteById(chargeIds);
         return responseEntity;
     }
 
     /**
      * 插入新数据
-     * @param chargeInfoDto 前端传输过来的数据
+     * @param chargeItemInfoDto 前端传输过来的数据
      * @return
      */
     @PostMapping("insert")
-    public ResponseEntity insertNewAssets(@RequestBody ChargeInfoDto chargeInfoDto){
-        ResponseEntity responseEntity = chargeService.insertAssets(chargeInfoDto);
+    public ResponseEntity insertNewAssets(@RequestBody ChargeItemInfoDto chargeItemInfoDto){
+        ResponseEntity responseEntity = chargeItemService.insertChargeItem(chargeItemInfoDto);
         return responseEntity;
     }
 
     /**
      * 更新数据
-     * @param chargeInfoDto
+     * @param chargeItemInfoDto
      * @return
      */
     @PostMapping("update")
-    public ResponseEntity updateAssetsInfo(@RequestBody ChargeInfoDto chargeInfoDto){
-        ResponseEntity responseEntity = chargeService.updateAssets(chargeInfoDto);
+    public ResponseEntity updateAssetsInfo(@RequestBody ChargeItemInfoDto chargeItemInfoDto){
+        ResponseEntity responseEntity = chargeItemService.updateChargeItem(chargeItemInfoDto);
         return responseEntity;
     }
 }

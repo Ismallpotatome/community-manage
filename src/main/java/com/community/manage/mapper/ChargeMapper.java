@@ -22,11 +22,14 @@ public interface ChargeMapper {
 
     int updateByPrimaryKey(Charge record);
 
+    Charge selectByName(@Param("chargeName") String chargeName,@Param("communityName") String communityName);
+
+
     List<ChargeBean> selectAll();
 
     List<ChargeBean> selectByKey(@Param("chargeSearchDto") SearchDto chargeSearchDto);
 
-    int updateStatusById(int chargeIds);
+    int updateStatusById(int chargeId);
 
     int updateStatusByIds(@Param("chargeIds") int[] chargeIds);
 }

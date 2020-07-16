@@ -101,6 +101,7 @@ public class ChargeServiceImpl implements ChargeService {
     public ResponseEntity updateAssets(ChargeInfoDto chargeInfoDto) {
         Charge charge = new Charge();
 
+        charge.setChargeId(chargeInfoDto.getChargeId());
         charge.setChargeName(chargeInfoDto.getChargeName());
         charge.setCommunityId(selectIdByName(chargeInfoDto.getCommunityName()));
 

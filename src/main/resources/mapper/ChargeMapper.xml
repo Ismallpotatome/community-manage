@@ -11,7 +11,7 @@
         <result column="charge_establish_date" jdbcType="TIMESTAMP" property="chargeEstablishDate"/>
         <result column="charge_status" jdbcType="INTEGER" property="chargeStatus"/>
     </resultMap>
-    <resultMap id="ChargeBeanResultMap" type="com.community.manage.domain.vo.ChargeBean">
+    <resultMap id="ChargeBeanResultMap" type="com.community.manage.domain.vo.ChargeBean" extends="BaseResultMap">
         <association property="community" resultMap="com.community.manage.mapper.CommunityMapper.BaseResultMap"/>
     </resultMap>
     <sql id="Base_Column_List">
@@ -113,6 +113,7 @@
         select ch.charge_id, ch.community_id, ch.charge_num,
          ch.charge_name, ch.charge_establish_date, ch.charge_status,co.community_name
         from charge ch left join community co on ch.community_id = co.community_id
+        where charge_status=1
     </select>
     <select id="selectByKey" resultMap="ChargeBeanResultMap">
         SELECT ch.charge_id, ch.community_id, ch.charge_num,
@@ -132,17 +133,23 @@
                     > #{chargeSearchDto.endTime}
                 </if>
             </if>
+            and charge_status=1
         </trim>
     </select>
     <update id="updateStatusById">
         UPDATE charge SET charge_status=0
-        WHERE charge_status=#{chargeIds}
+        WHERE charge_id=#{chargeId}
     </update>
     <update id="updateStatusByIds">
         UPDATE charge SET charge_status=0
-        WHERE charge_status IN
+        WHERE charge_id IN
         <foreach collection="chargeIds" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </update>
+    <select id="selectByName" resultMap="BaseResultMap">
+        select charge_id
+        from charge left join community c2 on charge.community_id = c2.community_id
+        where charge_name=#{chargeName} and community_name=#{communityName}
+    </select>
 </mapper>
