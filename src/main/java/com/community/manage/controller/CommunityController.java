@@ -33,27 +33,27 @@ public class CommunityController {
      * @return
      */
     @PostMapping("/deleteOne")
-    public Result<List<CommunityDto>> deleteOne(@RequestBody CommunityDto communityDto) {
-        List<CommunityDto> communityDtos = communityService.deleteOne(communityDto);
-        if (communityDtos == null) {
+    public Result<String> deleteOne(@RequestBody CommunityDto communityDto) {
+        String Dto = communityService.deleteOne(communityDto);
+        if (Dto == null) {
             return Result.success(null);
         }
-        return Result.success(communityDtos);
+        return Result.success(Dto);
     }
 
     /**
-     * 批量删除当前页面中的记录,保证当前页面记录条数不变
+     * 批量删除当前页面中的记录
      *
      * @param communityDtos 把所有数据的id封装进集合还在第一个元素封装了startDate,endDate,page,size
      * @return
      */
     @PostMapping("/deleteBatch")
-    public Result<List<CommunityDto>> deleteBatch(@RequestBody List<CommunityDto> communityDtos) {
-        List<CommunityDto> dtos = communityService.deleteBatch(communityDtos);
-        if (communityDtos == null) {
+    public Result<String> deleteBatch(@RequestBody List<CommunityDto> communityDtos) {
+        String s = communityService.deleteBatch(communityDtos);
+        if (s == null) {
             return Result.success(null);
         }
-        return Result.success(dtos);
+        return Result.success(s);
     }
 
     /**

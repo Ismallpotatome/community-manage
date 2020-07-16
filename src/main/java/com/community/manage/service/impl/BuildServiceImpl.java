@@ -45,7 +45,12 @@ public class BuildServiceImpl implements BuildService {
     @Override
     public List<BuildDto> deleteBatch(List<BuildDto> buildDtos) {
         ArrayList<Build> builds = new ArrayList<>();
-        BeanUtils.copyProperties(buildDtos, builds);
+       Build build = null;
+        for (BuildDto dto : buildDtos) {
+            build = new Build();
+            BeanUtils.copyProperties(dto, build);
+            builds.add(build);
+        }
         int i = buildMapper.deleteAllBuild(builds);
         if (i > 0) {
             return buildDtoMapper.selectByKeyword(buildDtos.get(0));

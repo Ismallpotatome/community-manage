@@ -16,7 +16,7 @@
                  and home_name like concat('%',#{homeDto.homeName},'%')
              </if>
          </trim>
-        and home_is_delete = 0 limit #{homeDto.startDate}, #{homeDto.endDate}
+        and home_is_delete = 0 limit #{homeDto.page}, #{homeDto.size}
     </select>
     <select id="selectHomeNumber" resultType="com.community.manage.domain.dto.HomeDto">
         select count(1) msgNumber from home h left join build b on h.build_id = b.build_id
@@ -29,7 +29,7 @@
                 and home_name like concat('%',#{homeDto.homeName},'%')
             </if>
         </trim>
-        and home_is_delete = 0 limit #{homeDto.startDate}, #{homeDto.endDate}
+        and home_is_delete = 0 limit #{homeDto.page}, #{homeDto.size}
     </select>
     <select id="selectOne" resultMap="BaseResultMap">
         select h.*,b.bulid_name,c.community_name from home h left join build b on h.build_id = b.build_id

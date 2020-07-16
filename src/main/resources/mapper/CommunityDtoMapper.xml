@@ -6,7 +6,7 @@
         select sum(build_home) communityHome from community left join build on community.community_id = build.community_id
         where build.community_id = #{communityDto.communityId}
     </select>
-    <select id="selectFilter" resultType="com.community.manage.domain.dto.CommunityDto">
+    <select id="selectFilter" resultMap="BaseResultMap">
         select * from community
         where
         <trim prefixOverrides="and|or">

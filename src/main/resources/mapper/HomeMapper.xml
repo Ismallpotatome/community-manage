@@ -180,7 +180,7 @@
     update home set home_is_delete = 1 where home_id = #{homeId}
   </delete>
   <delete id="deleteBatch">
-    select * from home where home_id in
+    update home set home_is_delete = 1 where home_id in
     <foreach collection="homes" item="home" open="(" close=")" separator=",">
       #{home.homeId}
     </foreach>
