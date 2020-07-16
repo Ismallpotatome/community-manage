@@ -1,6 +1,7 @@
 package com.community.manage.service.impl;
 
 import com.community.manage.domain.dto.ParkingDetailDto;
+import com.community.manage.domain.dto.SearchsDto;
 import com.community.manage.domain.entity.TbParkingDetail;
 import com.community.manage.mapper.TbParkingDetailMapper;
 import com.community.manage.service.ParkingDetailService;
@@ -19,10 +20,11 @@ public class ParkingDetailServiceImpl implements ParkingDetailService {
 
 
     @Override
-    public List<TbParkingDetail> selectAll(String keyword, String begin, String end, int limit, int offset) {
+    public List<TbParkingDetail> selectAll(SearchsDto searchsDto, int limit, int offset) {
+        String keyword = searchsDto.getKeyword();
+        String begin = searchsDto.getStartDate();
+        String end = searchsDto.getEndData();
         limit = (limit-1)*offset;
-
-
 
         List<TbParkingDetail> tbParkingDetails = parkingDetailMapper.selectByCondition(keyword, begin, end, limit, offset);
 

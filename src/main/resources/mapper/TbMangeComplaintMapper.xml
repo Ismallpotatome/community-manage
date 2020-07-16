@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.manage.mapper.TbMangeComplaintMapper">
   <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.TbMangeComplaint">
-    <!--@mbg.generated-->
-    <!--@Table tb_mange_complaint-->
+
     <id column="complaint_id" jdbcType="INTEGER" property="complaintId" />
     <result column="community_id" jdbcType="INTEGER" property="communityId" />
     <result column="complaint_use" jdbcType="VARCHAR" property="complaintUse" />
@@ -13,120 +12,85 @@
     <result column="complaint_status" jdbcType="INTEGER" property="complaintStatus" />
     <result column="complaint_is_del" jdbcType="INTEGER" property="complaintIsDel" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    complaint_id, community_id, complaint_use, complaint_reason, complaint_describe, 
-    complaint_create_time, complaint_status, complaint_is_del
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from tb_mange_complaint
-    where complaint_id = #{complaintId,jdbcType=INTEGER}
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    SELECT complaint_id, community_id, complaint_use, complaint_reason, complaint_describe, complaint_create_time, complaint_status
+    FROM tb_mange_complaint c
+    <trim prefix="where" prefixOverrides="and">
+      <if test="keyword != null and keyword != ''">
+        and complaint_use like concat('%',#{keyword} ,'%') or complaint_reason like concat('%',#{keyword} ,'%')
+         or complaint_describe like concat('%',#{keyword} ,'%')
+      </if>
+
+      <if test="begin != null and begin != '' and end != null and end != ''">
+        and complaint_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+      </if>
+      and complaint_is_del = 1
+    </trim>
+
+    limit #{limit},#{offset}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from tb_mange_complaint
-    where complaint_id = #{complaintId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="complaint_id" keyProperty="complaintId" parameterType="com.community.manage.domain.entity.TbMangeComplaint" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_complaint (community_id, complaint_use, complaint_reason, 
-      complaint_describe, complaint_create_time, 
-      complaint_status, complaint_is_del)
-    values (#{communityId,jdbcType=INTEGER}, #{complaintUse,jdbcType=VARCHAR}, #{complaintReason,jdbcType=VARCHAR}, 
-      #{complaintDescribe,jdbcType=VARCHAR}, #{complaintCreateTime,jdbcType=TIMESTAMP}, 
-      #{complaintStatus,jdbcType=INTEGER}, #{complaintIsDel,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="complaint_id" keyProperty="complaintId" parameterType="com.community.manage.domain.entity.TbMangeComplaint" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_complaint
+  <insert id="insertMangeComplaint">
+    insert into  tb_mange_complaint
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
+      <if test="tbMangeComplaint.communityId != null ">
         community_id,
       </if>
-      <if test="complaintUse != null">
+      <if test="tbMangeComplaint.complaintUse != null">
         complaint_use,
       </if>
-      <if test="complaintReason != null">
+      <if test="tbMangeComplaint.complaintReason != null ">
         complaint_reason,
       </if>
-      <if test="complaintDescribe != null">
+
+      <if test="tbMangeComplaint.complaintDescribe != null ">
         complaint_describe,
       </if>
-      <if test="complaintCreateTime != null">
-        complaint_create_time,
-      </if>
-      <if test="complaintStatus != null">
-        complaint_status,
-      </if>
-      <if test="complaintIsDel != null">
-        complaint_is_del,
-      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        #{communityId,jdbcType=INTEGER},
+      <if test="tbMangeComplaint.communityId != null">
+        #{tbMangeComplaint.communityId },
       </if>
-      <if test="complaintUse != null">
-        #{complaintUse,jdbcType=VARCHAR},
+      <if test="tbMangeComplaint.complaintUse != null ">
+        #{tbMangeComplaint.complaintUse},
       </if>
-      <if test="complaintReason != null">
-        #{complaintReason,jdbcType=VARCHAR},
+      <if test="tbMangeComplaint.complaintReason != null">
+        #{tbMangeComplaint.complaintReason},
       </if>
-      <if test="complaintDescribe != null">
-        #{complaintDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="complaintCreateTime != null">
-        #{complaintCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="complaintStatus != null">
-        #{complaintStatus,jdbcType=INTEGER},
-      </if>
-      <if test="complaintIsDel != null">
-        #{complaintIsDel,jdbcType=INTEGER},
+      <if test="tbMangeComplaint.complaintDescribe != null">
+        #{tbMangeComplaint.complaintDescribe},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.TbMangeComplaint">
-    <!--@mbg.generated-->
-    update tb_mange_complaint
+  <update id="updateAll">
+    update tb_mange_complaint c
     <set>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=INTEGER},
-      </if>
-      <if test="complaintUse != null">
-        complaint_use = #{complaintUse,jdbcType=VARCHAR},
-      </if>
-      <if test="complaintReason != null">
-        complaint_reason = #{complaintReason,jdbcType=VARCHAR},
-      </if>
-      <if test="complaintDescribe != null">
-        complaint_describe = #{complaintDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="complaintCreateTime != null">
-        complaint_create_time = #{complaintCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="complaintStatus != null">
-        complaint_status = #{complaintStatus,jdbcType=INTEGER},
-      </if>
-      <if test="complaintIsDel != null">
-        complaint_is_del = #{complaintIsDel,jdbcType=INTEGER},
-      </if>
+      <trim suffixOverrides=",">
+        <if test="tbMangeComplaint.complaintId != null ">
+          community_id=#{tbMangeComplaint.complaintId},
+        </if>
+        <if test="tbMangeComplaint.complaintUse != null">
+          complaint_use=#{tbMangeComplaint.complaintUse},
+        </if>
+        <if test="tbMangeComplaint.complaintReason != null ">
+          complaint_reason=#{tbMangeComplaint.complaintReason},
+        </if>
+
+        <if test="tbMangeComplaint.complaintDescribe != null ">
+          complaint_describe=#{tbMangeComplaint.complaintDescribe},
+        </if>
+
+        <if test=" tbMangeComplaint.complaintStatus != null ">
+          complaint_status=#{tbMangeComplaint.complaintStatus},
+        </if>
+      </trim>
     </set>
-    where complaint_id = #{complaintId,jdbcType=INTEGER}
+    where complaint_id =#{tbMangeComplaint.complaintId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbMangeComplaint">
-    <!--@mbg.generated-->
-    update tb_mange_complaint
-    set community_id = #{communityId,jdbcType=INTEGER},
-      complaint_use = #{complaintUse,jdbcType=VARCHAR},
-      complaint_reason = #{complaintReason,jdbcType=VARCHAR},
-      complaint_describe = #{complaintDescribe,jdbcType=VARCHAR},
-      complaint_create_time = #{complaintCreateTime,jdbcType=TIMESTAMP},
-      complaint_status = #{complaintStatus,jdbcType=INTEGER},
-      complaint_is_del = #{complaintIsDel,jdbcType=INTEGER}
-    where complaint_id = #{complaintId,jdbcType=INTEGER}
-  </update>
+  <delete id="delById">
+    update tb_mange_complaint c
+    set complaint_is_del = 0
+    where complaint_id=#{complaintId}
+  </delete>
+
 </mapper>

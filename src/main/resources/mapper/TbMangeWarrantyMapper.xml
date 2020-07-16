@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.manage.mapper.TbMangeWarrantyMapper">
   <resultMap id="BaseResultMap" type="com.community.manage.domain.entity.TbMangeWarranty">
-    <!--@mbg.generated-->
-    <!--@Table tb_mange_warranty-->
+
     <id column="warranty_id" jdbcType="INTEGER" property="warrantyId" />
     <result column="community_id" jdbcType="INTEGER" property="communityId" />
     <result column="warranty_use" jdbcType="VARCHAR" property="warrantyUse" />
@@ -13,120 +12,88 @@
     <result column="warranty_status" jdbcType="INTEGER" property="warrantyStatus" />
     <result column="warranty_is_del" jdbcType="INTEGER" property="warrantyIsDel" />
   </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    warranty_id, community_id, warranty_use, warranty_equipment, warranty_describe, warranty_create_time, 
-    warranty_status, warranty_is_del
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from tb_mange_warranty
-    where warranty_id = #{warrantyId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--@mbg.generated-->
-    delete from tb_mange_warranty
-    where warranty_id = #{warrantyId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="warranty_id" keyProperty="warrantyId" parameterType="com.community.manage.domain.entity.TbMangeWarranty" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_warranty (community_id, warranty_use, warranty_equipment, 
-      warranty_describe, warranty_create_time, 
-      warranty_status, warranty_is_del)
-    values (#{communityId,jdbcType=INTEGER}, #{warrantyUse,jdbcType=VARCHAR}, #{warrantyEquipment,jdbcType=VARCHAR}, 
-      #{warrantyDescribe,jdbcType=VARCHAR}, #{warrantyCreateTime,jdbcType=TIMESTAMP}, 
-      #{warrantyStatus,jdbcType=INTEGER}, #{warrantyIsDel,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="warranty_id" keyProperty="warrantyId" parameterType="com.community.manage.domain.entity.TbMangeWarranty" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into tb_mange_warranty
+
+    <select id="selectByCondition" resultMap="BaseResultMap">
+      SELECT w.warranty_id, community_id, warranty_use, warranty_equipment, warranty_describe, warranty_create_time, warranty_status
+      FROM tb_mange_warranty w
+      <trim prefix="where" prefixOverrides="and">
+        <if test="keyword != null and keyword != ''">
+          and warranty_use like concat('%',#{keyword} ,'%') or warranty_equipment like concat('%',#{keyword} ,'%')
+        </if>
+
+        <if test="begin != null and begin != '' and end != null and end != ''">
+          and warranty_create_time between concat(#{begin},' 00:00:00') and concat(#{end},' 23:59:59')
+        </if>
+        and warranty_is_del = 1
+      </trim>
+
+      limit #{limit},#{offset}
+
+    </select>
+  <insert id="insertMangeWarranty">
+    insert into  tb_mange_warranty
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
+      <if test="mangeWarranty.communityId != null ">
         community_id,
       </if>
-      <if test="warrantyUse != null">
+      <if test="mangeWarranty.warrantyUse != null">
         warranty_use,
       </if>
-      <if test="warrantyEquipment != null">
+      <if test="mangeWarranty.warrantyEquipment != null ">
         warranty_equipment,
       </if>
-      <if test="warrantyDescribe != null">
+
+      <if test="mangeWarranty.warrantyDescribe != null ">
         warranty_describe,
       </if>
-      <if test="warrantyCreateTime != null">
-        warranty_create_time,
-      </if>
-      <if test="warrantyStatus != null">
-        warranty_status,
-      </if>
-      <if test="warrantyIsDel != null">
-        warranty_is_del,
-      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="communityId != null">
-        #{communityId,jdbcType=INTEGER},
+      <if test="mangeWarranty.communityId != null">
+        #{mangeWarranty.communityId},
       </if>
-      <if test="warrantyUse != null">
-        #{warrantyUse,jdbcType=VARCHAR},
+      <if test="mangeWarranty.warrantyUse != null ">
+        #{mangeWarranty.warrantyUse},
       </if>
-      <if test="warrantyEquipment != null">
-        #{warrantyEquipment,jdbcType=VARCHAR},
+      <if test="mangeWarranty.warrantyEquipment != null">
+        #{mangeWarranty.warrantyEquipment},
       </if>
-      <if test="warrantyDescribe != null">
-        #{warrantyDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="warrantyCreateTime != null">
-        #{warrantyCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="warrantyStatus != null">
-        #{warrantyStatus,jdbcType=INTEGER},
-      </if>
-      <if test="warrantyIsDel != null">
-        #{warrantyIsDel,jdbcType=INTEGER},
+      <if test="mangeWarranty.warrantyDescribe != null">
+        #{mangeWarranty.warrantyDescribe },
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.community.manage.domain.entity.TbMangeWarranty">
-    <!--@mbg.generated-->
-    update tb_mange_warranty
+  <update id="updateAll">
+    update tb_mange_warranty w
     <set>
-      <if test="communityId != null">
-        community_id = #{communityId,jdbcType=INTEGER},
-      </if>
-      <if test="warrantyUse != null">
-        warranty_use = #{warrantyUse,jdbcType=VARCHAR},
-      </if>
-      <if test="warrantyEquipment != null">
-        warranty_equipment = #{warrantyEquipment,jdbcType=VARCHAR},
-      </if>
-      <if test="warrantyDescribe != null">
-        warranty_describe = #{warrantyDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="warrantyCreateTime != null">
-        warranty_create_time = #{warrantyCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="warrantyStatus != null">
-        warranty_status = #{warrantyStatus,jdbcType=INTEGER},
-      </if>
-      <if test="warrantyIsDel != null">
-        warranty_is_del = #{warrantyIsDel,jdbcType=INTEGER},
-      </if>
+      <trim suffixOverrides=",">
+        <if test="mangeWarranty.communityId != null ">
+          community_id=#{mangeWarranty.communityId},
+        </if>
+        <if test="mangeWarranty.warrantyUse != null">
+          warranty_use=#{mangeWarranty.warrantyUse},
+        </if>
+        <if test="mangeWarranty.warrantyEquipment != null ">
+          warranty_equipment=#{mangeWarranty.warrantyEquipment},
+        </if>
+
+        <if test="mangeWarranty.warrantyDescribe != null ">
+          warranty_describe=#{mangeWarranty.warrantyDescribe},
+        </if>
+
+        <if test=" mangeWarranty.warrantyStatus != null ">
+          warranty_status=#{mangeWarranty.warrantyStatus},
+        </if>
+
+
+
+      </trim>
     </set>
-    where warranty_id = #{warrantyId,jdbcType=INTEGER}
+    where warranty_id =#{mangeWarranty.warrantyId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.community.manage.domain.entity.TbMangeWarranty">
-    <!--@mbg.generated-->
-    update tb_mange_warranty
-    set community_id = #{communityId,jdbcType=INTEGER},
-      warranty_use = #{warrantyUse,jdbcType=VARCHAR},
-      warranty_equipment = #{warrantyEquipment,jdbcType=VARCHAR},
-      warranty_describe = #{warrantyDescribe,jdbcType=VARCHAR},
-      warranty_create_time = #{warrantyCreateTime,jdbcType=TIMESTAMP},
-      warranty_status = #{warrantyStatus,jdbcType=INTEGER},
-      warranty_is_del = #{warrantyIsDel,jdbcType=INTEGER}
-    where warranty_id = #{warrantyId,jdbcType=INTEGER}
+  <update id="delById">
+    update tb_mange_warranty w
+    set warranty_is_del = 0
+    where w.warranty_id=#{warrantyId}
   </update>
 </mapper>
