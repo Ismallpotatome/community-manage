@@ -6,7 +6,7 @@
         select sum(build_home) communityHome from community left join build on community.community_id = build.community_id
         where build.community_id = #{communityDto.communityId}
     </select>
-    <select id="selectFilter" resultMap="BaseResultMap">
+    <select id="selectFilter" resultType="com.community.manage.domain.dto.CommunityDto">
         select * from community
         where
         <trim prefixOverrides="and|or">
@@ -14,11 +14,20 @@
                 and community_creat_etime between #{communityDto.startDate} and #{communityDto.endDate}
             </if>
             <if test="communityDto.communityName != null">
-                and community_name = #{communityDto.communityName}
+                and community_name like concat('%', #{communityDto.communityName},'%')
             </if>
         </trim>
         and community_is_delete = 0
         limit #{communityDto.page}, #{communityDto.size}
+    </select>
+    <select id="selectAllBuildNumber" resultType="com.community.manage.domain.dto.CommunityDto">
+        select sum(community_build) allBuildNumber from community where community_id = #{communityId}
+    </select>
+    <select id="selectAllHomeNumber" resultType="com.community.manage.domain.dto.CommunityDto">
+        select sum(community_home) allHomeNumber from community where community_id = #{communityId}
+    </select>
+    <select id="selectMsgNumber" resultType="com.community.manage.domain.dto.CommunityDto">
+        select  count(1) msgNumber from community
     </select>
 </mapper>
 

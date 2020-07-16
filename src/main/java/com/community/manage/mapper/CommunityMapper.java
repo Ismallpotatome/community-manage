@@ -35,4 +35,8 @@ public interface CommunityMapper {
     int insertOne(@Param("community") Community community);
     //修改status状态
     int updateStatus(@Param("communityId") int communityId, @Param("status") int status);
+    //根据小区Id筛选出一条小区信息
+    Community selectOneCommunity(@Param("communityId") int communityId);
+    //查询所以小区的信息包含名字和id
+    List<Community> selectAllCommunity();
 }
