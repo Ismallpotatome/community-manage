@@ -77,7 +77,7 @@ public class ParkingUserServiceImpl implements ParkingUserService {
         BeanUtils.copyProperties(parkingUserDto,parkingUser);
         int i = parkingUserMapper.insertParkingUser(parkingUser);
         if(i>0) {
-            return ResponseEntity.success();
+            return ResponseEntity.success("成功");
         }
         return ResponseEntity.error();
     }
