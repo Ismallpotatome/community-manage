@@ -2,6 +2,7 @@ package com.community.manage.domain.dto;
 
 import com.community.manage.domain.entity.Community;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class CommunityDto extends  Community {
@@ -12,4 +13,5 @@ public class CommunityDto extends  Community {
     private int allBuildNumber;
     private int allHomeNumber;
     private int msgNumber;
+    private String communityCreatEtime;
 }

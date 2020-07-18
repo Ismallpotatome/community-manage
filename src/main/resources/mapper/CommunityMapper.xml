@@ -222,8 +222,8 @@
     where community_id = #{community.communityId}
   </update>
   <insert id="insertOne">
-    insert into community(community_name, community_address, community_area, community_build, Community_greening, community_icon, community_developers, community_company, community_creat_etime, community_status)
-      values (#{community.communityName}, #{community.communityAddress},#{community.communityArea}, #{community.communityBuild},#{community.communityGreening},
+    insert into community(community_name, community_home,community_address, community_area, community_build, Community_greening, community_icon, community_developers, community_company, community_creat_etime, community_status)
+      values (#{community.communityName}, #{community.communityHome},#{community.communityAddress},#{community.communityArea}, #{community.communityBuild},#{community.communityGreening},
     #{community.communityIcon},#{community.communityDevelopers}, #{community.communityCompany},#{community.communityCreatEtime},#{community.communityStatus})
   </insert>
   <update id="updateStatus">
