@@ -46,14 +46,15 @@
         </trim>
     </select>
     <insert id="insertPersonnel">
-        insert into owner(community_id, owner_name, owner_idcard, owner_birth, owner_phone, owner_profession, owner_sex,
+        insert into owner(community_id, owner_name, owner_idcard, owner_birth,
+                          owner_phone, owner_profession, owner_sex,
                           owner_type, owner_describe, owner_createtime, owner_updatetime)
         values (#{owner.communityId}, #{owner.ownerName}, #{owner.ownerIdcard}, #{owner.ownerBirth},
                 #{owner.ownerPhone}, #{owner.ownerProfession}, #{owner.ownerSex}, #{owner.ownerType},
-                #{owner.ownerDescribe},date(now()),date(now()))
+                #{owner.ownerDescribe}, date(now()), date(now()))
     </insert>
     <update id="updateBatchPersonnel">
-        update owner set  owner_status = 1,owner_updatetime = date(now())
+        update owner set owner_status = 1,owner_updatetime = date(now())
         where owner_status = 0 and owner_id in
         <foreach collection="personnelIdList" item="personnelId" open="(" close=")" separator=",">
             #{personnelId}
@@ -63,7 +64,7 @@
         update owner
         <set>
             <if test="owner.communityId != null">
-                 community_id = #{owner.communityId},
+                community_id = #{owner.communityId},
             </if>
             <if test="owner.ownerName != null">
                 owner_name = #{owner.ownerName},
@@ -97,7 +98,10 @@
         where owner_id = #{owner.ownerId}
     </update>
     <update id="updateSinglePersonnel">
-        update owner set owner_status = 1,owner_updatetime = date(now())
-        where owner_status = 0 and owner_id = #{personnelId}
+        update owner
+        set owner_status     = 1,
+            owner_updatetime = date(now())
+        where owner_status = 0
+          and owner_id = #{personnelId}
     </update>
 </mapper>
