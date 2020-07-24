@@ -28,7 +28,7 @@ public class AdminsController {
      * @param adminDto:管理员信息的封装类
      * @return
      */
-    @PostMapping("personnel/add")
+    @PostMapping("personnel")
     public ResponseEntity personnelAdd(@RequestBody AdminDto adminDto){
         return  adminsService.addPersonnel(adminDto);
     }
@@ -38,7 +38,7 @@ public class AdminsController {
      * @param personnelIdList:需批量删除的id集合
      * @return
      */
-    @PostMapping("personnel/delete_batch")
+    @PostMapping("personnel/deleteBatch")
     public ResponseEntity personnelBatchDelete(@RequestBody List<Integer> personnelIdList){
         return adminsService.deleteBatchPersonnel(personnelIdList);
     }
@@ -58,7 +58,7 @@ public class AdminsController {
      * @param personnelId
      * @return
      */
-    @PostMapping("personnel/delete_single")
+    @PostMapping("personnel/deleteSingle")
     public ResponseEntity personnelSingleDelete(@RequestBody Integer personnelId){
         return adminsService.deleteSinglePersonnel(personnelId);
     }
@@ -68,7 +68,7 @@ public class AdminsController {
      * @param personnelId
      * @return
      */
-    @PostMapping("personnel/status_alter")
+    @PostMapping("personnel/statusAlter")
     public ResponseEntity personnelStatusAlter(@RequestBody Integer personnelId){
         return adminsService.alterStatusPersonnel(personnelId);
     }
@@ -76,7 +76,7 @@ public class AdminsController {
      * 获取全部的管理员角色信息
      * @return
      */
-    @GetMapping("role/get_all")
+    @GetMapping("role/getAll")
     public ResponseEntity getAdminRoleAll(){
         return adminsService.getRoleAll();
     }
@@ -86,7 +86,7 @@ public class AdminsController {
      * @param adminRoleDto:管理员角色信息的封装类
      * @return
      */
-    @PostMapping("role/add")
+    @PostMapping("role")
     public ResponseEntity roleAdd(@RequestBody AdminRoleDto adminRoleDto){
         return  adminsService.addRole(adminRoleDto);
     }
@@ -96,7 +96,7 @@ public class AdminsController {
      * @param roleIdList:需批量删除的id集合
      * @return
      */
-    @PostMapping("role/delete_batch")
+    @PostMapping("role/deleteBatch")
     public ResponseEntity roleBatchDelete(@RequestBody List<Integer> roleIdList){
         return adminsService.deleteBatchRole(roleIdList);
     }
@@ -116,7 +116,7 @@ public class AdminsController {
      * @param roleId
      * @return
      */
-    @PostMapping("role/delete_single")
+    @PostMapping("role/deleteSingle")
     public ResponseEntity roleSingleDelete(@RequestBody Integer roleId){
         return adminsService.deleteSingleRole(roleId);
     }
@@ -126,7 +126,7 @@ public class AdminsController {
      * @param roleId
      * @return
      */
-    @PostMapping("role/status_alter")
+    @PostMapping("role/statusAlter")
     public ResponseEntity roleStatusAlter(@RequestBody Integer roleId){
         return adminsService.alterStatusRole(roleId);
     }
@@ -135,7 +135,7 @@ public class AdminsController {
      * 获取全部的权限信息
      * @return
      */
-    @GetMapping("permissions/get_all")
+    @GetMapping("permissions/getAll")
     public ResponseEntity getPermissionsAll(){
         return adminsService.getPermissionsAll();
     }
@@ -145,7 +145,7 @@ public class AdminsController {
      * @param permissionsDto:权限信息的封装类
      * @return
      */
-    @PostMapping("permissions/add")
+    @PostMapping("permissions")
     public ResponseEntity permissionsAdd(@RequestBody PermissionsDto permissionsDto){
         return adminsService.addPermissions(permissionsDto);
     }
@@ -155,7 +155,7 @@ public class AdminsController {
      * @param permissionsIdList:需批量删除的id集合
      * @return
      */
-    @PostMapping("permissions/delete_batch")
+    @PostMapping("permissions/deleteBatch")
     public ResponseEntity permissionsBatchDelete(@RequestBody List<Integer> permissionsIdList){
         return adminsService.deleteBatchPermissions(permissionsIdList);
     }
@@ -175,7 +175,7 @@ public class AdminsController {
      * @param permissionsId
      * @return
      */
-    @PostMapping("permissions/delete_single")
+    @PostMapping("permissions/deleteSingle")
     public ResponseEntity permissionsSingleDelete(@RequestBody Integer permissionsId){
         return adminsService.deleteSinglePermissions(permissionsId);
     }
@@ -185,7 +185,7 @@ public class AdminsController {
      * @param permissionsId
      * @return
      */
-    @PostMapping("permissions/status_alter")
+    @PostMapping("permissions/statusAlter")
     public ResponseEntity permissionsStatusAlter(@RequestBody Integer permissionsId){
         return adminsService.alterStatusPermissions(permissionsId);
     }

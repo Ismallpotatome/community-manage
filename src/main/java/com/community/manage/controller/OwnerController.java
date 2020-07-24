@@ -32,7 +32,7 @@ public class OwnerController {
      * @param ownerDto
      * @return
      */
-    @PostMapping("personnel/add")
+    @PostMapping("personnel")
     public ResponseEntity personnelAdd(@RequestBody OwnerDto ownerDto){
         return  ownerService.addPersonnel(ownerDto);
     }
@@ -42,7 +42,7 @@ public class OwnerController {
      * @param personnelIdList
      * @return
      */
-    @PostMapping("personnel/delete_batch")
+    @PostMapping("personnel/deleteBatch")
     public ResponseEntity personnelBatchDelete(@RequestBody List<Integer> personnelIdList){
         return ownerService.deleteBatchPersonnel(personnelIdList);
     }
@@ -62,7 +62,7 @@ public class OwnerController {
      * @param personnelId
      * @return
      */
-    @PostMapping("personnel/delete_single")
+    @PostMapping("personnel/deleteSingle")
     public ResponseEntity personnelSingleDelete(@RequestBody Integer personnelId){
         return ownerService.deleteSinglePersonnel(personnelId);
     }
@@ -71,7 +71,7 @@ public class OwnerController {
      * @param communityId
      * @return
      */
-    @PostMapping("personnel/select_by_community")
+    @PostMapping("personnel/selectByCommunity")
     public ResponseEntity personnelByCommunityId(@RequestBody Integer communityId){
         return ownerService.personnelByCommunityId(communityId);
     }
@@ -93,7 +93,7 @@ public class OwnerController {
      * 业主的车辆添加
      * @param vehicleDto:车辆信息封装类
      */
-    @PostMapping("vehicle/add")
+    @PostMapping("vehicle")
     public ResponseEntity vehicleAdd(@RequestBody VehicleDto vehicleDto){
 
         return ownerService.addVehicle(vehicleDto);
@@ -104,7 +104,7 @@ public class OwnerController {
      *批量删除车辆
      * @param vehicleIdList:需要批量删除的车辆id集合
      */
-    @PostMapping("vehicle/delete_batch")
+    @PostMapping("vehicle/deleteBatch")
     public ResponseEntity vehicleBatchDelete(@RequestBody List<Integer> vehicleIdList){
         return ownerService.deleteBatchVehicle(vehicleIdList);
     }
@@ -113,7 +113,7 @@ public class OwnerController {
      *删除单个车辆
      * @param vehicleId:需要删除的车辆id
      */
-    @PostMapping("vehicle/delete_single")
+    @PostMapping("vehicle/deleteSingle")
     public ResponseEntity vehicleSingleDelete(@RequestBody Integer vehicleId){
         return ownerService.deleteSingleVehicle(vehicleId);
     }
@@ -145,7 +145,7 @@ public class OwnerController {
      * @param petDto:封装的"宠物"信息类
      * @return
      */
-    @PostMapping("pet/add")
+    @PostMapping("pet")
     public ResponseEntity petAdd(@RequestBody PetDto petDto){
         return ownerService.addPet(petDto);
     }
@@ -155,7 +155,7 @@ public class OwnerController {
      * @param petIdList:"宠物id"集合
      * @return
      */
-    @PostMapping("pet/delete_batch")
+    @PostMapping("pet/deleteBatch")
     public ResponseEntity petBatchDelete(@RequestBody List<Integer> petIdList){
         return   ownerService.deleteBatchPet(petIdList);
     }
@@ -175,7 +175,7 @@ public class OwnerController {
      * @param petId
      * @return
      */
-    @PostMapping("pet/delete_single")
+    @PostMapping("pet/deleteSingle")
     public ResponseEntity petSingleDelete(@RequestBody Integer petId){
         return ownerService.deleteSinglePet(petId);
     }
